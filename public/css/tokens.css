@@ -1,0 +1,48 @@
+:root {
+  --vela: #FFFDFB;
+  --duna: #FBF5F0;
+  --blush-claro: #F8EEE9;
+  --blush: #F3E3DE;
+  --rosa-poeira: #D9B8B0;
+  --rose: #C98F83;
+  --rose-meio: #B87C70;
+  --rose-escuro: #9E665B;
+  --salvia-claro: #E7EFEA;
+  --salvia: #7B968C;
+  --salvia-escuro: #54736A;
+  --salvia-fundo: #3F5A51;
+  --texto: #3E3A3D;
+  --texto-suave: #77717A;
+  --borda: #EFE5DD;
+  --whatsapp: #25D366;
+  --whatsapp-hover: #1EB659;
+  --erro: #B3695E;
+  --sucesso: #4F7A5E;
+
+  --fonte-display: "Playfair Display", Georgia, serif;
+  --fonte-corpo: "Nunito Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  --espaco-1: 4px;
+  --espaco-2: 8px;
+  --espaco-3: 12px;
+  --espaco-4: 16px;
+  --espaco-5: 24px;
+  --espaco-6: 32px;
+  --espaco-7: 48px;
+  --espaco-8: 64px;
+  --espaco-9: 96px;
+
+  --raio-sm: 8px;
+  --raio-md: 16px;
+  --raio-lg: 24px;
+  --raio-xl: 32px;
+
+  --sombra-suave: 0 2px 12px rgba(62, 58, 61, 0.06);
+  --sombra-elevada: 0 12px 32px rgba(184, 124, 112, 0.14);
+  --sombra-whatsapp: 0 8px 24px rgba(37, 211, 102, 0.35);
+
+  --gradiente-rose: linear-gradient(135deg, #C98F83, #B87C70);
+
+  --containe-max: 1120px;
+  --transicao: 0.25s ease;
+}

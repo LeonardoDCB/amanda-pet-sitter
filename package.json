@@ -1,0 +1,29 @@
+{
+  "name": "siteamanda",
+  "version": "1.0.0",
+  "description": "Site da Pet Sitter Amanda (Birigui-SP) — formulario de orcamento, galeria e painel admin",
+  "main": "src/server.js",
+  "private": true,
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node scripts/teste-fumaca.js",
+    "hash-senha": "node scripts/hash-senha.js"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.4.0",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "puppeteer": "^25.8.0"
+  }
+}

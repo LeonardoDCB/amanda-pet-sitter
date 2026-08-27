@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Pet Sitter Amanda — amor e cuidado para o seu pet em Birigui-SP. Visitas em domicílio e hospedagem na casa da Amanda. Peça seu orçamento pelo WhatsApp." />
+  <meta name="theme-color" content="#54736A" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:title" content="Amanda Pet Sitter — Birigui-SP" />
+  <meta property="og:description" content="Visitas em domicílio e hospedagem com muito carinho. Peça seu orçamento pelo WhatsApp (18) 99760-7771." />
+  <meta property="og:url" content="https://www.amandapetsitter.com.br/" />
+  <meta property="og:image" content="https://www.amandapetsitter.com.br/img/og-capa.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <title>Amanda Pet Sitter — Birigui-SP</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Nunito+Sans:wght@400;600;700;800&display=swap" />
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/componentes.css" />
+  <link rel="stylesheet" href="css/loja.css" />
+</head>
+<body>
+
+  <header class="cabecalho">
+    <div class="containe cabecalho-inner">
+      <a class="marca" href="#principal">
+        <span class="marca-icone" aria-hidden="true">🐾</span>
+        <span class="marca-nome">Amanda<em>Pet Sitter</em></span>
+      </a>
+
+      <button class="menu-botao" id="menu-botao" aria-expanded="false" aria-controls="menu-navegacao" aria-label="Abrir menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="menu" id="menu-navegacao" aria-label="Navegação principal">
+        <div class="menu-links">
+          <a href="#principal">Principal</a>
+          <a href="#sobre">Sobre</a>
+          <a href="#servicos">Serviços</a>
+          <a href="#galeria">Galeria</a>
+          <a href="#loja">Loja</a>
+          <a href="#depoimentos">Depoimentos</a>
+          <a href="#orcamento">Orçamento</a>
+        </div>
+        <div class="menu-ctas">
+          <a class="btn btn-whatsapp btn-pequeno menu-cta" target="_blank" rel="noopener" href="https://wa.me/5518997607771?text=Ol%C3%A1%20Amanda!%20Vi%20seu%20site%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es.">WhatsApp</a>
+          <a class="btn btn-instagram btn-pequeno menu-cta" target="_blank" rel="noopener" href="https://www.instagram.com/amandaa.petsitter">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.7.1-1.1.1-1.7.2-2.1.4-.5.2-.9.4-1.3.8-.4.4-.6.8-.8 1.3-.2.4-.3 1-.4 2.1C2.6 8.5 2.6 8.9 2.6 12s0 3.5.1 4.7c.1 1.1.2 1.7.4 2.1.2.5.4.9.8 1.3.4.4.8.6 1.3.8.4.2 1 .3 2.1.4 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1-.1 1.7-.2 2.1-.4.5-.2.9-.4 1.3-.8.4-.4.8-.6 1.3-.8.4-.2 1-.3 2.1-.4 1.2-.1 1.6-.1 4.7-.1s-3.5 0-4.7.1c-1.1.1-1.7.2-2.1.4-.5.2-.9.4-1.3.8-.4.4-.8.6-1.3.8-.4.2-1 .3-2.1.4-1.2.1-1.6.1-4.7.1zm0-3c2.2 0 4 1.8 4 4s-1.8 4-4 4-4-1.8-4-4 1.8-4 4-4zm0 1.8c-1.2 0-2.2 1-2.2 2.2s1 2.2 2.2 2.2 2.2-1 2.2-2.2-1-2.2-2.2-2.2zm4.6-3.4c.5 0 .9.4.9.9s-.4.9-.9.9-.9-.4-.9-.9.4-.9.9-.9z"/></svg>
+            Instagram
+          </a>
+        </div>
+      </nav>
+      <div class="menu-overlay" id="menu-overlay" hidden></div>
+    </div>
+  </header>
+
+  <main>
+
+    <section id="principal" class="hero">
+      <div class="containe hero-conteudo">
+        <div>
+          <span class="chip">Birigui-SP · Pet Sitter em domicílio</span>
+          <h1>Amor e cuidado para o seu pet, <em>na sua casa</em></h1>
+          <p class="hero-sub">Visitas em domicílio e hospedagem na casa da Amanda, com rotina personalizada, atenção individual e atualizações com fotos para você ficar tranquilo.</p>
+          <div class="hero-acoes">
+            <a class="btn btn-whatsapp btn-grande" target="_blank" rel="noopener" href="https://wa.me/5518997607771?text=Ol%C3%A1%20Amanda!%20Vi%20seu%20site%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es.">
+              <svg viewBox="0 0 32 32" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.2 1.6 6L4 29l8.2-1.6c1.8.9 3.8 1.4 5.8 1.4 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-1.7 0-3.4-.4-4.9-1.3l-.4-.2-4.9 1 1-4.7-.2-.4c-1-1.6-1.5-3.4-1.5-5.2 0-5.5 4.5-10 10-10s10 4.5 10 10-4.5 10.8-10 10.8zm5.5-7.5c-.3-.1-1.8-.9-2.1-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-1-2.3c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.3-.6-.4z"/></svg>
+              Falar no WhatsApp
+            </a>
+            <a class="btn btn-fantasma btn-grande" href="#servicos">Conhecer os serviços <span class="seta">→</span></a>
+          </div>
+          <ul class="hero-selos">
+            <li>🏡 Atendimento em domicílio</li>
+            <li>💛 Rotina personalizada</li>
+            <li>📸 Atualizações com fotos</li>
+          </ul>
+        </div>
+
+        <div class="hero-foto">
+          <div class="foto-moldura">
+            <span class="chip chip-status hero-chip">✅ Disponível para novas reservas</span>
+            <img src="img/placeholder-amanda.svg" alt="Foto da Amanda com um pet" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sobre" class="secao sobre">
+      <div class="containe sobre-grid">
+        <div class="sobre-foto">
+          <div class="foto-moldura">
+            <img src="img/placeholder-amanda.svg" alt="Foto da Amanda" />
+          </div>
+        </div>
+        <div>
+          <span class="eyebrow">Sobre mim</span>
+          <h2>Olá, eu sou a <em>Amanda</em> 👋</h2>
+          <p>Sou pet sitter em <strong>Birigui-SP</strong> e cuido de cada pet como se fosse meu: com paciência, carinho e atenção aos detalhes da rotina de cada um.</p>
+          <p>Você viaja ou passa o dia fora com a certeza de que seu melhor amigo está sendo bem cuidado — seja na sua casa, com as visitas em domicílio, seja na minha, na hospedagem.</p>
+          <ul class="lista-checks sobre-checks">
+            <li><span class="check">✓</span> Rotina personalizada para cada pet</li>
+            <li><span class="check">✓</span> Cuidado com alimentação e medicação</li>
+            <li><span class="check">✓</span> Atualizações com fotos e vídeos</li>
+            <li><span class="check">✓</span> Ambiente seguro e carinhoso</li>
+          </ul>
+          <p class="assinatura">Com carinho, Amanda 🐾</p>
+          <a class="btn btn-link" target="_blank" rel="noopener" href="https://wa.me/5518997607771?text=Ol%C3%A1%20Amanda!%20Vi%20seu%20site%20e%20quero%20conhecer%20seu%20trabalho.">
+            Vamos conversar? <span class="seta">→</span>
+          </a>
+          <p class="insta-destaque">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.7.1-1.1.1-1.7.2-2.1.4-.5.2-.9.4-1.3.8-.4.4-.6.8-.8 1.3-.2.4-.3 1-.4 2.1C2.6 8.5 2.6 8.9 2.6 12s0 3.5.1 4.7c.1 1.1.2 1.7.4 2.1.2.5.4.9.8 1.3.4.4.8.6 1.3.8.4.2 1 .3 2.1.4 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1-.1 1.7-.2 2.1-.4.5-.2.9-.4 1.3-.8.4-.4.8-.6 1.3-.8.4-.2 1-.3 2.1-.4 1.2-.1 1.6-.1 4.7-.1s-3.5 0-4.7.1c-1.1.1-1.7.2-2.1.4-.5.2-.9.4-1.3.8-.4.4-.8.6-1.3.8-.4.2-1 .3-2.1.4-1.2.1-1.6.1-4.7.1zm0-3c2.2 0 4 1.8 4 4s-1.8 4-4 4-4-1.8-4-4 1.8-4 4-4zm0 1.8c-1.2 0-2.2 1-2.2 2.2s1 2.2 2.2 2.2 2.2-1 2.2-2.2-1-2.2-2.2-2.2zm4.6-3.4c.5 0 .9.4.9.9s-.4.9-.9.9-.9-.4-.9-.9.4-.9.9-.9z"/></svg>
+            Me siga no Instagram <a target="_blank" rel="noopener" href="https://www.instagram.com/amandaa.petsitter">@amandaa.petsitter</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="servicos" class="secao">
+      <div class="containe">
+        <div class="secao-titulo">
+          <span class="eyebrow">Nossos serviços</span>
+          <h2>Dois jeitos de deixar seu pet <em>muito bem cuidado</em></h2>
+          <p>Escolha o que combina com a sua rotina — e com a do seu pet.</p>
+        </div>
+
+        <div class="servicos-grid">
+          <article class="card card-destaque servico">
+            <span class="servico-icone" aria-hidden="true">🏠</span>
+            <h3>Visitas em domicílio</h3>
+            <p>Vou até a sua casa nos horários combinados para cuidar do seu pet sem que ele precise sair do conforto dele.</p>
+            <ul class="lista-checks">
+              <li><span class="check">✓</span> Alimentação e água fresca</li>
+              <li><span class="check">✓</span> Brincadeiras e muito carinho</li>
+              <li><span class="check">✓</span> Medicação, se necessário</li>
+              <li><span class="check">✓</span> Fotos no final de cada visita</li>
+            </ul>
+            <div class="servico-rodape">
+              <span class="chip chip-salvia">Perfeita para o dia a dia</span>
+              <a class="btn btn-link" href="#orcamento">Pedir orçamento <span class="seta">→</span></a>
+            </div>
+          </article>
+
+          <article class="card card-destaque servico">
+            <span class="servico-icone" aria-hidden="true">💗</span>
+            <h3>Hospedagem na casa da Amanda</h3>
+            <p>Seu pet acolhido em um ambiente familiar, com atenção individual e toda a rotina de casa — viagem tranquila para você.</p>
+            <ul class="lista-checks">
+              <li><span class="check">✓</span> Ambiente familiar e seguro</li>
+              <li><span class="check">✓</span> Rotina de alimentação e passeios</li>
+              <li><span class="check">✓</span> Atualizações diárias com fotos</li>
+              <li><span class="check">✓</span> Atenção individual a cada hóspede</li>
+            </ul>
+            <div class="servico-rodape">
+              <span class="chip chip-salvia">Ideal para viagens</span>
+              <a class="btn btn-link" href="#orcamento">Pedir orçamento <span class="seta">→</span></a>
+            </div>
+          </article>
+
+          <article class="card card-destaque servico">
+            <span class="servico-icone" aria-hidden="true">🦮</span>
+            <h3>Passeio com o pet</h3>
+            <p>Saídas para seu cachorro se exercitar, explorar o mundo e gastar energia com segurança — no ritmo e porte dele.</p>
+            <ul class="lista-checks">
+              <li><span class="check">✓</span> Passeios com coleira e segurança</li>
+              <li><span class="check">✓</span> Exercício e estimulação</li>
+              <li><span class="check">✓</span> Fotos e resumo do passeio</li>
+              <li><span class="check">✓</span> Aceita cães de porte pequeno e grande</li>
+            </ul>
+            <div class="servico-rodape">
+              <span class="chip chip-salvia">Para rotina e diversão</span>
+              <a class="btn btn-link" href="#orcamento">Pedir orçamento <span class="seta">→</span></a>
+            </div>
+          </article>
+        </div>
+
+        <p class="servicos-combinar">Pacotes mensais disponíveis — <strong>tudo a combinar</strong>. É só me chamar no WhatsApp ou Instagram! 💬</p>
+
+        <div class="faixa-diferenciais">
+          <span class="chip">📱 Atualizações diárias</span>
+          <span class="chip">🧍 Ambiente familiar</span>
+          <span class="chip">🔒 Pet sempre supervisionado</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="galeria" class="secao galeria">
+      <div class="containe">
+        <div class="secao-titulo">
+          <span class="eyebrow">Galeria</span>
+          <h2>Alguns dos meus <em>melhores clientes</em></h2>
+          <p>Eles também curtem uma fotinha quando estão sob meus cuidados 🐶🐱</p>
+        </div>
+        <div id="grade-galeria" class="galeria-masonry" aria-live="polite">
+          <p class="chip chip-salvia">Carregando galeria…</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="loja" class="secao loja">
+      <div class="containe secao-titulo">
+        <span class="eyebrow">Loja</span>
+        <h2>Produtos para o seu <em>pet</em></h2>
+        <p>Monte seu carrinho e finalize pelo WhatsApp. Assim que receber, eu confirmo disponibilidade e pagamento com carinho. 🐾</p>
+      </div>
+      <div class="containe">
+        <div id="grade-loja" class="loja-grade" aria-live="polite">
+          <p class="chip chip-salvia">Carregando produtos…</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="depoimentos" class="secao depoimentos">
+      <div class="containe secao-titulo">
+        <span class="eyebrow">Depoimentos</span>
+        <h2>Quem já confiou, <em>recomenda</em> 💛</h2>
+        <p>Veja o que tutores e seus pets dizem do meu cuidado.</p>
+      </div>
+      <div class="containe">
+        <div id="grade-depoimentos" class="depoimentos-grade" aria-live="polite">
+          <p class="chip chip-salvia">Carregando depoimentos…</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="orcamento" class="secao">
+      <div class="containe secao-titulo">
+        <span class="eyebrow">Orçamento</span>
+        <h2>Peça seu <em>orçamento</em></h2>
+        <p>Preencha o formulário e eu retorno com valores e disponibilidade. Sem compromisso.</p>
+      </div>
+
+      <div class="containe orcamento-grid">
+        <aside class="contato-card" aria-label="Contato direto">
+          <h3>Prefere conversar direito?</h3>
+          <p>Me chame no WhatsApp — respondo pessoalmente e com carinho.</p>
+          <a class="btn btn-whatsapp" target="_blank" rel="noopener" href="https://wa.me/5518997607771?text=Ol%C3%A1%20Amanda!%20Vi%20seu%20site%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es.">
+            Chamar no WhatsApp
+          </a>
+          <a class="btn btn-instagram" target="_blank" rel="noopener" href="https://www.instagram.com/amandaa.petsitter">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.1 0-3.5 0-4.7.1-1.1.1-1.7.2-2.1.4-.5.2-.9.4-1.3.8-.4.4-.6.8-.8 1.3-.2.4-.3 1-.4 2.1C2.6 8.5 2.6 8.9 2.6 12s0 3.5.1 4.7c.1 1.1.2 1.7.4 2.1.2.5.4.9.8 1.3.4.4.8.6 1.3.8.4.2 1 .3 2.1.4 1.2.1 1.6.1 4.7.1s3.5 0 4.7-.1c1.1-.1 1.7-.2 2.1-.4.5-.2.9-.4 1.3-.8.4-.4.8-.6 1.3-.8.4-.2 1-.3 2.1-.4 1.2-.1 1.6-.1 4.7-.1s-3.5 0-4.7.1c-1.1.1-1.7.2-2.1.4-.5.2-.9.4-1.3.8-.4.4-.8.6-1.3.8-.4.2-1 .3-2.1.4-1.2.1-1.6.1-4.7.1zm0-3c2.2 0 4 1.8 4 4s-1.8 4-4 4-4-1.8-4-4 1.8-4 4-4zm0 1.8c-1.2 0-2.2 1-2.2 2.2s1 2.2 2.2 2.2 2.2-1 2.2-2.2-1-2.2-2.2-2.2zm4.6-3.4c.5 0 .9.4.9.9s-.4.9-.9.9-.9-.4-.9-.9.4-.9.9-.9z"/></svg>
+            Instagram
+          </a>
+          <div class="dica">💡 Tenha em mãos: as datas de que precisa, endereço e o porte do seu pet.</div>
+        </aside>
+
+        <div class="card">
+          <form id="form-orcamento" class="formulario" novalidate>
+            <input type="text" id="website" name="website" class="honeypot" tabindex="-1" aria-hidden="true" autocomplete="off" />
+            <div class="campo">
+              <label for="nome_cliente">Seu nome</label>
+              <input type="text" id="nome_cliente" name="nome_cliente" required maxlength="100" placeholder="Como posso te chamar?" />
+              <span class="campo-msg">Informe seu nome (mínimo 2 letras).</span>
+            </div>
+            <div class="campo">
+              <label for="contato">Contato (WhatsApp ou e-mail)</label>
+              <input type="text" id="contato" name="contato" required maxlength="60" placeholder="(18) 9xxxx-xxxx" />
+              <span class="campo-msg">Preciso de um contato para responder.</span>
+            </div>
+            <div class="campo-linha">
+              <div class="campo">
+                <label for="tipo_pet">Tipo de pet</label>
+                <select id="tipo_pet" name="tipo_pet" required>
+                  <option value="cachorro">Cachorro</option>
+                  <option value="gato">Gato</option>
+                  <option value="outro">Outro</option>
+                </select>
+              </div>
+              <div class="campo">
+                <label for="tipo_servico">Serviço</label>
+                <select id="tipo_servico" name="tipo_servico" required>
+                    <option value="visita">Visita em domicílio</option>
+                    <option value="hospedagem">Hospedagem</option>
+                    <option value="passeio">Passeio com o pet</option>
+                  </select>
+                </div>
+              </div>
+
+            <div class="campo-linha">
+              <div class="campo">
+                <label for="porte">Porte do cachorro</label>
+                <select id="porte" name="porte" required>
+                  <option value="Pequeno">Pequeno</option>
+                  <option value="Grande">Grande</option>
+                </select>
+              </div>
+              <div class="campo">
+                <label for="usa_medicacao">Usa medicação?</label>
+                <select id="usa_medicacao" name="usa_medicacao" required>
+                  <option value="nao">Não</option>
+                  <option value="sim">Sim</option>
+                </select>
+              </div>
+            </div>
+            <div class="campo" id="campo-medicacao-detalhes" hidden>
+              <label for="medicacao_detalhes">Qual medicação? (opcional)</label>
+              <input type="text" id="medicacao_detalhes" name="medicacao_detalhes" maxlength="500" placeholder="Ex.: antibiótico 2x ao dia" />
+            </div>
+            <div class="campo-linha">
+              <div class="campo">
+                <label for="data_inicio">Data de início</label>
+                <input type="date" id="data_inicio" name="data_inicio" required />
+                <span class="campo-msg">Escolha a data de início.</span>
+              </div>
+              <div class="campo">
+                <label for="data_fim">Data de fim <span class="opcional">(opcional)</span></label>
+                <input type="date" id="data_fim" name="data_fim" />
+                <span class="campo-msg">A data de fim não pode ser anterior à de início.</span>
+              </div>
+            </div>
+            <div class="campo">
+              <label for="mensagem">Mensagem</label>
+              <textarea id="mensagem" name="mensagem" maxlength="2000" rows="4" placeholder="Conte sobre seu pet: porte, idade, rotina, cuidados especiais…"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primario btn-grande">Enviar orçamento</button>
+            <p id="aviso-form" class="aviso" role="status"></p>
+          </form>
+
+          <div id="sucesso-orcamento" class="sucesso" hidden>
+            <span class="emoji" aria-hidden="true">💌</span>
+            <h3>Orçamento enviado com sucesso!</h3>
+            <p>Vou ler sua mensagem e responder o quanto antes. Quer agilizar?</p>
+            <ul id="resumo-orcamento" class="sucesso-resumo"></ul>
+            <div class="sucesso-acoes">
+              <a id="link-whatsapp" class="btn btn-whatsapp" target="_blank" rel="noopener" href="https://wa.me/5518997607771">
+                Confirmar no WhatsApp
+              </a>
+              <button type="button" class="btn btn-fantasma" id="novo-orcamento">Enviar outro orçamento</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="rodape-grid">
+      <div>
+        <a class="marca" href="#principal">
+          <span class="marca-icone" aria-hidden="true">🐾</span>
+          <span class="marca-nome">Amanda<em>Pet Sitter</em></span>
+        </a>
+        <p>Cuidado com amor, carinho e segurança para o seu pet, em Birigui-SP.</p>
+      </div>
+      <div>
+        <h3>Contato</h3>
+        <ul>
+          <li><a target="_blank" rel="noopener" href="https://wa.me/5518997607771">(18) 99760-7771</a></li>
+          <li><a target="_blank" rel="noopener" href="https://www.instagram.com/amandaa.petsitter">@amandaa.petsitter</a></li>
+          <li>Birigui-SP</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Navegação</h3>
+        <ul>
+          <li><a href="#principal">Principal</a></li>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#servicos">Serviços</a></li>
+          <li><a href="#orcamento">Orçamento</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="rodape-linha">
+      <span>© 2026 Amanda Pet Sitter. Todos os direitos reservados.</span>
+      <span>Feito com 🐾 para pets bem cuidados</span>
+    </div>
+  </footer>
+
+  <a class="whatsapp-flutuante" target="_blank" rel="noopener" href="https://wa.me/5518997607771?text=Ol%C3%A1%20Amanda!%20Vi%20seu%20site%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es." aria-label="Falar no WhatsApp">
+    <svg viewBox="0 0 32 32" width="28" height="28" fill="currentColor" aria-hidden="true"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.1.6 4.2 1.6 6L4 29l8.2-1.6c1.8.9 3.8 1.4 5.8 1.4 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-1.7 0-3.4-.4-4.9-1.3l-.4-.2-4.9 1 1-4.7-.2-.4c-1-1.6-1.5-3.4-1.5-5.2 0-5.5 4.5-10 10-10s10 4.5 10 10-4.5 10.8-10 10.8zm5.5-7.5c-.3-.1-1.8-.9-2.1-1-.3-.1-.5-.1-.7.1-.2.3-.8 1-.9 1.2-.2.2-.3.2-.6.1-.3-.1-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-1-2.3c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.3-.6-.4z"/></svg>
+  </a>
+
+  <button class="carrinho-botao" id="abrir-carrinho" type="button" aria-label="Abrir carrinho">
+    🛒 <span class="carrinho-contador" id="carrinho-contador" hidden>0</span>
+  </button>
+
+  <div class="carrinho-overlay" id="carrinho-overlay" hidden></div>
+
+  <aside class="carrinho" id="carrinho" hidden aria-label="Carrinho de compras">
+    <div class="carrinho-topo">
+      <h3>Seu carrinho</h3>
+      <button class="carrinho-fechar" id="fechar-carrinho" type="button" aria-label="Fechar carrinho">✕</button>
+    </div>
+    <div class="carrinho-itens" id="carrinho-itens"></div>
+    <div class="carrinho-vazio" id="carrinho-vazio">Seu carrinho está vazio.</div>
+    <div class="carrinho-rodape">
+      <div class="carrinho-total">
+        <span>Total</span>
+        <strong id="carrinho-total">R$ 0,00</strong>
+      </div>
+      <form id="form-pedido" class="carrinho-form" novalidate>
+        <input type="text" id="pedido-nome" placeholder="Seu nome" maxlength="100" required />
+        <input type="text" id="pedido-contato" placeholder="WhatsApp ou e-mail" maxlength="60" required />
+        <textarea id="pedido-obs" placeholder="Observações (opcional)" maxlength="2000" rows="2"></textarea>
+        <button type="submit" class="btn btn-primario btn-grande">Finalizar pedido</button>
+        <p id="aviso-pedido" class="aviso" role="status"></p>
+      </form>
+      <div id="sucesso-pedido" class="sucesso sucesso-carrinho" hidden>
+        <span class="emoji" aria-hidden="true">💌</span>
+        <h3>Pedido enviado!</h3>
+        <p>Vou conferir e te respondo pelo WhatsApp.</p>
+        <a id="link-pedido-whatsapp" class="btn btn-whatsapp" target="_blank" rel="noopener" href="https://wa.me/5518997607771">Confirmar no WhatsApp</a>
+        <button type="button" class="btn btn-fantasma" id="fechar-sucesso-pedido">Fechar</button>
+      </div>
+    </div>
+  </aside>
+
+  <script src="js/site.js"></script>
+</body>
+</html>
