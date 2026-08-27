@@ -74,7 +74,8 @@ const depoimentoSchema = z.object({
   autor: z.string().trim().max(100).optional().nullable(),
   texto: z.string().max(2000).optional().nullable(),
   ativo: z.enum(['sim', 'nao']).optional().default('sim'),
-  ordem: z.coerce.number().int().min(0).max(999999).optional().default(0)
+  ordem: z.coerce.number().int().min(0).max(999999).optional().default(0),
+  avaliacao: z.coerce.number().int().min(1).max(5).optional()
 });
 
 function validar(schema) {

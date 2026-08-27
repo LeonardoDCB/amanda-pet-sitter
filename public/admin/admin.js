@@ -981,6 +981,7 @@ formDepoimento.addEventListener("submit", async (evento) => {
   form.append("autor", document.getElementById("depoimento-autor").value.trim());
   form.append("texto", texto);
   form.append("ativo", document.getElementById("depoimento-ativo").checked ? "sim" : "nao");
+  const avaliacao = document.getElementById("depoimento-avaliacao").value;
   if (arquivo) form.append("imagem", arquivo);
 
   const botao = formDepoimento.querySelector('button[type="submit"]');
@@ -990,6 +991,8 @@ formDepoimento.addEventListener("submit", async (evento) => {
     if (depoimentoEditandoId) {
       const remover = document.getElementById("depoimento-remover-imagem");
       if (remover.checked) form.append("remover_imagem", "1");
+      if (avaliacao) form.append("avaliacao", avaliacao);
+      else form.append("remover_avaliacao", "1");
       const resposta = await api(`/api/admin/depoimentos/${depoimentoEditandoId}`, { method: "PATCH", body: form });
       if (resposta.ok) {
         resetarFormularioDepoimento();
@@ -999,6 +1002,7 @@ formDepoimento.addEventListener("submit", async (evento) => {
         avisoDepoimento.className = "aviso erro";
       }
     } else {
+      if (avaliacao) form.append("avaliacao", avaliacao);
       const resposta = await api("/api/admin/depoimentos", { method: "POST", body: form });
       if (resposta.ok) {
         resetarFormularioDepoimento();
@@ -1065,6 +1069,13 @@ function criarItemDepoimento(item) {
     info.appendChild(trecho);
   }
 
+  if (item.avaliacao) {
+    const estrelas = document.createElement("span");
+    estrelas.className = "item-estrelas";
+    estrelas.textContent = "★".repeat(item.avaliacao) + "☆".repeat(5 - item.avaliacao);
+    info.appendChild(estrelas);
+  }
+
   const estado = document.createElement("span");
   estado.className = "chip " + (item.ativo === "sim" ? "chip-salvia" : "chip-status");
   estado.textContent = item.ativo === "sim" ? "Ativo" : "Inativo";
@@ -1097,6 +1108,7 @@ function criarItemDepoimento(item) {
     depoimentoEditandoId = item.id;
     document.getElementById("depoimento-autor").value = item.autor || "";
     document.getElementById("depoimento-texto").value = item.texto || "";
+    document.getElementById("depoimento-avaliacao").value = item.avaliacao ? String(item.avaliacao) : "";
     document.getElementById("depoimento-ativo").checked = item.ativo === "sim";
     document.getElementById("depoimento-imagem").value = "";
     const removerWrap = document.getElementById("depoimento-remover-wrap");

@@ -1,22 +1,22 @@
 :root {
   --vela: #FFFDFB;
-  --duna: #FBF5F0;
-  --blush-claro: #F8EEE9;
-  --blush: #F3E3DE;
-  --rosa-poeira: #D9B8B0;
-  --rose: #C98F83;
-  --rose-meio: #B87C70;
-  --rose-escuro: #9E665B;
-  --salvia-claro: #E7EFEA;
-  --salvia: #7B968C;
-  --salvia-escuro: #54736A;
-  --salvia-fundo: #3F5A51;
+  --duna: #FBF1F5;
+  --blush-claro: #FBEAF1;
+  --blush: #F6DBE7;
+  --rosa-poeira: #EBC6D8;
+  --rose: #D98CB4;
+  --rose-meio: #C76B92;
+  --rose-escuro: #B2567E;
+  --salvia-claro: #F7E1EC;
+  --salvia: #CD7FAA;
+  --salvia-escuro: #A24E76;
+  --salvia-fundo: #7E2F56;
   --texto: #3E3A3D;
-  --texto-suave: #77717A;
-  --borda: #EFE5DD;
+  --texto-suave: #7A6E76;
+  --borda: #F2DCE7;
   --whatsapp: #25D366;
   --whatsapp-hover: #1EB659;
-  --erro: #B3695E;
+  --erro: #C2557C;
   --sucesso: #4F7A5E;
 
   --fonte-display: "Playfair Display", Georgia, serif;
@@ -38,10 +38,10 @@
   --raio-xl: 32px;
 
   --sombra-suave: 0 2px 12px rgba(62, 58, 61, 0.06);
-  --sombra-elevada: 0 12px 32px rgba(184, 124, 112, 0.14);
+  --sombra-elevada: 0 12px 32px rgba(199, 107, 146, 0.18);
   --sombra-whatsapp: 0 8px 24px rgba(37, 211, 102, 0.35);
 
-  --gradiente-rose: linear-gradient(135deg, #C98F83, #B87C70);
+  --gradiente-rose: linear-gradient(135deg, #C76B92, #9C3F6B);
 
   --containe-max: 1120px;
   --transicao: 0.25s ease;

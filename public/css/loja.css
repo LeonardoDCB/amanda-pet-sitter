@@ -19,7 +19,7 @@
 
 .produto-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(184, 124, 112, 0.14);
+  box-shadow: 0 12px 32px rgba(199, 107, 146, 0.14);
 }
 
 .produto-card .produto-foto {
@@ -153,13 +153,13 @@
   font-weight: 700;
   font-size: 1rem;
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(184, 124, 112, 0.35);
+  box-shadow: 0 8px 24px rgba(199, 107, 146, 0.35);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .carrinho-botao:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(184, 124, 112, 0.45);
+  box-shadow: 0 12px 28px rgba(199, 107, 146, 0.45);
 }
 
 .carrinho-contador {

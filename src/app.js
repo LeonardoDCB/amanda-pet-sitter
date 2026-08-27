@@ -72,6 +72,23 @@ app.use('/api/depoimentos', depoimentosPublico);
 app.use('/api/admin/depoimentos', depoimentosAdmin);
 app.use('/api/admin', adminRouter);
 
+const PAGINAS_ESTATICAS = {
+  '/servicos/visita': 'servicos/visita.html',
+  '/servicos/hospedagem': 'servicos/hospedagem.html',
+  '/servicos/passeio': 'servicos/passeio.html',
+  '/faq': 'faq.html',
+  '/dicas': 'dicas.html'
+};
+
+for (const [rota, arquivo] of Object.entries(PAGINAS_ESTATICAS)) {
+  app.get(rota, (req, res) => {
+    res.sendFile(path.join(PUBLIC_DIR, arquivo));
+  });
+  app.get(`${rota}.html`, (req, res) => {
+    res.redirect(301, rota);
+  });
+}
+
 app.use(express.static(PUBLIC_DIR));
 
 app.use((req, res) => {

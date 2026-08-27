@@ -45,7 +45,7 @@ const publico = express.Router();
 publico.get('/', (req, res) => {
   const itens = db
     .prepare(
-      `SELECT id, autor, texto, arquivo
+      `SELECT id, autor, texto, arquivo, avaliacao
        FROM depoimentos
        WHERE ativo = 'sim'
        ORDER BY ordem ASC, id DESC`
@@ -70,6 +70,7 @@ admin.get('/', (req, res) => {
 
 admin.post('/', upload.single('imagem'), validar(depoimentoSchema), (req, res) => {
   const { autor, texto, ativo, ordem } = req.dados;
+  const avaliacao = req.dados.avaliacao ?? null;
 
   let arquivo = null;
   let tipoMime = null;
@@ -90,10 +91,10 @@ admin.post('/', upload.single('imagem'), validar(depoimentoSchema), (req, res) =
 
   const info = db
     .prepare(
-      `INSERT INTO depoimentos (autor, texto, arquivo, tipo_mime, ativo, ordem)
-       VALUES (?, ?, ?, ?, ?, ?)`
+      `INSERT INTO depoimentos (autor, texto, arquivo, tipo_mime, ativo, ordem, avaliacao)
+       VALUES (?, ?, ?, ?, ?, ?, ?)`
     )
-    .run(autor || null, texto || null, arquivo, tipoMime, ativo, ordem);
+    .run(autor || null, texto || null, arquivo, tipoMime, ativo, ordem, avaliacao);
 
   res.status(201).json({ id: info.lastInsertRowid, mensagem: 'Depoimento cadastrado com sucesso!' });
 });
@@ -105,9 +106,12 @@ admin.patch('/:id', upload.single('imagem'), validar(depoimentoSchema), (req, re
   const campos = { ...item, ...req.dados };
 
   const removerImagem = req.body.remover_imagem === '1' || req.body.remover_imagem === true || req.body.remover_imagem === 1;
+  const removerAvaliacao = req.body.remover_avaliacao === '1' || req.body.remover_avaliacao === true || req.body.remover_avaliacao === 1;
 
   let arquivo = item.arquivo;
   let tipoMime = item.tipo_mime;
+  let avaliacao = campos.avaliacao ?? null;
+  if (removerAvaliacao) avaliacao = null;
 
   if (req.file) {
     const tipo = detectarTipo(req.file.buffer);
@@ -131,7 +135,7 @@ admin.patch('/:id', upload.single('imagem'), validar(depoimentoSchema), (req, re
 
   db.prepare(
     `UPDATE depoimentos
-     SET autor = ?, texto = ?, arquivo = ?, tipo_mime = ?, ativo = ?, ordem = ?
+     SET autor = ?, texto = ?, arquivo = ?, tipo_mime = ?, ativo = ?, ordem = ?, avaliacao = ?
      WHERE id = ?`
   ).run(
     campos.autor || null,
@@ -140,6 +144,7 @@ admin.patch('/:id', upload.single('imagem'), validar(depoimentoSchema), (req, re
     tipoMime,
     campos.ativo,
     campos.ordem,
+    avaliacao,
     item.id
   );
 

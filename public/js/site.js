@@ -657,6 +657,72 @@ function iniciarCarrinho() {
   });
 }
 
+function montarEstrelas(n) {
+  const wrap = document.createElement("span");
+  wrap.className = "estrelas";
+  wrap.setAttribute("aria-label", `Avaliação ${n} de 5`);
+  for (let i = 1; i <= 5; i++) {
+    const estrela = document.createElement("span");
+    estrela.className = "estrela" + (i <= n ? " ativa" : "");
+    estrela.textContent = i <= n ? "★" : "☆";
+    wrap.appendChild(estrela);
+  }
+  return wrap;
+}
+
+function injetarJsonLdEmpresa(depoimentos) {
+  const avaliados = depoimentos.filter((d) => d.avaliacao >= 1 && d.avaliacao <= 5);
+  const dados = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "@id": "https://amandapetsitter.pet/#empresa",
+    name: "Pet Sitter Amanda",
+    image: "https://amandapetsitter.pet/img/og-capa.png",
+    url: "https://amandapetsitter.pet/",
+    telephone: "+5518997607771",
+    priceRange: "$$",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Birigui",
+      addressRegion: "SP",
+      addressCountry: "BR"
+    },
+    geo: { "@type": "GeoCoordinates", latitude: -21.2678, longitude: -50.3417 },
+    areaServed: "Birigui-SP",
+    sameAs: ["https://www.instagram.com/amandaa.petsitter"],
+    openingHoursSpecification: [{
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+      opens: "08:00",
+      closes: "20:00"
+    }]
+  };
+
+  if (avaliados.length) {
+    const soma = avaliados.reduce((s, d) => s + d.avaliacao, 0);
+    dados.aggregateRating = {
+      "@type": "AggregateRating",
+      ratingValue: (soma / avaliados.length).toFixed(1),
+      reviewCount: avaliados.length
+    };
+    dados.review = avaliados.map((d) => ({
+      "@type": "Review",
+      author: { "@type": "Person", name: d.autor || "Cliente" },
+      reviewBody: d.texto || "",
+      reviewRating: { "@type": "Rating", ratingValue: d.avaliacao }
+    }));
+  }
+
+  let script = document.getElementById("jsonld-empresa");
+  if (!script) {
+    script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.id = "jsonld-empresa";
+    document.head.appendChild(script);
+  }
+  script.textContent = JSON.stringify(dados);
+}
+
 async function carregarDepoimentos() {
   const grade = document.getElementById("grade-depoimentos");
   if (!grade) return;
@@ -688,6 +754,7 @@ async function carregarDepoimentos() {
         texto.textContent = d.texto;
         card.appendChild(texto);
       }
+      if (d.avaliacao) card.appendChild(montarEstrelas(d.avaliacao));
       if (d.autor) {
         const autor = document.createElement("p");
         autor.className = "depoimento-autor";
@@ -696,6 +763,7 @@ async function carregarDepoimentos() {
       }
       grade.appendChild(card);
     }
+    injetarJsonLdEmpresa(depoimentos);
   } catch {
     grade.innerHTML = '<p class="chip chip-salvia">Não foi possível carregar os depoimentos.</p>';
   }

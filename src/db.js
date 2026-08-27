@@ -120,6 +120,11 @@ function migrar() {
 
     db.exec('PRAGMA user_version = 4;');
   }
+
+  if (versao < 5) {
+    db.exec("ALTER TABLE depoimentos ADD COLUMN avaliacao INTEGER CHECK (avaliacao IS NULL OR avaliacao BETWEEN 1 AND 5)");
+    db.exec('PRAGMA user_version = 5;');
+  }
 }
 
 migrar();
@@ -184,6 +189,7 @@ db.exec(`
     tipo_mime TEXT,
     ativo TEXT NOT NULL DEFAULT 'sim' ${STATUS_DEPOIMENTO},
     ordem INTEGER NOT NULL DEFAULT 0,
+    avaliacao INTEGER CHECK (avaliacao IS NULL OR avaliacao BETWEEN 1 AND 5),
     criado_em DATETIME NOT NULL DEFAULT (datetime('now'))
   );
 `);

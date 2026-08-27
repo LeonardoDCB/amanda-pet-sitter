@@ -38,7 +38,7 @@
 }
 
 .btn-primario:hover {
-  background: linear-gradient(135deg, #B87C70, #9E665B);
+  background: linear-gradient(135deg, #B3557E, #7E2F56);
 }
 
 .btn-secundario {
@@ -551,7 +551,7 @@
   display: flex;
   align-items: flex-end;
   padding: var(--espaco-5);
-  background: linear-gradient(180deg, transparent 50%, rgba(63, 90, 81, 0.78));
+  background: linear-gradient(180deg, transparent 50%, rgba(126, 47, 86, 0.78));
   color: #fff;
   font-weight: 700;
   font-size: 0.95rem;
@@ -711,7 +711,7 @@
 .campo textarea:focus {
   outline: none;
   border-color: var(--salvia);
-  box-shadow: 0 0 0 3px rgba(123, 150, 140, 0.25);
+  box-shadow: 0 0 0 3px rgba(199, 107, 146, 0.25);
 }
 
 .campo.erro input,
@@ -1111,4 +1111,79 @@
   margin-top: auto;
   font-weight: 800;
   color: var(--salvia-escuro);
+}
+
+/* ---------- Estrelas / avaliação ---------- */
+.estrelas {
+  display: inline-flex;
+  gap: 2px;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: #d9cdbb;
+}
+.estrelas .estrela.ativa {
+  color: #f5b301;
+}
+.depoimento-card .estrelas {
+  margin-top: calc(-1 * var(--espaco-1));
+}
+.item-estrelas {
+  display: inline-block;
+  color: #f5b301;
+  letter-spacing: 1px;
+}
+
+/* ---------- FAQ ---------- */
+.faq-lista {
+  display: grid;
+  gap: var(--espaco-3);
+  margin-top: var(--espaco-6);
+}
+.faq-item {
+  background: #fff;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-lg);
+  padding: 0 var(--espaco-5);
+  box-shadow: var(--sombra-suave);
+}
+.faq-item summary {
+  cursor: pointer;
+  font-weight: 800;
+  padding: var(--espaco-4) 0;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: "+";
+  font-size: 1.4rem;
+  color: var(--salvia);
+  margin-left: var(--espaco-4);
+}
+.faq-item[open] summary::after { content: "\2212"; }
+.faq-item p {
+  padding: 0 0 var(--espaco-4);
+  color: var(--texto);
+  line-height: 1.6;
+}
+
+/* ---------- Dicas (artigos) ---------- */
+.cartao-dica {
+  background: #fff;
+  border: 1px solid var(--borda);
+  border-left: 4px solid var(--salvia);
+  border-radius: var(--raio-lg);
+  padding: var(--espaco-5);
+  margin-top: var(--espaco-5);
+  box-shadow: var(--sombra-suave);
+}
+.cartao-dica h3 {
+  color: var(--salvia-escuro);
+  margin-bottom: var(--espaco-3);
+}
+.cartao-dica p {
+  color: var(--texto);
+  line-height: 1.6;
 }

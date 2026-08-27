@@ -257,6 +257,39 @@ async function testar() {
 
     await fetch(base + '/api/admin/depoimentos/' + depId, { method: 'DELETE', headers: auth });
     await fetch(base + '/api/admin/depoimentos/' + depImgId, { method: 'DELETE', headers: auth });
+
+    // avaliacao em depoimentos
+    const depAval = await fetch(base + '/api/admin/depoimentos', {
+      method: 'POST', headers: auth,
+      body: (() => { const f = new FormData(); f.append('autor', 'Ana'); f.append('texto', 'Excelente atendimento!'); f.append('avaliacao', '5'); f.append('ativo', 'sim'); return f; })(),
+    });
+    verificar('POST /api/admin/depoimentos com avaliacao -> 201', depAval.status === 201);
+    const depAvalId = (await depAval.json()).id;
+    const depPubAval = await json('/api/depoimentos', {});
+    verificar('GET /api/depoimentos inclui avaliacao', depPubAval.corpo.some((d) => d.id === depAvalId && d.avaliacao === 5));
+    const depPatchAval = await fetch(base + '/api/admin/depoimentos/' + depAvalId, {
+      method: 'PATCH', headers: auth,
+      body: (() => { const f = new FormData(); f.append('remover_avaliacao', '1'); return f; })(),
+    });
+    verificar('PATCH remover_avaliacao -> 200', depPatchAval.status === 200);
+    const depPubAval2 = await json('/api/depoimentos', {});
+    verificar('avaliacao removida fica null', depPubAval2.corpo.find((d) => d.id === depAvalId)?.avaliacao === null);
+    await fetch(base + '/api/admin/depoimentos/' + depAvalId, { method: 'DELETE', headers: auth });
+
+    // paginas de conteudo / SEO
+    const homeTxt = await (await fetch(base + '/')).text();
+    verificar('home canonical .pet', homeTxt.includes('rel="canonical" href="https://amandapetsitter.pet/"'));
+    verificar('home og:url .pet', homeTxt.includes('og:url" content="https://amandapetsitter.pet/"'));
+    for (const pag of ['/servicos/visita', '/servicos/hospedagem', '/servicos/passeio', '/faq', '/dicas']) {
+      const r = await fetch(base + pag);
+      verificar(`GET ${pag} -> 200 html`, r.status === 200 && (r.headers.get('content-type') || '').includes('text/html'));
+    }
+    const robots = await fetch(base + '/robots.txt');
+    const robotsTxt = await robots.text();
+    verificar('robots.txt aponta Sitemap', robotsTxt.includes('Sitemap: https://amandapetsitter.pet/sitemap.xml'));
+    const sm = await fetch(base + '/sitemap.xml');
+    const smTxt = await sm.text();
+    verificar('sitemap.xml com urls de servico/faq', sm.status === 200 && smTxt.includes('amandapetsitter.pet/servicos/visita') && smTxt.includes('amandapetsitter.pet/faq'));
   } finally {
     server.close();
     try {
