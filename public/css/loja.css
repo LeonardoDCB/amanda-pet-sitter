@@ -85,7 +85,7 @@
 }
 
 .produto-card .produto-estoque.esgotado {
-  background: #f3dede;
+  background: var(--blush);
   color: var(--erro);
 }
 

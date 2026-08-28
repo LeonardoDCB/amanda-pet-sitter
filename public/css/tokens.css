@@ -18,6 +18,7 @@
   --whatsapp-hover: #1EB659;
   --erro: #C2557C;
   --sucesso: #4F7A5E;
+  --superficie: #ffffff;
 
   --fonte-display: "Playfair Display", Georgia, serif;
   --fonte-corpo: "Nunito Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
@@ -45,4 +46,29 @@
 
   --containe-max: 1120px;
   --transicao: 0.25s ease;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --vela: #1A1419;
+  --duna: #221B21;
+  --blush-claro: #2C222A;
+  --blush: #362A33;
+  --rosa-poeira: #3A2C36;
+  --rose: #C77BA0;
+  --rose-meio: #C76B92;
+  --rose-escuro: #EFA9C8;
+  --salvia-claro: #2C222A;
+  --salvia: #CD7FAA;
+  --salvia-escuro: #EFA9C8;
+  --salvia-fundo: #7E2F56;
+  --texto: #F4ECF0;
+  --texto-suave: #CBBCC6;
+  --borda: #3C2F39;
+  --erro: #E88AAE;
+  --sucesso: #7FB593;
+  --superficie: #251D23;
+  --sombra-suave: 0 2px 12px rgba(0, 0, 0, 0.35);
+  --sombra-elevada: 0 12px 32px rgba(0, 0, 0, 0.45);
+  --gradiente-rose: linear-gradient(135deg, #B3557E, #7E2F56);
 }

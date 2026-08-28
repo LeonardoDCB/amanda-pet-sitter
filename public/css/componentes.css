@@ -124,7 +124,7 @@
 /* ---------- Card ---------- */
 
 .card {
-  background: #fff;
+  background: var(--superficie);
   border: 1px solid var(--borda);
   border-radius: var(--raio-lg);
   padding: var(--espaco-6);
@@ -510,8 +510,8 @@
 }
 
 .faixa-diferenciais .chip {
-  background: #fff;
-  color: var(--salvia-fundo);
+  background: var(--superficie);
+  color: var(--salvia-escuro);
 }
 
 /* ---------- Galeria ---------- */
@@ -533,7 +533,7 @@
   overflow: hidden;
   cursor: pointer;
   border: 1px solid var(--borda);
-  background: #fff;
+  background: var(--superficie);
 }
 
 .galeria-item img {
@@ -1104,7 +1104,7 @@
 }
 
 .depoimento-card {
-  background: #fff;
+  background: var(--superficie);
   border: 1px solid var(--borda);
   border-radius: var(--raio-lg);
   padding: var(--espaco-5);
@@ -1143,7 +1143,7 @@
   gap: 2px;
   font-size: 1.1rem;
   line-height: 1;
-  color: #d9cdbb;
+  color: var(--texto-suave);
 }
 .estrelas .estrela.ativa {
   color: #f5b301;
@@ -1164,7 +1164,7 @@
   margin-top: var(--espaco-6);
 }
 .faq-item {
-  background: #fff;
+  background: var(--superficie);
   border: 1px solid var(--borda);
   border-radius: var(--raio-lg);
   padding: 0 var(--espaco-5);
@@ -1195,7 +1195,7 @@
 
 /* ---------- Dicas (artigos) ---------- */
 .cartao-dica {
-  background: #fff;
+  background: var(--superficie);
   border: 1px solid var(--borda);
   border-left: 4px solid var(--salvia);
   border-radius: var(--raio-lg);
@@ -1206,6 +1206,54 @@
 .cartao-dica h3 {
   color: var(--salvia-escuro);
   margin-bottom: var(--espaco-3);
+}
+
+/* ---------- Botão de tema ---------- */
+
+.btn-tema {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1.5px solid var(--borda);
+  background: var(--superficie);
+  color: var(--texto);
+  font-size: 1.15rem;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: transform var(--transicao), background var(--transicao);
+}
+
+.btn-tema:hover {
+  transform: scale(1.08);
+}
+
+/* ---------- Transição do tema ---------- */
+
+body,
+.card,
+.faq-item,
+.depoimento-card,
+.cartao-dica,
+.galeria-item {
+  transition: background-color var(--transicao), color var(--transicao), border-color var(--transicao);
+}
+
+/* ---------- Overrides do tema escuro ---------- */
+
+[data-theme="dark"] .marca-icone {
+  background: var(--salvia-fundo);
+}
+
+[data-theme="dark"] .chip-status {
+  color: var(--salvia-escuro);
+}
+
+[data-theme="dark"] .hero-foto .foto-moldura {
+  border-color: var(--borda);
 }
 .cartao-dica p {
   color: var(--texto);
