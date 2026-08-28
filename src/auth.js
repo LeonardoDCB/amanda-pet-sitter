@@ -1,7 +1,15 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'secreto-desenvolver-local';
+const JWT_SECRET = process.env.JWT_SECRET || (function () {
+  if (process.env.NODE_ENV === 'production') {
+    console.error('ERRO: JWT_SECRET obrigatório em produção.');
+    process.exit(1);
+  }
+  console.warn('AVISO: JWT_SECRET não definido. Gerando valor aleatório (tokens não persistem entre reinícios).');
+  return crypto.randomBytes(32).toString('hex');
+})();
 const TOKEN_EXPIRACAO = '8h';
 
 const ADMIN_USER = process.env.ADMIN_USER || 'admin';

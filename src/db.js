@@ -192,6 +192,18 @@ db.exec(`
     avaliacao INTEGER CHECK (avaliacao IS NULL OR avaliacao BETWEEN 1 AND 5),
     criado_em DATETIME NOT NULL DEFAULT (datetime('now'))
   );
+
+  CREATE TABLE IF NOT EXISTS audit_log (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    data DATETIME NOT NULL DEFAULT (datetime('now')),
+    usuario TEXT,
+    metodo TEXT NOT NULL,
+    rota TEXT NOT NULL,
+    entidade TEXT,
+    entidade_id INTEGER,
+    descricao TEXT,
+    ip TEXT
+  );
 `);
 
 module.exports = db;

@@ -9,6 +9,8 @@ node_modules/
 # Dados locais e banco (no servidor usam disco persistente)
 data/
 uploads/
+data/backups/
+data/audit.log
 *.db
 *.sqlite
 *.sqlite3

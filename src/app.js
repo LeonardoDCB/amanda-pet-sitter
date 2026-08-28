@@ -25,7 +25,31 @@ app.set('trust proxy', 1);
 
 const PUBLIC_DIR = path.join(__dirname, '..', 'public');
 
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", "https://www.googletagmanager.com", "https://www.google-analytics.com"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      imgSrc: ["'self'", "data:", "blob:"],
+      connectSrc: ["'self'", "https://www.google-analytics.com", "https://www.googletagmanager.com"],
+      frameSrc: ["'none'"],
+      objectSrc: ["'none'"],
+      baseUri: ["'self'"],
+      formAction: ["'self'"],
+      upgradeInsecureRequests: []
+    }
+  },
+  hsts: { maxAge: 31536000, includeSubDomains: true },
+  referrerPolicy: { policy: "strict-origin-when-cross-origin" },
+  permissionsPolicy: {
+    camera: [],
+    microphone: [],
+    geolocation: [],
+    payment: []
+  }
+}));
 
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -37,6 +61,24 @@ const apiLimiter = rateLimit({
 
 app.use(express.json({ limit: '100kb' }));
 app.use('/api', apiLimiter);
+
+app.use('/api/admin', (req, res, next) => {
+  const inicio = Date.now();
+  res.on('finish', () => {
+    const dados = {
+      data: new Date().toISOString(),
+      metodo: req.method,
+      rota: req.originalUrl,
+      status: res.statusCode,
+      ip: req.ip
+    };
+    try {
+      const logPath = path.join(__dirname, '..', 'data', 'audit.log');
+      fs.appendFileSync(logPath, JSON.stringify(dados) + '\n');
+    } catch (_) {}
+  });
+  next();
+});
 
 app.get('/uploads/:arquivo', (req, res) => {
   const nome = req.params.arquivo;
