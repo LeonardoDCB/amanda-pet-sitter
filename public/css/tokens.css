@@ -48,7 +48,7 @@
   --transicao: 0.25s ease;
 }
 
-[data-theme="dark"] {
+html[data-theme="dark"] {
   color-scheme: dark;
   --vela: #1A1419;
   --duna: #221B21;

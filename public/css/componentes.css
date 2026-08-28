@@ -1208,28 +1208,83 @@
   margin-bottom: var(--espaco-3);
 }
 
-/* ---------- Botão de tema ---------- */
+/* ---------- Toggle de tema (pill switch) ---------- */
 
 .btn-tema {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 1.5px solid var(--borda);
-  background: var(--superficie);
-  color: var(--texto);
-  font-size: 1.15rem;
-  line-height: 1;
+  position: relative;
+  width: 60px;
+  height: 30px;
+  border-radius: 15px;
+  border: 2px solid var(--borda);
+  background: linear-gradient(135deg, #FBEAF1, #F7E1EC);
   cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
   flex-shrink: 0;
-  transition: transform var(--transicao), background var(--transicao);
+  overflow: hidden;
+  transition: background 0.4s ease, border-color 0.4s ease;
+  padding: 0;
 }
 
-.btn-tema:hover {
-  transform: scale(1.08);
+html[data-theme="dark"] .btn-tema {
+  background: linear-gradient(135deg, #2C222A, #3A2C36);
+  border-color: #5A4A56;
+}
+
+.btn-tema .tema-icone-esq,
+.btn-tema .tema-icone-dir {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.85rem;
+  line-height: 1;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.btn-tema .tema-icone-esq {
+  left: 6px;
+  opacity: 1;
+}
+
+.btn-tema .tema-icone-dir {
+  right: 6px;
+  opacity: 0.4;
+}
+
+html[data-theme="dark"] .btn-tema .tema-icone-esq {
+  opacity: 0.4;
+}
+
+html[data-theme="dark"] .btn-tema .tema-icone-dir {
+  opacity: 1;
+}
+
+.btn-tema::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), background 0.35s ease;
+  z-index: 2;
+}
+
+html[data-theme="dark"] .btn-tema::before {
+  transform: translateX(30px);
+  background: #EFA9C8;
+}
+
+.btn-tema:hover::before {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-tema:focus-visible {
+  outline: 3px solid var(--rose-meio);
+  outline-offset: 2px;
 }
 
 /* ---------- Transição do tema ---------- */
@@ -1245,27 +1300,27 @@ body,
 
 /* ---------- Overrides do tema escuro ---------- */
 
-[data-theme="dark"] .marca-icone {
+html[data-theme="dark"] .marca-icone {
   background: var(--salvia-fundo);
 }
 
-[data-theme="dark"] .chip-status {
+html[data-theme="dark"] .chip-status {
   color: var(--salvia-escuro);
 }
 
-[data-theme="dark"] .hero-foto .foto-moldura {
+html[data-theme="dark"] .hero-foto .foto-moldura {
   border-color: var(--borda);
 }
 
-[data-theme="dark"] .cabecalho {
+html[data-theme="dark"] .cabecalho {
   background: rgba(26, 20, 25, 0.88);
 }
 
-[data-theme="dark"] .telefone-flutuante {
+html[data-theme="dark"] .telefone-flutuante {
   color: #1A1419;
 }
 
-[data-theme="dark"] .menu {
+html[data-theme="dark"] .menu {
   background: var(--vela);
   border-color: var(--borda);
 }
