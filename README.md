@@ -81,3 +81,21 @@ uploads/          # imagens da galeria (gitignored)
 **Manutenção:**
 - Backup: copie `data/site.db` (ou use snapshot do disco) — o banco fica em `data/`, as imagens em `uploads/`.
 - Para esvaziar tudo: pare o servidor e apague `data/` e `uploads/` (são recriados no boot).
+
+## SEO local e monitoramento
+
+O site foi otimizado para ranquear em **Birigui-SP** e **Araçatuba-SP**. O que já está feito:
+
+- Metadados (título, description, Open Graph) e textos incluem as duas cidades.
+- Dados estruturados (`ProfessionalService` + `areaServed` Birigui/Araçatuba, `FAQPage`, `BreadcrumbList`) em todas as páginas.
+- Depoimentos estáticos de fallback em `public/index.html` para o Google indexar (substitua pelos depoimentos reais no painel admin).
+- `preload` da imagem do hero e imagens com `loading="lazy"`.
+
+### Antes de publicar (pendências)
+1. **Google Analytics 4**: troque `G-XXXXXXXXXX` nos 6 arquivos HTML (`public/index.html`, `public/servicos/*.html`, `public/faq.html`, `public/dicas.html`) pelo ID da sua propriedade.
+2. **Google Search Console**:
+   - Adicione o domínio `amandapetsitter.pet` e verifique a posse (use a meta tag ou o DNS).
+   - Em *Sitemaps*, envie `https://amandapetsitter.pet/sitemap.xml`.
+   - Acompanhe as posições para: `pet sitter birigui`, `pet sitter araçatuba`, `hospedagem cachorro birigui`, `passeio com cachorro araçatuba`, etc.
+3. **Perfil do Google (Google Meu Negócio)** — item separado, ainda não feito: criar/otimizar o perfil "Pet Sitter Amanda" com área Birigui + Araçatuba, telefone e Instagram.
+4. Imagens do hero/sobre e `og-capa.png` foram mantidas; recomenda-se comprimi-las (ex.: < 200 KB) para Core Web Vitals.

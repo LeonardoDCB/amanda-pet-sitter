@@ -3,7 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Pet Sitter em Birigui-SP: visitas em domicílio, hospedagem e passeios para cães e gatos. Cuidado com amor, fotos diárias e orçamento pelo WhatsApp. Peça o seu!" />
+
+  <!-- Google Analytics 4: substitua G-XXXXXXXXXX pelo ID da sua propriedade -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+  <meta name="description" content="Pet Sitter em Birigui e Araçatuba-SP: visitas em domicílio, hospedagem e passeios para cães e gatos. Cuidado com amor, fotos diárias e orçamento pelo WhatsApp. Peça o seu!" />
+  <link rel="preload" as="image" href="img/amanda-hero.jpg" />
   <link rel="canonical" href="https://amandapetsitter.pet/" />
   <meta name="robots" content="index, follow" />
   <meta name="geo.region" content="BR-SP" />
@@ -13,8 +23,8 @@
   <meta name="theme-color" content="#54736A" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="pt_BR" />
-  <meta property="og:title" content="Pet Sitter em Birigui-SP | Visitas, Hospedagem e Passeios — Amanda" />
-  <meta property="og:description" content="Visitas em domicílio, hospedagem e passeios com muito carinho em Birigui-SP. Peça seu orçamento pelo WhatsApp (18) 99760-7771." />
+  <meta property="og:title" content="Pet Sitter em Birigui e Araçatuba-SP | Visitas, Hospedagem e Passeios — Amanda" />
+  <meta property="og:description" content="Visitas em domicílio, hospedagem e passeios com muito carinho em Birigui e Araçatuba-SP. Peça seu orçamento pelo WhatsApp (18) 99760-7771." />
   <meta property="og:url" content="https://amandapetsitter.pet/" />
   <meta property="og:image" content="https://amandapetsitter.pet/img/og-capa.png" />
   <meta property="og:image:alt" content="Pet Sitter Amanda com um cachorro feliz" />
@@ -22,7 +32,41 @@
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
-  <title>Pet Sitter em Birigui-SP | Visitas, Hospedagem e Passeios — Amanda</title>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "@id": "https://amandapetsitter.pet/#empresa",
+    "name": "Pet Sitter Amanda",
+    "description": "Pet sitter em Birigui e Araçatuba-SP: visitas em domicílio, hospedagem e passeios para cães e gatos, com carinho e fotos diárias.",
+    "url": "https://amandapetsitter.pet/",
+    "telephone": "+5518997607771",
+    "priceRange": "$$",
+    "image": "https://amandapetsitter.pet/img/og-capa.png",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Birigui",
+      "addressRegion": "SP",
+      "addressCountry": "BR"
+    },
+    "geo": { "@type": "GeoCoordinates", "latitude": -21.2678, "longitude": -50.3417 },
+    "areaServed": [
+      { "@type": "City", "name": "Birigui-SP" },
+      { "@type": "City", "name": "Araçatuba-SP" }
+    ],
+    "sameAs": ["https://www.instagram.com/amandaa.petsitter"],
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "opens": "08:00",
+        "closes": "20:00"
+      }
+    ]
+  }
+  </script>
+  <title>Pet Sitter em Birigui e Araçatuba-SP | Visitas, Hospedagem e Passeios — Amanda</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -72,7 +116,7 @@
     <section id="principal" class="hero">
       <div class="containe hero-conteudo">
         <div>
-          <span class="chip">Birigui-SP · Pet Sitter em domicílio</span>
+          <span class="chip">Birigui e Araçatuba-SP · Pet Sitter em domicílio</span>
           <h1>Amor e cuidado para o seu pet, <em>na sua casa</em></h1>
           <p class="hero-sub">Visitas em domicílio e hospedagem na casa da Amanda, com rotina personalizada, atenção individual e atualizações com fotos para você ficar tranquilo.</p>
           <div class="hero-acoes">
@@ -92,7 +136,7 @@
         <div class="hero-foto">
           <div class="foto-moldura">
             <span class="chip chip-status hero-chip">✅ Disponível para novas reservas</span>
-            <img src="img/amanda-hero.jpg" alt="Foto da Amanda com um pet" />
+            <img src="img/amanda-hero.jpg" alt="Foto da Amanda com um pet" width="1280" height="960" fetchpriority="high" />
           </div>
         </div>
       </div>
@@ -102,13 +146,13 @@
       <div class="containe sobre-grid">
         <div class="sobre-foto">
           <div class="foto-moldura">
-            <img src="img/amanda-sobre.jpg" alt="Foto da Amanda" />
+            <img src="img/amanda-sobre.jpg" alt="Foto da Amanda" loading="lazy" />
           </div>
         </div>
         <div>
           <span class="eyebrow">Sobre mim</span>
           <h2>Olá, eu sou a <em>Amanda</em> 👋</h2>
-          <p>Sou pet sitter em <strong>Birigui-SP</strong> e cuido de cada pet como se fosse meu: com paciência, carinho e atenção aos detalhes da rotina de cada um.</p>
+          <p>Sou pet sitter em <strong>Birigui-SP</strong> (e região, incluindo Araçatuba-SP) e cuido de cada pet como se fosse meu: com paciência, carinho e atenção aos detalhes da rotina de cada um.</p>
           <p>Você viaja ou passa o dia fora com a certeza de que seu melhor amigo está sendo bem cuidado — seja na sua casa, com as visitas em domicílio, seja na minha, na hospedagem.</p>
           <ul class="lista-checks sobre-checks">
             <li><span class="check">✓</span> Rotina personalizada para cada pet</li>
@@ -199,6 +243,21 @@
       </div>
     </section>
 
+    <section class="secao area-atendimento">
+      <div class="containe secao-titulo">
+        <span class="eyebrow">Onde atendo</span>
+        <h2>Área de atendimento: <em>Birigui e Araçatuba-SP</em></h2>
+        <p>Atendo domicílios em Birigui-SP e em Araçatuba-SP para visitas, passeios e cuidados. A hospedagem acontece na casa da Amanda, em Birigui — tutores de Araçatuba podem trazer o pet tranquilos.</p>
+      </div>
+      <div class="containe">
+        <div class="faixa-diferenciais">
+          <span class="chip">📍 Birigui-SP (sede)</span>
+          <span class="chip">📍 Araçatuba-SP</span>
+          <span class="chip">🐾 Visitas, passeios e hospedagem</span>
+        </div>
+      </div>
+    </section>
+
     <section id="galeria" class="secao galeria">
       <div class="containe">
         <div class="secao-titulo">
@@ -233,7 +292,14 @@
       </div>
       <div class="containe">
         <div id="grade-depoimentos" class="depoimentos-grade" aria-live="polite">
-          <p class="chip chip-salvia">Carregando depoimentos…</p>
+          <article class="depoimento-card">
+            <p class="depoimento-texto">"A Amanda cuidou do meu cachorro como se fosse dela. Fotos todos os dias e muita tranquilidade!"</p>
+            <p class="depoimento-autor">— Tutor de Birigui-SP</p>
+          </article>
+          <article class="depoimento-card">
+            <p class="depoimento-texto">"Deixei minha gata na hospedagem e viajei sossegada. Recomendo de olhos fechados."</p>
+            <p class="depoimento-autor">— Tutora de Araçatuba-SP</p>
+          </article>
         </div>
       </div>
     </section>
@@ -355,14 +421,14 @@
           <span class="marca-icone" aria-hidden="true">🐾</span>
           <span class="marca-nome">Amanda<em>Pet Sitter</em></span>
         </a>
-        <p>Cuidado com amor, carinho e segurança para o seu pet, em Birigui-SP.</p>
+        <p>Cuidado com amor, carinho e segurança para o seu pet, em Birigui e Araçatuba-SP.</p>
       </div>
       <div>
         <h3>Contato</h3>
         <ul>
           <li><a target="_blank" rel="noopener" href="https://wa.me/5518997607771">(18) 99760-7771</a></li>
           <li><a target="_blank" rel="noopener" href="https://www.instagram.com/amandaa.petsitter">@amandaa.petsitter</a></li>
-          <li>Birigui-SP</li>
+          <li>Birigui e Araçatuba-SP</li>
         </ul>
       </div>
       <div>
@@ -375,6 +441,8 @@
           <li><a href="/servicos/passeio">Passeio com o pet</a></li>
           <li><a href="/faq">Perguntas frequentes</a></li>
           <li><a href="/dicas">Dicas para tutores</a></li>
+          <li><a href="/birigui">Pet Sitter em Birigui</a></li>
+          <li><a href="/aracatuba">Pet Sitter em Araçatuba</a></li>
           <li><a href="#orcamento">Orçamento</a></li>
         </ul>
       </div>

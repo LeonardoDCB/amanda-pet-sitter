@@ -76,6 +76,8 @@ const PAGINAS_ESTATICAS = {
   '/servicos/visita': 'servicos/visita.html',
   '/servicos/hospedagem': 'servicos/hospedagem.html',
   '/servicos/passeio': 'servicos/passeio.html',
+  '/birigui': 'birigui.html',
+  '/aracatuba': 'aracatuba.html',
   '/faq': 'faq.html',
   '/dicas': 'dicas.html'
 };

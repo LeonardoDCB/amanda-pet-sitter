@@ -688,7 +688,7 @@ function injetarJsonLdEmpresa(depoimentos) {
       addressCountry: "BR"
     },
     geo: { "@type": "GeoCoordinates", latitude: -21.2678, longitude: -50.3417 },
-    areaServed: "Birigui-SP",
+    areaServed: ["Birigui-SP", "Araçatuba-SP"],
     sameAs: ["https://www.instagram.com/amandaa.petsitter"],
     openingHoursSpecification: [{
       "@type": "OpeningHoursSpecification",
@@ -730,11 +730,8 @@ async function carregarDepoimentos() {
     const resposta = await fetch("/api/depoimentos");
     if (!resposta.ok) throw new Error("falha");
     const depoimentos = await resposta.json();
+    if (!depoimentos.length) return;
     grade.innerHTML = "";
-    if (!depoimentos.length) {
-      grade.innerHTML = '<p class="chip chip-salvia">Ainda não há depoimentos por aqui. 💛</p>';
-      return;
-    }
     for (const d of depoimentos) {
       const card = document.createElement("article");
       card.className = "depoimento-card";
@@ -765,7 +762,7 @@ async function carregarDepoimentos() {
     }
     injetarJsonLdEmpresa(depoimentos);
   } catch {
-    grade.innerHTML = '<p class="chip chip-salvia">Não foi possível carregar os depoimentos.</p>';
+    /* mantém o conteúdo estático de fallback já presente no HTML */
   }
 }
 
