@@ -68,7 +68,7 @@ async function carregarGaleria() {
 
       const figuraImg = document.createElement("img");
       figuraImg.src = `/uploads/${img.arquivo}`;
-      figuraImg.alt = img.legenda || "Pet cuidado pela Amanda";
+      figuraImg.alt = img.legenda || "Pet de cliente da Amanda em Birigui ou Araçatuba-SP";
       figuraImg.loading = "lazy";
 
       figura.appendChild(figuraImg);

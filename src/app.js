@@ -78,6 +78,8 @@ const PAGINAS_ESTATICAS = {
   '/servicos/passeio': 'servicos/passeio.html',
   '/birigui': 'birigui.html',
   '/aracatuba': 'aracatuba.html',
+  '/artigos/hospedagem-cachorro-birigui': 'artigos/hospedagem-cachorro-birigui.html',
+  '/artigos/passeio-cachorro-aracatuba': 'artigos/passeio-cachorro-aracatuba.html',
   '/faq': 'faq.html',
   '/dicas': 'dicas.html'
 };
@@ -91,10 +93,23 @@ for (const [rota, arquivo] of Object.entries(PAGINAS_ESTATICAS)) {
   });
 }
 
-app.use(express.static(PUBLIC_DIR));
+app.use(
+  express.static(PUBLIC_DIR, {
+    setHeaders: (res, filePath) => {
+      if (/\.(css|js)$/.test(filePath)) {
+        res.setHeader('Cache-Control', 'public, max-age=604800, immutable');
+      } else if (/\.(png|jpe?g|svg|webp|gif|ico|woff2?)$/i.test(filePath)) {
+        res.setHeader('Cache-Control', 'public, max-age=2592000');
+      }
+    }
+  })
+);
 
 app.use((req, res) => {
-  res.status(404).json({ erro: 'Rota não encontrada' });
+  if (req.path.startsWith('/api/')) {
+    return res.status(404).json({ erro: 'Rota não encontrada' });
+  }
+  res.status(404).sendFile(path.join(PUBLIC_DIR, '404.html'));
 });
 
 app.use((err, req, res, next) => {

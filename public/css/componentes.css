@@ -904,6 +904,30 @@
   }
 }
 
+/* ---------- Telefone flutuante ---------- */
+
+.telefone-flutuante {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  z-index: 60;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--salvia-escuro);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(162, 78, 118, 0.35);
+  transition: transform 0.2s, background var(--transicao);
+}
+
+.telefone-flutuante:hover {
+  background: var(--salvia-fundo);
+  transform: scale(1.1);
+}
+
 /* ---------- Responsivo ---------- */
 
 @media (max-width: 900px) {
