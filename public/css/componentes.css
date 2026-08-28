@@ -1211,8 +1211,8 @@
 /* ---------- Botão de tema ---------- */
 
 .btn-tema {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: 1.5px solid var(--borda);
   background: var(--superficie);
@@ -1224,6 +1224,7 @@
   align-items: center;
   justify-content: center;
   padding: 0;
+  flex-shrink: 0;
   transition: transform var(--transicao), background var(--transicao);
 }
 
@@ -1254,6 +1255,40 @@ body,
 
 [data-theme="dark"] .hero-foto .foto-moldura {
   border-color: var(--borda);
+}
+
+[data-theme="dark"] .cabecalho {
+  background: rgba(26, 20, 25, 0.88);
+}
+
+[data-theme="dark"] .telefone-flutuante {
+  color: #1A1419;
+}
+
+[data-theme="dark"] .menu {
+  background: var(--vela);
+  border-color: var(--borda);
+}
+
+/* ---------- Skip link (acessibilidade) ---------- */
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--salvia-fundo);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 0 0 var(--raio-md) var(--raio-md);
+  font-weight: 700;
+  z-index: 200;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+  top: 0;
 }
 .cartao-dica p {
   color: var(--texto);

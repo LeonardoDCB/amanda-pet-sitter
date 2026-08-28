@@ -195,6 +195,7 @@ function validarCampos() {
     const erro = (input.type === "date" && !valor) ||
       (input.type !== "date" && (!valor || valor.length < 2));
     campo.classList.toggle("erro", erro);
+    input.setAttribute("aria-invalid", erro);
     if (erro) valido = false;
   }
 
@@ -202,7 +203,11 @@ function validarCampos() {
 }
 
 function limparErros() {
-  document.querySelectorAll(".campo.erro").forEach((campo) => campo.classList.remove("erro"));
+  document.querySelectorAll(".campo.erro").forEach((campo) => {
+    campo.classList.remove("erro");
+    const input = campo.querySelector("input, select, textarea");
+    if (input) input.removeAttribute("aria-invalid");
+  });
 }
 
 function confirmarDatas() {

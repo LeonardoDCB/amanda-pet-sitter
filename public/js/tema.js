@@ -27,9 +27,13 @@
   });
 
   var alvo =
-    document.querySelector(".menu-ctas") ||
     document.querySelector(".cabecalho-inner") ||
     document.body;
-  alvo.appendChild(btn);
+  var nav = alvo.querySelector("nav.menu");
+  if (nav && nav.parentNode === alvo) {
+    alvo.insertBefore(btn, nav);
+  } else {
+    alvo.appendChild(btn);
+  }
   atualiza();
 })();

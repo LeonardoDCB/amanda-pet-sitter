@@ -9,6 +9,8 @@ function abrirMenu() {
   menuBotao.setAttribute('aria-expanded', 'true');
   if (menuOverlay) menuOverlay.hidden = false;
   menuNavegacao.inert = false;
+  var primeiroLink = menuNavegacao.querySelector('a');
+  if (primeiroLink) primeiroLink.focus();
 }
 
 function fecharMenu() {
@@ -17,6 +19,7 @@ function fecharMenu() {
   menuBotao.setAttribute('aria-expanded', 'false');
   if (menuOverlay) menuOverlay.hidden = true;
   if (ehMobile()) menuNavegacao.inert = true;
+  menuBotao.focus();
 }
 
 if (menuBotao && menuNavegacao) {
