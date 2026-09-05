@@ -89,12 +89,16 @@ admin.post('/', upload.single('imagem'), validar(depoimentoSchema), (req, res) =
     return res.status(400).json({ erro: 'Informe um texto ou envie um print do depoimento.' });
   }
 
-  const info = db
-    .prepare(
+  let info;
+  try {
+    info = db.prepare(
       `INSERT INTO depoimentos (autor, texto, arquivo, tipo_mime, ativo, ordem, avaliacao)
        VALUES (?, ?, ?, ?, ?, ?, ?)`
-    )
-    .run(autor || null, texto || null, arquivo, tipoMime, ativo, ordem, avaliacao);
+    ).run(autor || null, texto || null, arquivo, tipoMime, ativo, ordem, avaliacao);
+  } catch (erro) {
+    if (arquivo) removerArquivo(arquivo);
+    throw erro;
+  }
 
   res.status(201).json({ id: info.lastInsertRowid, mensagem: 'Depoimento cadastrado com sucesso!' });
 });
@@ -113,6 +117,7 @@ admin.patch('/:id', upload.single('imagem'), validar(depoimentoSchema), (req, re
   let avaliacao = campos.avaliacao ?? null;
   if (removerAvaliacao) avaliacao = null;
 
+  let arquivoNovo = null;
   if (req.file) {
     const tipo = detectarTipo(req.file.buffer);
     if (!tipo) {
@@ -120,11 +125,10 @@ admin.patch('/:id', upload.single('imagem'), validar(depoimentoSchema), (req, re
     }
     const nomeNovo = `${crypto.randomUUID()}.${EXTENSOES[tipo]}`;
     fs.writeFileSync(path.join(UPLOADS_DIR, nomeNovo), req.file.buffer);
-    if (item.arquivo) removerArquivo(item.arquivo);
+    arquivoNovo = nomeNovo;
     arquivo = nomeNovo;
     tipoMime = tipo;
   } else if (removerImagem && item.arquivo) {
-    removerArquivo(item.arquivo);
     arquivo = null;
     tipoMime = null;
   }
@@ -133,20 +137,17 @@ admin.patch('/:id', upload.single('imagem'), validar(depoimentoSchema), (req, re
     return res.status(400).json({ erro: 'O depoimento precisa de um texto ou de um print.' });
   }
 
-  db.prepare(
-    `UPDATE depoimentos
-     SET autor = ?, texto = ?, arquivo = ?, tipo_mime = ?, ativo = ?, ordem = ?, avaliacao = ?
-     WHERE id = ?`
-  ).run(
-    campos.autor || null,
-    campos.texto || null,
-    arquivo,
-    tipoMime,
-    campos.ativo,
-    campos.ordem,
-    avaliacao,
-    item.id
-  );
+  try {
+    db.prepare(
+      `UPDATE depoimentos
+       SET autor = ?, texto = ?, arquivo = ?, tipo_mime = ?, ativo = ?, ordem = ?, avaliacao = ?
+       WHERE id = ?`
+    ).run(campos.autor || null, campos.texto || null, arquivo, tipoMime, campos.ativo, campos.ordem, avaliacao, item.id);
+  } catch (erro) {
+    if (arquivoNovo) removerArquivo(arquivoNovo);
+    throw erro;
+  }
+  if (item.arquivo && item.arquivo !== arquivo) removerArquivo(item.arquivo);
 
   res.json({ mensagem: 'Depoimento atualizado com sucesso!' });
 });

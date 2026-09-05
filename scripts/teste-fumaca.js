@@ -64,6 +64,12 @@ async function testar() {
     });
     verificar('POST orcamento valido -> 201(id 1)', valido.resposta.status === 201 && valido.corpo.id === 1);
 
+    const dataInvalida = await json('/api/orcamentos', {
+      method: 'POST',
+      body: JSON.stringify({ nome_cliente: 'Data Inválida', contato: 'c@c.com', tipo_pet: 'gato', tipo_servico: 'visita', porte: 'Pequeno', usa_medicacao: 'nao', data_inicio: '2026-02-30' }),
+    });
+    verificar('POST com data inexistente -> 400', dataInvalida.resposta.status === 400);
+
     const invertido = await json('/api/orcamentos', {
       method: 'POST',
       body: JSON.stringify({ nome_cliente: 'Carlos', contato: 'c@c.com', tipo_pet: 'cachorro', tipo_servico: 'visita', porte: 'Grande', usa_medicacao: 'sim', medicacao_detalhes: 'antibiotico', data_inicio: '2026-12-10', data_fim: '2026-12-01' }),
@@ -128,6 +134,7 @@ async function testar() {
     const formProd = new FormData();
     formProd.append('nome', 'Coleira Rosa');
     formProd.append('preco_centavos', '2590');
+    formProd.append('estoque', '2');
     formProd.append('ativo', 'sim');
     formProd.append('descricao', 'Coleira fofa');
     const prodResp = await fetch(base + '/api/admin/produtos', { method: 'POST', headers: auth, body: formProd });
@@ -143,10 +150,22 @@ async function testar() {
 
     const pedidoOk = await json('/api/pedidos', {
       method: 'POST',
+      headers: { 'Idempotency-Key': 'pedido-teste-1' },
       body: JSON.stringify({ nome_cliente: 'Cliente Teste', contato: '(18) 90000-2222', itens: [{ produto_id: prodId, quantidade: 2 }], observacoes: 'por favor' }),
     });
     verificar('POST /api/pedidos valido -> 201(id 1)', pedidoOk.resposta.status === 201 && pedidoOk.corpo.id === 1);
     const pedidoId = pedidoOk.corpo.id;
+
+    const pedidoRepetido = await json('/api/pedidos', {
+      method: 'POST',
+      headers: { 'Idempotency-Key': 'pedido-teste-1' },
+      body: JSON.stringify({ nome_cliente: 'Cliente Teste', contato: '(18) 90000-2222', itens: [{ produto_id: prodId, quantidade: 2 }] }),
+    });
+    verificar('pedido repetido com a mesma chave -> idempotente', pedidoRepetido.resposta.status === 200 && pedidoRepetido.corpo.id === pedidoId);
+
+    const estoqueAtual = await fetch(base + '/api/produtos');
+    const estoqueCorpo = await estoqueAtual.json();
+    verificar('pedido reserva o estoque sem ficar negativo', estoqueCorpo.find((p) => p.id === prodId)?.estoque === 0);
 
     const pedidoDet = await json('/api/admin/pedidos/' + pedidoId, { headers: auth });
     verificar('total do pedido = 2 x 2590 = 5180', pedidoDet.resposta.ok && pedidoDet.corpo.total_centavos === 5180);

@@ -1,5 +1,25 @@
 const { z } = require('zod');
 
+function dataISOValida(valor) {
+  const [ano, mes, dia] = valor.split('-').map(Number);
+  const data = new Date(Date.UTC(ano, mes - 1, dia));
+  return data.getUTCFullYear() === ano && data.getUTCMonth() === mes - 1 && data.getUTCDate() === dia;
+}
+
+function dataNaoPassada(valor) {
+  const hoje = new Date();
+  const hojeISO = [hoje.getUTCFullYear(), hoje.getUTCMonth() + 1, hoje.getUTCDate()]
+    .map((parte, indice) => indice === 0 ? String(parte) : String(parte).padStart(2, '0'))
+    .join('-');
+  return valor >= hojeISO;
+}
+
+const dataSchema = z
+  .string()
+  .regex(/^\d{4}-\d{2}-\d{2}$/, 'Data deve estar no formato AAAA-MM-DD')
+  .refine(dataISOValida, 'Data inválida')
+  .refine(dataNaoPassada, 'A data não pode estar no passado');
+
 const orcamentoSchema = z.object({
   nome_cliente: z.string().trim().min(2).max(100),
   contato: z.string().trim().min(5).max(60),
@@ -8,14 +28,14 @@ const orcamentoSchema = z.object({
   porte: z.enum(['Pequeno', 'Grande']),
   usa_medicacao: z.enum(['sim', 'nao']),
   medicacao_detalhes: z.string().max(500).optional().nullable(),
-  data_inicio: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Data deve estar no formato AAAA-MM-DD'),
-  data_fim: z
-    .string()
-    .regex(/^\d{4}-\d{2}-\d{2}$/, 'Data deve estar no formato AAAA-MM-DD')
-    .nullable()
-    .optional(),
+  data_inicio: dataSchema,
+  data_fim: dataSchema.nullable().optional(),
   mensagem: z.string().max(2000).optional().default(''),
   website: z.string().max(100).optional().default('')
+}).superRefine((dados, contexto) => {
+  if (dados.data_fim && dados.data_fim < dados.data_inicio) {
+    contexto.addIssue({ code: z.ZodIssueCode.custom, path: ['data_fim'], message: 'A data de fim não pode ser anterior à de início' });
+  }
 });
 
 const loginSchema = z.object({

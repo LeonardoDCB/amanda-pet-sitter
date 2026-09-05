@@ -64,46 +64,70 @@ const pedidosPublico = express.Router();
 
 pedidosPublico.post('/', validar(pedidoSchema), (req, res) => {
   const { nome_cliente, contato, itens, observacoes } = req.dados;
+  const idempotencyKey = req.get('Idempotency-Key')?.trim() || null;
+
+  if (idempotencyKey && !/^[A-Za-z0-9._:-]{8,100}$/.test(idempotencyKey)) {
+    return res.status(400).json({ erro: 'Chave de idempotência inválida' });
+  }
 
   if (req.dados.website) {
     return res.status(201).json({ id: null, mensagem: 'Pedido enviado com sucesso!' });
   }
 
-  const snapshot = [];
-  let total = 0;
-
-  for (const item of itens) {
-    const produto = db
-      .prepare("SELECT id, nome, preco_centavos, estoque, ativo FROM produtos WHERE id = ?")
-      .get(item.produto_id);
-
-    if (!produto || produto.ativo !== 'sim') {
-      return res.status(400).json({ erro: `O produto "${item.produto_id}" não está disponível.` });
-    }
-
-    if (produto.estoque !== null && item.quantidade > produto.estoque) {
-      return res.status(400).json({ erro: `Estoque insuficiente para "${produto.nome}".` });
-    }
-
-    const subtotal = produto.preco_centavos * item.quantidade;
-    total += subtotal;
-
-    snapshot.push({
-      produto_id: produto.id,
-      nome: produto.nome,
-      preco_centavos: produto.preco_centavos,
-      quantidade: item.quantidade
-    });
+  if (idempotencyKey) {
+    const pedidoExistente = db.prepare('SELECT id FROM pedidos WHERE idempotency_key = ?').get(idempotencyKey);
+    if (pedidoExistente) return res.status(200).json({ id: pedidoExistente.id, mensagem: 'Pedido já recebido.' });
   }
 
-  const info = db
-    .prepare(
-      `INSERT INTO pedidos (nome_cliente, contato, itens, total_centavos, observacoes)
-       VALUES (?, ?, ?, ?, ?)`
-    )
-    .run(nome_cliente, contato, JSON.stringify(snapshot), total, observacoes || null);
+  const quantidades = new Map();
+  for (const item of itens) quantidades.set(item.produto_id, (quantidades.get(item.produto_id) || 0) + item.quantidade);
 
-  res.status(201).json({ id: info.lastInsertRowid, mensagem: 'Pedido enviado com sucesso!' });
+  let iniciouTransacao = false;
+  try {
+    db.exec('BEGIN IMMEDIATE');
+    iniciouTransacao = true;
+    const snapshot = [];
+    let total = 0;
+
+    for (const [produtoId, quantidade] of quantidades) {
+      const produto = db.prepare("SELECT id, nome, preco_centavos, estoque, ativo FROM produtos WHERE id = ?").get(produtoId);
+      if (!produto || produto.ativo !== 'sim') {
+        const erro = new Error(`O produto "${produtoId}" não está disponível.`);
+        erro.cliente = true;
+        throw erro;
+      }
+
+      if (produto.estoque !== null) {
+        const reserva = db.prepare('UPDATE produtos SET estoque = estoque - ? WHERE id = ? AND estoque >= ?').run(quantidade, produto.id, quantidade);
+        if (reserva.changes !== 1) {
+          const erro = new Error(`Estoque insuficiente para "${produto.nome}".`);
+          erro.cliente = true;
+          throw erro;
+        }
+      }
+
+      const subtotal = produto.preco_centavos * quantidade;
+      total += subtotal;
+      snapshot.push({ produto_id: produto.id, nome: produto.nome, preco_centavos: produto.preco_centavos, quantidade });
+    }
+
+    const info = db.prepare(
+      `INSERT INTO pedidos (nome_cliente, contato, itens, total_centavos, observacoes, idempotency_key)
+       VALUES (?, ?, ?, ?, ?, ?)`
+    ).run(nome_cliente, contato, JSON.stringify(snapshot), total, observacoes || null, idempotencyKey);
+    db.exec('COMMIT');
+    res.status(201).json({ id: info.lastInsertRowid, mensagem: 'Pedido enviado com sucesso!' });
+  } catch (erro) {
+    if (iniciouTransacao) {
+      try { db.exec('ROLLBACK'); } catch (_) {}
+    }
+    if (idempotencyKey && String(erro.message).includes('UNIQUE constraint failed')) {
+      const pedidoExistente = db.prepare('SELECT id FROM pedidos WHERE idempotency_key = ?').get(idempotencyKey);
+      if (pedidoExistente) return res.status(200).json({ id: pedidoExistente.id, mensagem: 'Pedido já recebido.' });
+    }
+    if (erro.cliente) return res.status(400).json({ erro: erro.message });
+    throw erro;
+  }
 });
 
 const produtosAdmin = express.Router();
@@ -136,12 +160,16 @@ produtosAdmin.post('/', upload.single('imagem'), validar(produtoSchema), (req, r
     fs.writeFileSync(path.join(UPLOADS_DIR, arquivo), req.file.buffer);
   }
 
-  const info = db
-    .prepare(
+  let info;
+  try {
+    info = db.prepare(
       `INSERT INTO produtos (nome, descricao, preco_centavos, arquivo, tipo_mime, estoque, ativo, ordem)
        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
-    )
-    .run(nome, descricao || null, preco_centavos, arquivo, tipoMime, estoque ?? null, ativo, ordem);
+    ).run(nome, descricao || null, preco_centavos, arquivo, tipoMime, estoque ?? null, ativo, ordem);
+  } catch (erro) {
+    if (arquivo) removerArquivo(arquivo);
+    throw erro;
+  }
 
   res.status(201).json({ id: info.lastInsertRowid, mensagem: 'Produto cadastrado com sucesso!' });
 });
@@ -157,6 +185,7 @@ produtosAdmin.patch('/:id', upload.single('imagem'), validar(produtoPatchSchema)
   let arquivo = item.arquivo;
   let tipoMime = item.tipo_mime;
 
+  let arquivoNovo = null;
   if (req.file) {
     const tipo = detectarTipo(req.file.buffer);
     if (!tipo) {
@@ -164,30 +193,28 @@ produtosAdmin.patch('/:id', upload.single('imagem'), validar(produtoPatchSchema)
     }
     const nomeNovo = `${crypto.randomUUID()}.${EXTENSOES[tipo]}`;
     fs.writeFileSync(path.join(UPLOADS_DIR, nomeNovo), req.file.buffer);
-    if (item.arquivo) removerArquivo(item.arquivo);
+    arquivoNovo = nomeNovo;
     arquivo = nomeNovo;
     tipoMime = tipo;
   } else if (removerImagem && item.arquivo) {
-    removerArquivo(item.arquivo);
     arquivo = null;
     tipoMime = null;
   }
 
-  db.prepare(
-    `UPDATE produtos
-     SET nome = ?, descricao = ?, preco_centavos = ?, arquivo = ?, tipo_mime = ?, estoque = ?, ativo = ?, ordem = ?
-     WHERE id = ?`
-  ).run(
-    campos.nome,
-    campos.descricao || null,
-    campos.preco_centavos,
-    arquivo,
-    tipoMime,
-    campos.estoque ?? null,
-    campos.ativo,
-    campos.ordem,
-    item.id
-  );
+  try {
+    db.prepare(
+      `UPDATE produtos
+       SET nome = ?, descricao = ?, preco_centavos = ?, arquivo = ?, tipo_mime = ?, estoque = ?, ativo = ?, ordem = ?
+       WHERE id = ?`
+    ).run(
+      campos.nome, campos.descricao || null, campos.preco_centavos, arquivo, tipoMime,
+      campos.estoque ?? null, campos.ativo, campos.ordem, item.id
+    );
+  } catch (erro) {
+    if (arquivoNovo) removerArquivo(arquivoNovo);
+    throw erro;
+  }
+  if (item.arquivo && item.arquivo !== arquivo) removerArquivo(item.arquivo);
 
   res.json({ mensagem: 'Produto atualizado com sucesso!' });
 });

@@ -80,7 +80,9 @@ app.use('/api/admin', (req, res, next) => {
     try {
       const logPath = path.join(__dirname, '..', 'data', 'audit.log');
       fs.appendFileSync(logPath, JSON.stringify(dados) + '\n');
-    } catch (_) {}
+    } catch (erro) {
+      console.error('Falha ao registrar auditoria:', erro.message);
+    }
   });
   res.setHeader('Cache-Control', 'no-store');
   next();

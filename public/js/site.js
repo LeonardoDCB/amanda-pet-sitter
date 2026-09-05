@@ -657,9 +657,10 @@ function iniciarCarrinho() {
     botao.textContent = "Enviando…";
 
     try {
+      const idempotencyKey = crypto.randomUUID();
       const resposta = await fetch("/api/pedidos", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "Idempotency-Key": idempotencyKey },
         body: JSON.stringify({ nome_cliente: nome, contato, itens, observacoes: obs, website: "" }),
       });
       const corpo = await resposta.json().catch(() => ({}));

@@ -125,6 +125,12 @@ function migrar() {
     db.exec("ALTER TABLE depoimentos ADD COLUMN avaliacao INTEGER CHECK (avaliacao IS NULL OR avaliacao BETWEEN 1 AND 5)");
     db.exec('PRAGMA user_version = 5;');
   }
+
+  if (versao < 6) {
+    db.exec('ALTER TABLE pedidos ADD COLUMN idempotency_key TEXT');
+    db.exec('CREATE UNIQUE INDEX IF NOT EXISTS idx_pedidos_idempotency_key ON pedidos (idempotency_key) WHERE idempotency_key IS NOT NULL');
+    db.exec('PRAGMA user_version = 6;');
+  }
 }
 
 migrar();
@@ -177,6 +183,7 @@ db.exec(`
     itens TEXT NOT NULL,
     total_centavos INTEGER NOT NULL CHECK (total_centavos >= 0),
     observacoes TEXT,
+    idempotency_key TEXT UNIQUE,
     status TEXT NOT NULL DEFAULT 'recebido' ${STATUS_PEDIDO},
     criado_em DATETIME NOT NULL DEFAULT (datetime('now'))
   );

@@ -64,8 +64,7 @@ admin.post('/', upload.array('imagens', 10), (req, res) => {
     return res.status(400).json({ erro: 'Envie pelo menos uma imagem' });
   }
 
-  const registrados = [];
-
+  const arquivosValidados = [];
   for (const arquivo of req.files) {
     const tipo = detectarTipo(arquivo.buffer);
     if (!tipo) {
@@ -74,17 +73,27 @@ admin.post('/', upload.array('imagens', 10), (req, res) => {
       });
     }
 
-    const nome = `${crypto.randomUUID()}.${EXTENSOES[tipo]}`;
-    fs.writeFileSync(path.join(UPLOADS_DIR, nome), arquivo.buffer);
+    arquivosValidados.push({ arquivo, tipo, nome: `${crypto.randomUUID()}.${EXTENSOES[tipo]}` });
+  }
 
-    const info = db
-      .prepare(
+  const registrados = [];
+  try {
+    db.exec('BEGIN');
+    for (const item of arquivosValidados) {
+      fs.writeFileSync(path.join(UPLOADS_DIR, item.nome), item.arquivo.buffer);
+      const info = db.prepare(
         `INSERT INTO galeria (arquivo, nome_original, tipo_mime, tamanho_bytes)
          VALUES (?, ?, ?, ?)`
-      )
-      .run(nome, arquivo.originalname, tipo, arquivo.size);
-
-    registrados.push({ id: info.lastInsertRowid, arquivo: nome });
+      ).run(item.nome, item.arquivo.originalname, item.tipo, item.arquivo.size);
+      registrados.push({ id: info.lastInsertRowid, arquivo: item.nome });
+    }
+    db.exec('COMMIT');
+  } catch (erro) {
+    try { db.exec('ROLLBACK'); } catch (_) {}
+    for (const item of arquivosValidados) {
+      try { fs.unlinkSync(path.join(UPLOADS_DIR, item.nome)); } catch (_) {}
+    }
+    throw erro;
   }
 
   res.status(201).json({ mensagem: `${registrados.length} imagem(ns) publicada(s)`, itens: registrados });

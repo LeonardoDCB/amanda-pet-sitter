@@ -14,10 +14,6 @@ publico.post('/', validar(orcamentoSchema), (req, res) => {
     return res.status(201).json({ id: null, mensagem: 'Orçamento enviado com sucesso!' });
   }
 
-  if (data_fim && data_fim < data_inicio) {
-    return res.status(400).json({ erro: 'A data de fim não pode ser anterior à data de início' });
-  }
-
   const info = db
     .prepare(
       `INSERT INTO orcamentos (nome_cliente, contato, tipo_pet, tipo_servico, porte, usa_medicacao, medicacao_detalhes, data_inicio, data_fim, mensagem)
