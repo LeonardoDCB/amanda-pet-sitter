@@ -97,6 +97,8 @@ function iniciarLightbox(figuras) {
     overlay.className = "lightbox";
     overlay.setAttribute("role", "dialog");
     overlay.setAttribute("aria-modal", "true");
+    overlay.setAttribute("aria-label", "Imagem ampliada da galeria");
+    overlay.tabIndex = -1;
 
     const img = document.createElement("img");
     const atualizar = () => {
@@ -131,6 +133,10 @@ function iniciarLightbox(figuras) {
       if (evento.key === "Escape") fecharLightbox();
       if (evento.key === "ArrowLeft") anterior();
       if (evento.key === "ArrowRight") proximo();
+      if (evento.key === "Tab") {
+        evento.preventDefault();
+        fechar.focus();
+      }
     };
 
     fechar.addEventListener("click", fecharLightbox);
@@ -433,6 +439,7 @@ function renderCarrinho() {
     const menos = document.createElement("button");
     menos.type = "button";
     menos.textContent = "−";
+    menos.setAttribute("aria-label", `Diminuir quantidade de ${item.nome}`);
     menos.addEventListener("click", () => adicionarAoCarrinho(item, -1));
     const valor = document.createElement("span");
     valor.className = "stepper-valor";
@@ -440,6 +447,7 @@ function renderCarrinho() {
     const mais = document.createElement("button");
     mais.type = "button";
     mais.textContent = "+";
+    mais.setAttribute("aria-label", `Aumentar quantidade de ${item.nome}`);
     mais.addEventListener("click", () => adicionarAoCarrinho(item, 1));
     stepper.append(menos, valor, mais);
 
@@ -459,15 +467,47 @@ function renderCarrinho() {
   }
 }
 
+let elementoAntesCarrinho = null;
+
 function abrirCarrinho() {
-  document.getElementById("carrinho").hidden = false;
+  const painel = document.getElementById("carrinho");
+  elementoAntesCarrinho = document.activeElement;
+  painel.hidden = false;
   document.getElementById("carrinho-overlay").hidden = false;
+  document.getElementById("abrir-carrinho").setAttribute("aria-expanded", "true");
+  document.getElementById("fechar-carrinho").focus();
 }
 
 function fecharCarrinho() {
   document.getElementById("carrinho").hidden = true;
   document.getElementById("carrinho-overlay").hidden = true;
+  document.getElementById("abrir-carrinho").setAttribute("aria-expanded", "false");
+  if (elementoAntesCarrinho && elementoAntesCarrinho.isConnected) elementoAntesCarrinho.focus();
 }
+
+function controlarTecladoCarrinho(evento) {
+  const painel = document.getElementById("carrinho");
+  if (painel.hidden) return;
+  if (evento.key === "Escape") {
+    fecharCarrinho();
+    return;
+  }
+  if (evento.key !== "Tab") return;
+  const focaveis = [...painel.querySelectorAll("button, input, textarea, select, a[href]")]
+    .filter((elemento) => !elemento.disabled && !elemento.hidden);
+  if (!focaveis.length) return;
+  const primeiro = focaveis[0];
+  const ultimo = focaveis[focaveis.length - 1];
+  if (evento.shiftKey && document.activeElement === primeiro) {
+    evento.preventDefault();
+    ultimo.focus();
+  } else if (!evento.shiftKey && document.activeElement === ultimo) {
+    evento.preventDefault();
+    primeiro.focus();
+  }
+}
+
+document.addEventListener("keydown", controlarTecladoCarrinho);
 
 function carregarLoja() {
   const grade = document.getElementById("grade-loja");
@@ -535,12 +575,14 @@ function carregarLoja() {
         const menos = document.createElement("button");
         menos.type = "button";
         menos.textContent = "−";
+        menos.setAttribute("aria-label", `Diminuir quantidade de ${produto.nome}`);
         const valor = document.createElement("span");
         valor.className = "stepper-valor";
         valor.textContent = "1";
         const mais = document.createElement("button");
         mais.type = "button";
         mais.textContent = "+";
+        mais.setAttribute("aria-label", `Aumentar quantidade de ${produto.nome}`);
         stepper.append(menos, valor, mais);
 
         const adicionar = document.createElement("button");

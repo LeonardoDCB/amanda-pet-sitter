@@ -11,8 +11,13 @@ const { produtosPublico, pedidosPublico, produtosAdmin, pedidosAdmin } = require
 const { depoimentosPublico, depoimentosAdmin } = require('./routes/depoimentos');
 const adminRouter = require('./routes/admin');
 
-if (process.env.NODE_ENV === 'production' && !process.env.JWT_SECRET) {
-  console.error('ERRO: defina JWT_SECRET nas variáveis de ambiente antes de rodar em produção.');
+if (process.env.NODE_ENV === 'production' && (!process.env.JWT_SECRET || process.env.JWT_SECRET.length < 32)) {
+  console.error('ERRO: defina um JWT_SECRET com pelo menos 32 caracteres antes de rodar em produção.');
+  process.exit(1);
+}
+
+if (process.env.NODE_ENV === 'production' && !process.env.ADMIN_PASSWORD_HASH) {
+  console.error('ERRO: defina ADMIN_PASSWORD_HASH antes de rodar em produção.');
   process.exit(1);
 }
 
@@ -77,6 +82,7 @@ app.use('/api/admin', (req, res, next) => {
       fs.appendFileSync(logPath, JSON.stringify(dados) + '\n');
     } catch (_) {}
   });
+  res.setHeader('Cache-Control', 'no-store');
   next();
 });
 

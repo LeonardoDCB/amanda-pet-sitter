@@ -55,7 +55,7 @@
 .produto-card h3 {
   font-family: "Playfair Display", Georgia, serif;
   font-size: 1.2rem;
-  color: var(--sálvia-escuro);
+  color: var(--salvia-escuro);
   margin: 0;
 }
 
@@ -69,7 +69,7 @@
 .produto-card .produto-preco {
   font-size: 1.25rem;
   font-weight: 800;
-  color: var(--rosé-meio);
+  color: var(--rose-meio);
 }
 
 .produto-card .produto-estoque {
@@ -80,8 +80,8 @@
   letter-spacing: 0.05em;
   padding: 3px 10px;
   border-radius: 999px;
-  background: var(--sálvia-claro);
-  color: var(--sálvia-escuro);
+  background: var(--salvia-claro);
+  color: var(--salvia-escuro);
 }
 
 .produto-card .produto-estoque.esgotado {
@@ -110,7 +110,7 @@
   height: 34px;
   border: none;
   background: var(--vela);
-  color: var(--sálvia-escuro);
+  color: var(--salvia-escuro);
   font-size: 1.1rem;
   font-weight: 700;
   cursor: pointer;
@@ -213,7 +213,7 @@
 
 .carrinho-topo h3 {
   font-family: "Playfair Display", Georgia, serif;
-  color: var(--sálvia-escuro);
+  color: var(--salvia-escuro);
   margin: 0;
 }
 
@@ -297,13 +297,19 @@
 }
 
 .carrinho-total strong {
-  color: var(--rosé-meio);
+  color: var(--rose-meio);
 }
 
 .carrinho-form {
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+.carrinho-form label {
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--salvia-escuro);
 }
 
 .carrinho-form input,
@@ -320,7 +326,7 @@
 .carrinho-form input:focus,
 .carrinho-form textarea:focus {
   outline: none;
-  border-color: var(--sálvia);
+  border-color: var(--salvia);
   box-shadow: 0 0 0 3px rgba(123, 150, 140, 0.18);
 }
 

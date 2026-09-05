@@ -23,7 +23,7 @@ function credenciaisValidas(usuario, senha) {
 }
 
 function gerarToken() {
-  return jwt.sign({ papel: 'admin' }, JWT_SECRET, { expiresIn: TOKEN_EXPIRACAO });
+  return jwt.sign({ papel: 'admin', usuario: ADMIN_USER }, JWT_SECRET, { expiresIn: TOKEN_EXPIRACAO });
 }
 
 function requireAuth(req, res, next) {

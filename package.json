@@ -26,5 +26,8 @@
   },
   "devDependencies": {
     "puppeteer": "^25.8.0"
+  },
+  "overrides": {
+    "qs": "^6.16.0"
   }
 }
