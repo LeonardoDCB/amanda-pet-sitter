@@ -1,101 +1,33 @@
-# Site da Pet Sitter Amanda — Birigui-SP
+# Amanda Pet Sitter
 
-Site de vitrine para a Pet Sitter Amanda (Birigui-SP): formulário de orçamento, galeria de fotos e painel administrativo protegido por senha. Backend Node.js + Express, banco SQLite (`node:sqlite`), frontend estático servido pelo próprio Express.
+Site estático da Amanda Pet Sitter para Birigui e Araçatuba-SP.
 
-## Requisitos
+## Como visualizar
 
-- Node.js **>= 22.13** (usa o módulo nativo `node:sqlite` — não compila dependências nativas)
+No Windows, execute `ver-site.bat`. Ele abre um servidor local usando Python e acessa o site em `http://localhost:8000`.
 
-## Como rodar localmente
+Também é possível abrir `public/index.html` diretamente no navegador, mas o servidor local reproduz melhor o comportamento publicado.
 
-1. Instalar dependências e criar o `.env`:
+## Publicação
 
-   ```
-   npm.cmd install
-   Copy-Item .env.example .env
-   ```
+O site é publicado pelo GitHub Pages através de `.github/workflows/pages.yml`. O workflow publica a pasta `public` automaticamente a cada push na branch `main`.
 
-2. Definir as credenciais do painel. Gere o hash da senha e o segredo JWT:
+O domínio personalizado está definido em `public/CNAME`. Depois de comprar o domínio, configure no provedor DNS os registros indicados pelo GitHub Pages e ative HTTPS nas configurações do repositório.
 
-   ```
-   npm run hash-senha "sua-senha-forte"
-   node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
-   ```
+## Conteúdo
 
-   Cole o hash em `ADMIN_PASSWORD_HASH` e o valor aleatório em `JWT_SECRET` no `.env`.
+- HTML, CSS, JavaScript e imagens ficam versionados no repositório.
+- Produtos e preços são cadastrados em `public/js/site.js`.
+- Fotos dos produtos ficam em `public/img/produtos/`.
+- A loja usa carrinho local e monta o pedido completo para o WhatsApp.
+- O formulário de orçamento também monta a mensagem completa para o WhatsApp.
+- Não existe banco de dados, painel administrativo, upload ou armazenamento no servidor.
 
-3. Subir o servidor:
+Para alterar produtos, fotos, preços ou textos, edite os arquivos, faça commit e execute `git push`.
 
-   ```
-   npm run dev
-   ```
+## SEO antes de publicar
 
-4. Acessar:
-   - Site: `http://localhost:3000`
-   - Painel: `http://localhost:3000/admin` (usuário `admin` + a senha escolhida)
-
-> No Windows, se o PowerShell bloquear `npm`, use `npm.cmd` (o alias `npm.ps1` pode ter a execução de scripts desabilitada).
-
-## Testes
-
-```
-npm test
-```
-
-Rodada um teste de fumaça que sobe o app em porta efêmera e valida: páginas estáticas, envio de orçamento (inclusive rejeição de datas invertidas e anti-spam), login, listagem/status de orçamentos, upload/exclusão de imagem, galeria pública e proteção 401 das rotas admin.
-
-## Estrutura
-
-```
-src/
-  app.js          # aplicação Express (rotas, segurança, estáticos)
-  server.js       # ponto de entrada — sobe o app
-  db.js           # SQLite + migrações (PRAGMA user_version)
-  auth.js         # JWT + bcrypt + middleware requireAuth
-  middleware/     # validação zod
-  routes/         # orcamentos, galeria, admin
-public/           # frontend do site (css/, js/, img/, admin/)
-docs/             # arquitetura.md e design-system.md
-scripts/          # hash-senha e teste de fumaça
-data/             # site.db (gitignored)
-uploads/          # imagens da galeria (gitignored)
-```
-
-## Checklist de publicação
-
-**Antes de publicar:**
-1. Substituir as fotos placeholder (`public/img/foto-hero.*`, `public/img/foto-sobre.*`) e revisar o texto da seção "Sobre" com a Amanda. Basta trocar o `src` em `public/index.html` (as referências atuais apontam para `img/placeholder-amanda.svg`).
-2. Trocar as URLs do Open Graph (`og:url` e `og:image`) pelo domínio real em `public/index.html`.
-3. Trocar a senha padrão (`npm run hash-senha`) e garantir `JWT_SECRET` forte (nunca versionar o `.env`).
-4. Gerar a imagem `public/img/og-capa.png` já está em `img/og-capa.png` (painéis sociais). Pode substituir por uma com a foto da Amanda se preferir.
-
-**Deploy no Render (recomendado — SQLite exige disco persistente):**
-1. Criar Web Service apontando para o repositório; comando `npm start`; Node **22.x**.
-2. Criar um **Persistent Disk** (ex.: 1 GB) e montar em `/data`.
-3. Variáveis de ambiente:
-   - `ADMIN_USER`, `ADMIN_PASSWORD_HASH`, `JWT_SECRET` (obrigatórias)
-   - `UPLOADS_DIR=/data/uploads` (imagens ficam no disco persistente)
-   - `NODE_ENV=production` (bloqueia o boot sem `JWT_SECRET`)
-4. Após o primeiro deploy, HTTPS é automático (certificado do Render).
-
-**Manutenção:**
-- Backup: copie `data/site.db` (ou use snapshot do disco) — o banco fica em `data/`, as imagens em `uploads/`.
-- Para esvaziar tudo: pare o servidor e apague `data/` e `uploads/` (são recriados no boot).
-
-## SEO local e monitoramento
-
-O site foi otimizado para ranquear em **Birigui-SP** e **Araçatuba-SP**. O que já está feito:
-
-- Metadados (título, description, Open Graph) e textos incluem as duas cidades.
-- Dados estruturados (`ProfessionalService` + `areaServed` Birigui/Araçatuba, `FAQPage`, `BreadcrumbList`) em todas as páginas.
-- Depoimentos estáticos de fallback em `public/index.html` para o Google indexar (substitua pelos depoimentos reais no painel admin).
-- `preload` da imagem do hero e imagens com `loading="lazy"`.
-
-### Antes de publicar (pendências)
-1. **Google Analytics 4**: troque `G-XXXXXXXXXX` nos 6 arquivos HTML (`public/index.html`, `public/servicos/*.html`, `public/faq.html`, `public/dicas.html`) pelo ID da sua propriedade.
-2. **Google Search Console**:
-   - Adicione o domínio `amandapetsitter.pet` e verifique a posse (use a meta tag ou o DNS).
-   - Em *Sitemaps*, envie `https://amandapetsitter.pet/sitemap.xml`.
-   - Acompanhe as posições para: `pet sitter birigui`, `pet sitter araçatuba`, `hospedagem cachorro birigui`, `passeio com cachorro araçatuba`, etc.
-3. **Perfil do Google (Google Meu Negócio)** — item separado, ainda não feito: criar/otimizar o perfil "Pet Sitter Amanda" com área Birigui + Araçatuba, telefone e Instagram.
-4. Imagens do hero/sobre e `og-capa.png` foram mantidas; recomenda-se comprimi-las (ex.: < 200 KB) para Core Web Vitals.
+- Trocar `G-XXXXXXXXXX` pelo ID real do Google Analytics, se for usar Analytics.
+- Confirmar o domínio no Google Search Console.
+- Enviar `https://amandapetsitter.com/sitemap.xml`.
+- Atualizar `public/sitemap.xml` se novas páginas forem criadas.

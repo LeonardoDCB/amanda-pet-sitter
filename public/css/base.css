@@ -18,6 +18,8 @@ body {
   background: var(--vela);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  background-image: radial-gradient(circle at 8% 12%, rgba(246, 219, 231, 0.38), transparent 28rem), radial-gradient(circle at 92% 38%, rgba(205, 127, 170, 0.12), transparent 24rem);
 }
 
 img {
@@ -97,5 +99,24 @@ textarea:focus-visible {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+.revelar {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.7s ease var(--atraso-revelar, 0ms), transform 0.7s cubic-bezier(0.2, 0.75, 0.25, 1) var(--atraso-revelar, 0ms);
+}
+
+.revelar.visivel {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .revelar,
+  .revelar.visivel {
+    opacity: 1;
+    transform: none;
   }
 }

@@ -129,6 +129,26 @@
   border-radius: var(--raio-lg);
   padding: var(--espaco-6);
   box-shadow: var(--sombra-suave);
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before,
+.produto-card::before,
+.galeria-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(120deg, transparent 25%, rgba(255, 255, 255, 0.18) 50%, transparent 75%);
+  transform: translateX(-120%);
+  transition: transform 0.8s ease;
+}
+
+.card:hover::before,
+.produto-card:hover::before,
+.galeria-item:hover::before {
+  transform: translateX(120%);
 }
 
 .card-destaque {
@@ -1095,68 +1115,6 @@
   text-decoration: underline;
 }
 
-/* ---------- Depoimentos ---------- */
-.depoimentos-grade {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: var(--espaco-5);
-  margin-top: var(--espaco-6);
-}
-
-.depoimento-card {
-  background: var(--superficie);
-  border: 1px solid var(--borda);
-  border-radius: var(--raio-lg);
-  padding: var(--espaco-5);
-  box-shadow: var(--sombra-suave);
-  display: flex;
-  flex-direction: column;
-  gap: var(--espaco-3);
-}
-
-.depoimento-figura {
-  border-radius: var(--raio);
-  overflow: hidden;
-  border: 1px solid var(--rosa-poeira);
-}
-.depoimento-figura img {
-  display: block;
-  width: 100%;
-  max-height: 320px;
-  object-fit: cover;
-}
-
-.depoimento-texto {
-  color: var(--texto);
-  line-height: 1.6;
-}
-
-.depoimento-autor {
-  margin-top: auto;
-  font-weight: 800;
-  color: var(--salvia-escuro);
-}
-
-/* ---------- Estrelas / avaliação ---------- */
-.estrelas {
-  display: inline-flex;
-  gap: 2px;
-  font-size: 1.1rem;
-  line-height: 1;
-  color: var(--texto-suave);
-}
-.estrelas .estrela.ativa {
-  color: #f5b301;
-}
-.depoimento-card .estrelas {
-  margin-top: calc(-1 * var(--espaco-1));
-}
-.item-estrelas {
-  display: inline-block;
-  color: #f5b301;
-  letter-spacing: 1px;
-}
-
 /* ---------- FAQ ---------- */
 .faq-lista {
   display: grid;
@@ -1292,7 +1250,6 @@ html[data-theme="dark"] .btn-tema::before {
 body,
 .card,
 .faq-item,
-.depoimento-card,
 .cartao-dica,
 .galeria-item {
   transition: background-color var(--transicao), color var(--transicao), border-color var(--transicao);
