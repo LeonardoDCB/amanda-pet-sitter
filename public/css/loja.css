@@ -9,6 +9,7 @@
 .produto-card {
   display: flex;
   flex-direction: column;
+  position: relative;
   background: var(--blush-claro);
   border: 1px solid var(--borda);
   border-radius: 16px;

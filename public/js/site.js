@@ -1,5 +1,45 @@
 const WHATSAPP_NUMERO = "5518997607771";
 
+const GALERIA_ESTATICA = [
+  { arquivo: "img/amanda-hero.jpg", legenda: "Cuidado com carinho em cada visita." },
+  { arquivo: "img/amanda-sobre.jpg", legenda: "Amanda Pet Sitter em Birigui e Araçatuba." },
+];
+
+const PRODUTOS_ESTATICOS = [
+  {
+    id: "casinha-cachorro",
+    nome: "Casinha para cachorro grande N5",
+    descricao: "Tamanho para raça média. Feita de polipropileno impermeável, protege contra chuva em áreas externas e internas.",
+    preco_centavos: 10990,
+    arquivo: "img/produtos/casinha-cachorro.jpg",
+    estoque: null,
+  },
+  {
+    id: "casa-gato-arranhador",
+    nome: "Casa de gato com rampa e arranhador",
+    descricao: "Estrutura em MDF com carpete, com 30 cm de altura, 36 cm de largura e 47 cm de comprimento.",
+    preco_centavos: 7990,
+    arquivo: "img/produtos/casa-gato-arranhador.jpg",
+    estoque: null,
+  },
+  {
+    id: "caixa-transporte",
+    nome: "Caixa de transporte para cães e gatos",
+    descricao: "Com ventilação, suporta até 5 kg e mede 31 cm de largura por 44 cm de comprimento.",
+    preco_centavos: 9990,
+    arquivo: "img/produtos/caixa-transporte.jpg",
+    estoque: null,
+  },
+  {
+    id: "bolinha-interativa",
+    nome: "Bolinha interativa inteligente recarregável",
+    descricao: "Brinquedo em plástico para gatos e cachorros, ideal para estimular a diversão do pet.",
+    preco_centavos: 7990,
+    arquivo: "img/produtos/bolinha-interativa.jpg",
+    estoque: null,
+  },
+];
+
 const menuBotao = document.getElementById("menu-botao");
 const menuNavegacao = document.getElementById("menu-navegacao");
 const menuOverlay = document.getElementById("menu-overlay");
@@ -46,20 +86,8 @@ if (ehMobile()) menuNavegacao.inert = true;
 
 async function carregarGaleria() {
   const grade = document.getElementById("grade-galeria");
-
-  try {
-    const resposta = await fetch("/api/galeria");
-    if (!resposta.ok) throw new Error("erro");
-    const imagens = await resposta.json();
-
-    grade.innerHTML = "";
-
-    if (imagens.length === 0) {
-      grade.innerHTML = '<div class="galeria-vazia"><span class="pata">🐾</span><p>Em breve, fotos dos meus clientes aqui!</p></div>';
-      return;
-    }
-
-    const figuras = imagens.map((img) => {
+  grade.replaceChildren();
+  const figuras = GALERIA_ESTATICA.map((img) => {
       const figura = document.createElement("figure");
       figura.className = "galeria-item";
       figura.tabIndex = 0;
@@ -67,7 +95,7 @@ async function carregarGaleria() {
       figura.setAttribute("aria-label", img.legenda || "Foto da galeria");
 
       const figuraImg = document.createElement("img");
-      figuraImg.src = `/uploads/${img.arquivo}`;
+       figuraImg.src = img.arquivo;
       figuraImg.alt = img.legenda || "Pet de cliente da Amanda em Birigui ou Araçatuba-SP";
       figuraImg.loading = "lazy";
 
@@ -83,12 +111,8 @@ async function carregarGaleria() {
       return figura;
     });
 
-    grade.append(...figuras);
-    if (imagens.length > 1) iniciarLightbox(figuras);
-  } catch {
-    grade.innerHTML = '<div class="galeria-vazia"><span class="pata">😢</span><p>Não foi possível carregar a galeria agora.</p><br><button type="button" class="btn btn-primario btn-pequeno" id="galeria-retry">Tentar novamente</button></div>';
-    document.getElementById("galeria-retry")?.addEventListener("click", carregarGaleria);
-  }
+  grade.append(...figuras);
+  if (figuras.length > 1) iniciarLightbox(figuras);
 }
 
 function iniciarLightbox(figuras) {
@@ -97,8 +121,6 @@ function iniciarLightbox(figuras) {
     overlay.className = "lightbox";
     overlay.setAttribute("role", "dialog");
     overlay.setAttribute("aria-modal", "true");
-    overlay.setAttribute("aria-label", "Imagem ampliada da galeria");
-    overlay.tabIndex = -1;
 
     const img = document.createElement("img");
     const atualizar = () => {
@@ -133,10 +155,6 @@ function iniciarLightbox(figuras) {
       if (evento.key === "Escape") fecharLightbox();
       if (evento.key === "ArrowLeft") anterior();
       if (evento.key === "ArrowRight") proximo();
-      if (evento.key === "Tab") {
-        evento.preventDefault();
-        fechar.focus();
-      }
     };
 
     fechar.addEventListener("click", fecharLightbox);
@@ -283,27 +301,8 @@ function iniciarFormulario() {
     botao.disabled = true;
     botao.textContent = "Enviando…";
 
-    try {
-      const resposta = await fetch("/api/orcamentos", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(dados),
-      });
-
-      const corpo = await resposta.json();
-
-      if (!resposta.ok) {
-        const detalhes = corpo.detalhes
-          ? Object.values(corpo.detalhes.fieldErrors).flat().join(" ")
-          : corpo.erro;
-        aviso.textContent = detalhes || "Não foi possível enviar. Tente novamente.";
-        aviso.className = "aviso erro";
-        botao.disabled = false;
-        botao.textContent = "Enviar orçamento";
-        return;
-      }
-
-      linkWhatsApp.href = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(montarMensagemWhatsApp(dados))}`;
+    linkWhatsApp.href = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(montarMensagemWhatsApp(dados))}`;
+    window.open(linkWhatsApp.href, "_blank", "noopener");
 
       resumo.replaceChildren();
       const linhasResumo = [
@@ -322,12 +321,8 @@ function iniciarFormulario() {
 
       form.hidden = true;
       sucesso.hidden = false;
-    } catch {
-      aviso.textContent = "Falha de conexão. Tente novamente em instantes.";
-      aviso.className = "aviso erro";
-      botao.disabled = false;
-      botao.textContent = "Enviar orçamento";
-    }
+    botao.disabled = false;
+    botao.textContent = "Abrir orçamento no WhatsApp";
   });
 
   document.getElementById("novo-orcamento").addEventListener("click", () => {
@@ -347,7 +342,8 @@ function montarMensagemPedido(dados) {
     "",
   ];
   for (const item of dados.itens) {
-    linhas.push(`• ${item.quantidade}x ${item.nome} — ${formatarPreco(item.preco_centavos * item.quantidade)}`);
+    linhas.push(`• ${item.quantidade}x ${item.nome}`);
+    linhas.push(`  Unitário: ${formatarPreco(item.preco_centavos)} · Subtotal: ${formatarPreco(item.preco_centavos * item.quantidade)}`);
   }
   linhas.push("", `💰 Total: ${formatarPreco(dados.total_centavos)}`);
   linhas.push(`👤 Nome: ${dados.nome_cliente}`);
@@ -421,7 +417,7 @@ function renderCarrinho() {
     linha.className = "item-carrinho";
 
     const img = document.createElement("img");
-    img.src = item.arquivo ? `/uploads/${item.arquivo}` : "img/placeholder-amanda.svg";
+    img.src = item.arquivo || "img/amanda-hero.jpg";
     img.alt = item.nome;
 
     const info = document.createElement("div");
@@ -439,7 +435,6 @@ function renderCarrinho() {
     const menos = document.createElement("button");
     menos.type = "button";
     menos.textContent = "−";
-    menos.setAttribute("aria-label", `Diminuir quantidade de ${item.nome}`);
     menos.addEventListener("click", () => adicionarAoCarrinho(item, -1));
     const valor = document.createElement("span");
     valor.className = "stepper-valor";
@@ -447,7 +442,6 @@ function renderCarrinho() {
     const mais = document.createElement("button");
     mais.type = "button";
     mais.textContent = "+";
-    mais.setAttribute("aria-label", `Aumentar quantidade de ${item.nome}`);
     mais.addEventListener("click", () => adicionarAoCarrinho(item, 1));
     stepper.append(menos, valor, mais);
 
@@ -467,62 +461,20 @@ function renderCarrinho() {
   }
 }
 
-let elementoAntesCarrinho = null;
-
 function abrirCarrinho() {
-  const painel = document.getElementById("carrinho");
-  elementoAntesCarrinho = document.activeElement;
-  painel.hidden = false;
+  document.getElementById("carrinho").hidden = false;
   document.getElementById("carrinho-overlay").hidden = false;
-  document.getElementById("abrir-carrinho").setAttribute("aria-expanded", "true");
-  document.getElementById("fechar-carrinho").focus();
 }
 
 function fecharCarrinho() {
   document.getElementById("carrinho").hidden = true;
   document.getElementById("carrinho-overlay").hidden = true;
-  document.getElementById("abrir-carrinho").setAttribute("aria-expanded", "false");
-  if (elementoAntesCarrinho && elementoAntesCarrinho.isConnected) elementoAntesCarrinho.focus();
 }
-
-function controlarTecladoCarrinho(evento) {
-  const painel = document.getElementById("carrinho");
-  if (painel.hidden) return;
-  if (evento.key === "Escape") {
-    fecharCarrinho();
-    return;
-  }
-  if (evento.key !== "Tab") return;
-  const focaveis = [...painel.querySelectorAll("button, input, textarea, select, a[href]")]
-    .filter((elemento) => !elemento.disabled && !elemento.hidden);
-  if (!focaveis.length) return;
-  const primeiro = focaveis[0];
-  const ultimo = focaveis[focaveis.length - 1];
-  if (evento.shiftKey && document.activeElement === primeiro) {
-    evento.preventDefault();
-    ultimo.focus();
-  } else if (!evento.shiftKey && document.activeElement === ultimo) {
-    evento.preventDefault();
-    primeiro.focus();
-  }
-}
-
-document.addEventListener("keydown", controlarTecladoCarrinho);
 
 function carregarLoja() {
   const grade = document.getElementById("grade-loja");
-
-  fetch("/api/produtos")
-    .then((r) => (r.ok ? r.json() : Promise.reject()))
-    .then((produtos) => {
-      grade.innerHTML = "";
-
-      if (produtos.length === 0) {
-        grade.innerHTML = '<div class="galeria-vazia"><span class="pata">🛍️</span><p>Ainda não há produtos à venda. Volte em breve!</p></div>';
-        return;
-      }
-
-      for (const produto of produtos) {
+  grade.replaceChildren();
+  for (const produto of PRODUTOS_ESTATICOS) {
         const card = document.createElement("article");
         card.className = "produto-card";
 
@@ -530,7 +482,7 @@ function carregarLoja() {
         foto.className = "produto-foto";
         if (produto.arquivo) {
           const img = document.createElement("img");
-          img.src = `/uploads/${produto.arquivo}`;
+           img.src = produto.arquivo;
           img.alt = produto.nome;
           img.loading = "lazy";
           foto.appendChild(img);
@@ -575,14 +527,12 @@ function carregarLoja() {
         const menos = document.createElement("button");
         menos.type = "button";
         menos.textContent = "−";
-        menos.setAttribute("aria-label", `Diminuir quantidade de ${produto.nome}`);
         const valor = document.createElement("span");
         valor.className = "stepper-valor";
         valor.textContent = "1";
         const mais = document.createElement("button");
         mais.type = "button";
         mais.textContent = "+";
-        mais.setAttribute("aria-label", `Aumentar quantidade de ${produto.nome}`);
         stepper.append(menos, valor, mais);
 
         const adicionar = document.createElement("button");
@@ -611,12 +561,7 @@ function carregarLoja() {
         corpo.append(titulo, desc, preco, estoqueEl, acoes);
         card.append(foto, corpo);
         grade.appendChild(card);
-      }
-    })
-    .catch(() => {
-      grade.innerHTML = '<div class="galeria-vazia"><span class="pata">😢</span><p>Não foi possível carregar a loja agora.</p><br><button type="button" class="btn btn-primario btn-pequeno" id="loja-retry">Tentar novamente</button></div>';
-      document.getElementById("loja-retry")?.addEventListener("click", carregarLoja);
-    });
+  }
 }
 
 function iniciarCarrinho() {
@@ -624,7 +569,7 @@ function iniciarCarrinho() {
   document.getElementById("fechar-carrinho").addEventListener("click", fecharCarrinho);
   document.getElementById("carrinho-overlay").addEventListener("click", fecharCarrinho);
 
-  document.getElementById("form-pedido").addEventListener("submit", async (evento) => {
+  document.getElementById("form-pedido").addEventListener("submit", (evento) => {
     evento.preventDefault();
     const aviso = document.getElementById("aviso-pedido");
     aviso.textContent = "";
@@ -654,34 +599,17 @@ function iniciarCarrinho() {
 
     const botao = evento.target.querySelector('button[type="submit"]');
     botao.disabled = true;
-    botao.textContent = "Enviando…";
-
-    try {
-      const idempotencyKey = crypto.randomUUID();
-      const resposta = await fetch("/api/pedidos", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "Idempotency-Key": idempotencyKey },
-        body: JSON.stringify({ nome_cliente: nome, contato, itens, observacoes: obs, website: "" }),
-      });
-      const corpo = await resposta.json().catch(() => ({}));
-
-      if (!resposta.ok) {
-        aviso.textContent = corpo.erro || "Não foi possível enviar o pedido.";
-        aviso.className = "aviso erro";
-        botao.disabled = false;
-        botao.textContent = "Finalizar pedido";
-        return;
-      }
-
-      const dadosWhatsApp = {
+    botao.textContent = "Abrindo WhatsApp…";
+    const dadosWhatsApp = {
         itens: Object.values(carrinho).map((i) => ({ nome: i.nome, quantidade: i.quantidade, preco_centavos: i.preco_centavos })),
         total_centavos: totalCarrinho(),
         nome_cliente: nome,
         contato,
         observacoes: obs,
       };
-      document.getElementById("link-pedido-whatsapp").href =
-        `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(montarMensagemPedido(dadosWhatsApp))}`;
+    const urlWhatsApp = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(montarMensagemPedido(dadosWhatsApp))}`;
+    document.getElementById("link-pedido-whatsapp").href = urlWhatsApp;
+    window.open(urlWhatsApp, "_blank", "noopener");
 
       for (const chave of Object.keys(carrinho)) delete carrinho[chave];
       renderCarrinho();
@@ -689,12 +617,8 @@ function iniciarCarrinho() {
 
       document.getElementById("form-pedido").hidden = true;
       document.getElementById("sucesso-pedido").hidden = false;
-    } catch {
-      aviso.textContent = "Falha de conexão. Tente novamente.";
-      aviso.className = "aviso erro";
-      botao.disabled = false;
-      botao.textContent = "Finalizar pedido";
-    }
+    botao.disabled = false;
+    botao.textContent = "Finalizar pedido";
   });
 
   document.getElementById("fechar-sucesso-pedido").addEventListener("click", () => {
@@ -705,117 +629,31 @@ function iniciarCarrinho() {
   });
 }
 
-function montarEstrelas(n) {
-  const wrap = document.createElement("span");
-  wrap.className = "estrelas";
-  wrap.setAttribute("aria-label", `Avaliação ${n} de 5`);
-  for (let i = 1; i <= 5; i++) {
-    const estrela = document.createElement("span");
-    estrela.className = "estrela" + (i <= n ? " ativa" : "");
-    estrela.textContent = i <= n ? "★" : "☆";
-    wrap.appendChild(estrela);
-  }
-  return wrap;
-}
-
-function injetarJsonLdEmpresa(depoimentos) {
-  const avaliados = depoimentos.filter((d) => d.avaliacao >= 1 && d.avaliacao <= 5);
-  const dados = {
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    "@id": "https://amandapetsitter.pet/#empresa",
-    name: "Pet Sitter Amanda",
-    image: "https://amandapetsitter.pet/img/og-capa.png",
-    url: "https://amandapetsitter.pet/",
-    telephone: "+5518997607771",
-    priceRange: "$$",
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Birigui",
-      addressRegion: "SP",
-      addressCountry: "BR"
-    },
-    geo: { "@type": "GeoCoordinates", latitude: -21.2678, longitude: -50.3417 },
-    areaServed: ["Birigui-SP", "Araçatuba-SP"],
-    sameAs: ["https://www.instagram.com/amandaa.petsitter"],
-    openingHoursSpecification: [{
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-      opens: "08:00",
-      closes: "20:00"
-    }]
-  };
-
-  if (avaliados.length) {
-    const soma = avaliados.reduce((s, d) => s + d.avaliacao, 0);
-    dados.aggregateRating = {
-      "@type": "AggregateRating",
-      ratingValue: (soma / avaliados.length).toFixed(1),
-      reviewCount: avaliados.length
-    };
-    dados.review = avaliados.map((d) => ({
-      "@type": "Review",
-      author: { "@type": "Person", name: d.autor || "Cliente" },
-      reviewBody: d.texto || "",
-      reviewRating: { "@type": "Rating", ratingValue: d.avaliacao }
-    }));
-  }
-
-  let script = document.getElementById("jsonld-empresa");
-  if (!script) {
-    script = document.createElement("script");
-    script.type = "application/ld+json";
-    script.id = "jsonld-empresa";
-    document.head.appendChild(script);
-  }
-  script.textContent = JSON.stringify(dados);
-}
-
-async function carregarDepoimentos() {
-  const grade = document.getElementById("grade-depoimentos");
-  if (!grade) return;
-  try {
-    const resposta = await fetch("/api/depoimentos");
-    if (!resposta.ok) throw new Error("falha");
-    const depoimentos = await resposta.json();
-    if (!depoimentos.length) return;
-    grade.innerHTML = "";
-    for (const d of depoimentos) {
-      const card = document.createElement("article");
-      card.className = "depoimento-card";
-      if (d.arquivo) {
-        const figura = document.createElement("div");
-        figura.className = "depoimento-figura";
-        const img = document.createElement("img");
-        img.src = "/uploads/" + d.arquivo;
-        img.alt = d.autor ? "Depoimento de " + d.autor : "Print de depoimento";
-        img.loading = "lazy";
-        figura.appendChild(img);
-        card.appendChild(figura);
-      }
-      if (d.texto) {
-        const texto = document.createElement("p");
-        texto.className = "depoimento-texto";
-        texto.textContent = d.texto;
-        card.appendChild(texto);
-      }
-      if (d.avaliacao) card.appendChild(montarEstrelas(d.avaliacao));
-      if (d.autor) {
-        const autor = document.createElement("p");
-        autor.className = "depoimento-autor";
-        autor.textContent = "— " + d.autor;
-        card.appendChild(autor);
-      }
-      grade.appendChild(card);
-    }
-    injetarJsonLdEmpresa(depoimentos);
-  } catch {
-    /* mantém o conteúdo estático de fallback já presente no HTML */
-  }
-}
-
 carregarGaleria();
 iniciarFormulario();
 carregarLoja();
 iniciarCarrinho();
-carregarDepoimentos();
+
+function iniciarAnimacoes() {
+  const elementos = document.querySelectorAll(".secao, .hero-conteudo > *, .card, .produto-card, .galeria-item, .faixa-diferenciais > *");
+  if (!("IntersectionObserver" in window)) {
+    elementos.forEach((elemento) => elemento.classList.add("visivel"));
+    return;
+  }
+
+  elementos.forEach((elemento, indice) => {
+    elemento.classList.add("revelar");
+    elemento.style.setProperty("--atraso-revelar", `${Math.min(indice % 5, 4) * 70}ms`);
+  });
+
+  const observador = new IntersectionObserver((entradas, observer) => {
+    entradas.forEach((entrada) => {
+      if (!entrada.isIntersecting) return;
+      entrada.target.classList.add("visivel");
+      observer.unobserve(entrada.target);
+    });
+  }, { rootMargin: "0px 0px -8%" });
+  elementos.forEach((elemento) => observador.observe(elemento));
+}
+
+iniciarAnimacoes();
