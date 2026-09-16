@@ -1,5 +1,10 @@
 (function () {
   const IDIOMAS = { pt: "Português", en: "English", es: "Español" };
+  const NOMES_IDIOMAS = {
+    pt: { pt: "Português", en: "Inglês", es: "Espanhol" },
+    en: { pt: "Portuguese", en: "English", es: "Spanish" },
+    es: { pt: "Portugués", en: "Inglés", es: "Español" },
+  };
   const CHAVES = {
     "Início": ["Home", "Inicio"],
     "Principal": ["Home", "Inicio"],
@@ -429,6 +434,10 @@
     "práticas": ["practical", "prácticos"], "prático": ["practical", "práctico"], "comportamento": ["behavior", "comportamiento"], "comportamentos": ["behaviors", "comportamientos"], "confiança": ["trust", "confianza"], "preocupação": ["worry", "preocupación"], "preocupa": ["worries", "preocupa"], "pessoalmente": ["personally", "personalmente"], "respondo": ["reply", "respondo"], "responder": ["reply", "responder"],
     "passa": ["share", "indicas"], "sigo": ["follow", "sigo"], "acostumado": ["used to", "acostumbrado"], "registro": ["records", "registro"], "jeitinho": ["way", "manera"], "notícias": ["updates", "noticias"], "feriados": ["holidays", "feriados"], "férias": ["vacations", "vacaciones"], "porções": ["portions", "porciones"], "restrições": ["restrictions", "restricciones"], "alimentares": ["dietary", "alimentarias"], "hidratação": ["hydration", "hidratación"], "pausa": ["break", "pausa"], "sombra": ["shade", "sombra"], "conforto": ["comfort", "comodidad"], "conhece": ["knows", "conoce"], "conhecer": ["get to know", "conocer"],
     "encontrada": ["found", "encontrada"], "destruição": ["destruction", "destrucción"], "segurança": ["safety", "seguridad"], "alimentação": ["feeding", "alimentación"], "administro": ["administer", "administro"], "administra": ["administer", "administra"], "medicação": ["medication", "medicación"], "dosagem": ["dosage", "dosis"], "incluída": ["included", "incluida"], "incluído": ["included", "incluido"], "preferidas": ["favorite", "favoritos"],
+    "Peça": ["Request", "Pide"], "peça": ["request", "pide"], "Área": ["Area", "Área"], "área": ["area", "área"], "Atendemos": ["We serve", "Atendemos"], "atendemos": ["we serve", "atendemos"], "Saiba": ["Learn", "Descubre"], "saiba": ["learn", "descubre"], "ajuda": ["helps", "ayuda"], "Ajuda": ["Helps", "Ayuda"], "passeando": ["walking", "paseando"],
+    "mim": ["me", "mí"], "É": ["It is", "Es"], "é": ["is", "es"], "me": ["me", "me"], "chamar": ["message", "escribir"], "Assim": ["That way", "Así"], "assim": ["that way", "así"], "receber": ["receive", "recibir"], "confirmo": ["I confirm", "confirmo"], "compromisso": ["obligation", "compromiso"], "podem": ["can", "pueden"], "traga": ["bring", "trae"], "vem": ["comes", "viene"], "dá": ["is possible", "se puede"], "dele": ["their", "su"], "Reunimos": ["We gathered", "Reunimos"], "reunimos": ["we gathered", "reunimos"], "costumam": ["usually", "suelen"], "contratar": ["hire", "contratar"], "faltou": ["was missing", "faltó"], "algo": ["something", "algo"], "datas": ["dates", "fechas"], "Ou": ["Or", "O"], "ou": ["or", "o"], "prefere": ["prefer", "prefieres"], "Fale": ["Talk", "Habla"], "fale": ["talk", "habla"], "comigo": ["with me", "conmigo"], "Veja": ["See", "Mira"], "veja": ["see", "mira"], "Conheça": ["Learn about", "Conoce"], "conheça": ["learn about", "conoce"], "pelo": ["through the", "por el"], "funciona": ["works", "funciona"], "ele": ["they", "él"],
+    "passear": ["walk", "pasear"], "Quer": ["Would you like", "¿Quieres"], "quer": ["would you like", "¿quieres"], "carinho": ["affection", "cariño"], "qualidade": ["quality", "calidad"], "porte": ["size", "tamaño"], "Porte": ["Size", "Tamaño"], "Tire": ["Get", "Resuelve"], "tire": ["get", "resuelve"],
+    "acalma": ["calms", "calma"], "acima": ["above", "ante todo"], "acontece": ["takes place", "sucede"], "acontecem": ["take place", "suceden"], "acumulada": ["pent-up", "acumulada"], "adaptado": ["adapted", "adaptado"], "adequada": ["suitable", "adecuada"], "adequadas": ["suitable", "adecuadas"], "administrada": ["given", "administrada"], "administrar": ["administer", "administrar"], "adora": ["love", "encantan"], "agendados": ["scheduled", "agendados"], "agilizar": ["speed up", "agilizar"], "ainda": ["still", "todavía"], "alguns": ["some", "algunos"], "alimentar": ["feed", "alimentar"], "amigo": ["friend", "amigo"], "anote": ["write down", "anota"], "ansiedade": ["anxiety", "ansiedad"], "ansiosos": ["anxious", "ansiosos"], "antecedência": ["advance", "anticipación"], "anterior": ["earlier", "anterior"], "aos": ["to the", "a los"], "apliquei": ["gave", "administré"], "aproveita": ["enjoy", "disfrutas"], "aqui": ["here", "aquí"], "areia": ["litter", "arena"], "articulares": ["joint", "articulares"], "atende": ["serves", "atiende"], "atualização": ["update", "actualización"], "aviso": ["notice", "aviso"], "banheiro": ["bathroom", "baño"], "base": ["base", "base"], "bastante": ["plenty of", "mucha"], "blusa": ["shirt", "camiseta"], "bom": ["good", "bueno"], "brincadeira": ["play", "juego"], "brincar": ["play", "jugar"], "buscar": ["pick up", "recoger"], "caixa": ["box", "caja"], "calma": ["calm", "calma"], "cantinho": ["cozy spot", "rincón"], "cantos": ["spaces", "rincones"], "carinhoso": ["caring", "cariñoso"], "carrinho": ["cart", "carrito"], "carro": ["car", "coche"], "cérebro": ["brain", "cerebro"], "certa": ["correct", "correcta"], "certeza": ["certainty", "certeza"], "certo": ["right", "correcto"], "chame": ["message", "escribe"], "cheiros": ["scents", "olores"], "clima": ["weather", "clima"], "cobertinha": ["small blanket", "mantita"], "coleira": ["collar", "correa"], "combina": ["fits", "combina"], "combinar": ["arrange", "acordar"], "completo": ["complete", "completo"], "conferir": ["check", "revisar"], "controle": ["tracking", "control"], "conversar": ["talk", "hablar"], "corrido": ["busy", "ajetreado"], "cuido": ["care for", "cuido"], "curta": ["short", "corta"], "curtas": ["short", "cortas"], "curtem": ["enjoy", "disfrutan"], "dar": ["give", "dar"], "deixando": ["leaving", "dejando"], "deixar": ["leave", "dejar"], "dentro": ["inside", "dentro"], "depende": ["depends", "depende"], "desejada": ["desired", "deseada"], "descanso": ["rest", "descanso"], "dia": ["day", "día"], "diferença": ["difference", "diferencia"], "diga": ["tell", "di"], "direito": ["directly", "directamente"], "direitos": ["rights", "derechos"], "disponíveis": ["available", "disponibles"], "diversão": ["fun", "diversión"], "domicílios": ["homes", "domicilios"], "dormem": ["sleep", "duermen"], "dormir": ["sleep", "dormir"], "dose": ["dose", "dosis"], "dupla": ["paired", "pareja"], "equilibrado": ["balanced", "equilibrado"], "equilíbrio": ["balance", "equilibrio"], "escolha": ["choose", "elige"], "essa": ["that", "esa"], "estando": ["being", "estando"], "estão": ["are", "están"], "estar": ["be", "estar"], "estimulado": ["stimulated", "estimulada"], "exercitam": ["exercise", "ejercitan"], "exercitar": ["exercise", "ejercitar"], "explique": ["explain", "explica"], "familiares": ["familiar", "familiares"], "fazem": ["make", "hacen"], "fazer": ["do", "hacer"], "ficam": ["become", "se ponen"], "finalize": ["check out", "finaliza"], "fosse": ["were", "fuera"], "fotinha": ["little photo", "fotito"], "fresca": ["fresh", "fresca"], "gasta": ["uses", "gasta"], "guia": ["leash", "correa"], "hidrato": ["provide water", "hidrato"], "ideais": ["ideal", "ideales"], "idosos": ["senior pets", "mayores"], "incluir": ["include", "incluir"], "jeitos": ["ways", "formas"], "ler": ["read", "leer"], "levar": ["take", "llevar"], "leve": ["bring", "lleva"], "limpeza": ["cleaning", "limpieza"], "longe": ["far", "lejos"], "lugar": ["place", "lugar"], "manha": ["quirk", "costumbre"], "mãos": ["hands", "manos"], "mas": ["but", "pero"], "medo": ["fear", "miedo"], "mensagens": ["messages", "mensajes"], "mensais": ["monthly", "mensuales"], "mental": ["mental", "mental"], "mesma": ["same", "misma"], "meus": ["my", "mis"], "mínimo": ["minimum", "mínimo"], "monte": ["build", "arma"], "mudança": ["change", "cambio"], "mudar": ["change", "cambiar"], "mudou": ["changed", "cambió"], "muitos": ["many", "muchos"], "necessidade": ["need", "necesidad"], "observações": ["notes", "observaciones"], "operatórios": ["surgical", "operatorios"], "outros": ["other", "otros"], "paciência": ["patience", "paciencia"], "passar": ["share", "indicar"], "pede": ["requires", "requiere"], "perfeitamente": ["perfectly", "perfectamente"], "períodos": ["periods", "períodos"], "pessoa": ["person", "persona"], "pode": ["can", "puede"], "pós": ["post", "pos"], "possível": ["possible", "posible"], "posso": ["can", "puedo"], "poupa": ["saves", "evita"], "precisa": ["needs", "necesita"], "precise": ["need", "necesite"], "preencher": ["fill out", "completar"], "prefira": ["prefer", "prefiere"], "problemas": ["problems", "problemas"], "procura": ["look for", "buscas"], "qualquer": ["any", "cualquier"], "quantidade": ["amount", "cantidad"], "quanto": ["how much", "cuánto"], "quiser": ["want", "quieras"], "recebe": ["receives", "recibe"], "reduz": ["reduces", "reduce"], "regularmente": ["regularly", "regularmente"], "reservados": ["reserved", "reservados"], "respeitada": ["respected", "respetada"], "respeito": ["respect", "respeto"], "resuminho": ["short summary", "pequeño resumen"], "risca": ["letter", "rigurosamente"], "rolou": ["happened", "pasó"], "rotinas": ["routines", "rutinas"], "rua": ["street", "calle"], "sabendo": ["knowing", "sabiendo"], "saudável": ["healthy", "saludable"], "sede": ["base", "sede"], "seguras": ["safe", "seguras"], "seguros": ["safe", "seguros"], "seja": ["whether", "sea"], "semanais": ["weekly", "semanales"], "sendo": ["being", "siendo"], "sentem": ["feel", "sienten"], "sentir": ["feel", "sentir"], "separada": ["separate", "separada"], "ser": ["be", "ser"], "siga": ["follow", "sigue"], "simplesmente": ["simply", "simplemente"], "sons": ["sounds", "sonidos"], "supervisionado": ["supervised", "supervisado"], "temperamento": ["temperament", "temperamento"], "tranquila": ["peaceful", "tranquila"], "troca": ["change", "cambio"], "trajeto": ["route", "ruta"], "vasilha": ["bowl", "recipiente"], "vazio": ["empty", "vacío"], "velha": ["old", "vieja"], "viagens": ["trips", "viajes"], "viaje": ["travel", "viaja"], "vídeos": ["videos", "videos"], "vira": ["becomes", "se convierte"], "volta": ["back", "vuelta"], "vontade": ["want", "ganas"], "xixi": ["bathroom break", "hacer sus necesidades"],
     "por que": ["why", "por qué"], "pet sitting": ["pet sitting", "cuidado de mascotas"], "cães e gatos": ["dogs and cats", "perros y gatos"], "para cães e gatos": ["for dogs and cats", "para perros y gatos"], "passeio regular": ["regular walks", "paseo regular"], "faz bem": ["is beneficial", "hace bien"], "Leitura rápida": ["Quick read", "Lectura rápida"], "Tire suas dúvidas": ["Get your questions answered", "Resuelve tus dudas"], "atendimento de qualidade": ["quality service", "atención de calidad"], "cuidar": ["care for", "cuidar"], "cuidando": ["caring for", "cuidando"], "cão passeando": ["dog walking", "perro paseando"], "na minha casa": ["at my home", "en mi casa"], "na sua casa": ["at your home", "en tu casa"], "a minha": ["mine", "la mía"], "a sua": ["yours", "la tuya"],
   };
 
@@ -457,7 +466,9 @@
 
   let idiomaAtual = idiomaInicial();
   const originaisTextos = new WeakMap();
-  const originaisAtributos = new Map();
+  const originaisAtributos = new WeakMap();
+  const originaisMetadados = new WeakMap();
+  const originaisLinks = new WeakMap();
 
   function chave(texto) { return String(texto).replace(/\s+/g, " ").trim(); }
 
@@ -466,6 +477,11 @@
     if (idioma === "pt" || !original.trim()) return original;
     const direto = CHAVES[chave(original)];
     if (direto) return direto[idioma === "en" ? 0 : 1];
+    const chaveTraduzida = Object.keys(CHAVES).find((termo) => {
+      const valores = CHAVES[termo];
+      return valores.some((valor) => chave(valor) === chave(original));
+    });
+    if (chaveTraduzida) return idioma === "en" ? CHAVES[chaveTraduzida][0] : CHAVES[chaveTraduzida][1];
     let resultado = Object.keys(CHAVES).sort((a, b) => b.length - a.length).reduce((valor, termo) => {
       const traducao = CHAVES[termo][idioma === "en" ? 0 : 1];
       return valor.split(termo).join(traducao);
@@ -494,32 +510,32 @@
     document.querySelectorAll("[placeholder],[title],[alt],[aria-label]").forEach((elemento) => {
       ["placeholder", "title", "alt", "aria-label"].forEach((atributo) => {
         if (!elemento.hasAttribute(atributo)) return;
-        const chaveAtributo = `${atributo}:${elemento.getAttribute(atributo)}`;
-        if (!originaisAtributos.has(chaveAtributo)) originaisAtributos.set(chaveAtributo, elemento.getAttribute(atributo));
-        elemento.setAttribute(atributo, traduzirTexto(originaisAtributos.get(chaveAtributo)));
+        if (!originaisAtributos.has(elemento)) originaisAtributos.set(elemento, {});
+        const originais = originaisAtributos.get(elemento);
+        if (!(atributo in originais)) originais[atributo] = elemento.getAttribute(atributo);
+        elemento.setAttribute(atributo, traduzirTexto(originais[atributo]));
       });
     });
     document.querySelectorAll("meta[name='description'],meta[property^='og:'],meta[name^='twitter:'],title").forEach((elemento) => {
-      const chaveMeta = elemento.tagName === "TITLE" ? "title" : `${elemento.tagName}:${elemento.getAttribute("name") || elemento.getAttribute("property")}`;
-      if (!originaisAtributos.has(chaveMeta)) originaisAtributos.set(chaveMeta, elemento.tagName === "TITLE" ? elemento.textContent : elemento.content);
-      const valor = traduzirTexto(originaisAtributos.get(chaveMeta));
+      if (!originaisMetadados.has(elemento)) originaisMetadados.set(elemento, elemento.tagName === "TITLE" ? elemento.textContent : elemento.content);
+      const valor = traduzirTexto(originaisMetadados.get(elemento));
       if (elemento.tagName === "TITLE") elemento.textContent = valor;
       else elemento.content = valor;
     });
     const locale = document.querySelector("meta[property='og:locale']");
     if (locale) locale.content = idiomaAtual === "en" ? "en_US" : idiomaAtual === "es" ? "es_ES" : "pt_BR";
     document.querySelectorAll("script[type='application/ld+json']").forEach((script) => {
-      if (!originaisAtributos.has(script)) originaisAtributos.set(script, script.textContent);
-      if (idiomaAtual === "pt") { script.textContent = originaisAtributos.get(script); return; }
+      if (!originaisMetadados.has(script)) originaisMetadados.set(script, script.textContent);
+      if (idiomaAtual === "pt") { script.textContent = originaisMetadados.get(script); return; }
       try {
-        const json = JSON.parse(originaisAtributos.get(script));
+        const json = JSON.parse(originaisMetadados.get(script));
         const traduzirJson = (valor) => Array.isArray(valor) ? valor.map(traduzirJson) : valor && typeof valor === "object" ? Object.fromEntries(Object.entries(valor).map(([chaveJson, valorJson]) => [chaveJson, traduzirJson(valorJson)])) : typeof valor === "string" ? traduzirTexto(valor) : valor;
         script.textContent = JSON.stringify(traduzirJson(json), null, 2);
       } catch (_) {}
     });
     document.querySelectorAll("a[href*='wa.me']").forEach((link) => {
-      if (!originaisAtributos.has(link)) originaisAtributos.set(link, link.href);
-      const original = originaisAtributos.get(link);
+      if (!originaisLinks.has(link)) originaisLinks.set(link, link.href);
+      const original = originaisLinks.get(link);
       try {
         const url = new URL(original, window.location.href);
         const texto = url.searchParams.get("text");
@@ -529,7 +545,12 @@
     const pagina = PAGINAS[window.location.pathname] || [];
     if (pagina.length && idiomaAtual !== "pt") document.title = pagina[idiomaAtual === "en" ? 0 : 1];
     const seletor = document.getElementById("seletor-idioma");
-    if (seletor) seletor.value = idiomaAtual;
+    if (seletor) {
+      seletor.value = idiomaAtual;
+      seletor.querySelectorAll("option").forEach((opcao) => {
+        opcao.textContent = NOMES_IDIOMAS[idiomaAtual][opcao.value];
+      });
+    }
     document.dispatchEvent(new CustomEvent("idiomaalterado", { detail: { idioma: idiomaAtual } }));
   }
 
@@ -548,21 +569,27 @@
     Object.entries(IDIOMAS).forEach(([codigo, nome]) => {
       const opcao = document.createElement("option");
       opcao.value = codigo;
-      opcao.textContent = nome;
+      opcao.textContent = NOMES_IDIOMAS[idiomaAtual][codigo] || nome;
       seletor.appendChild(opcao);
     });
     seletor.addEventListener("change", () => {
-      idiomaAtual = seletor.value;
-      try { localStorage.setItem("idioma", idiomaAtual); } catch (_) {}
-      traduzirPagina();
+      definirIdioma(seletor.value);
     });
     grupo.append(label, seletor);
     const nav = alvo.querySelector("nav");
     alvo.insertBefore(grupo, nav || null);
   }
 
+  function definirIdioma(novoIdioma) {
+    if (!IDIOMAS[novoIdioma]) return;
+    idiomaAtual = novoIdioma;
+    try { localStorage.setItem("idioma", idiomaAtual); } catch (_) {}
+    traduzirPagina();
+  }
+
   window.traduzirSite = traduzir;
   window.idiomaSite = () => idiomaAtual;
+  window.definirIdiomaSite = definirIdioma;
   document.addEventListener("DOMContentLoaded", () => {
     criarSeletor();
     traduzirPagina();

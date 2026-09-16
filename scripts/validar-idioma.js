@@ -57,3 +57,8 @@ for (const [idioma, termos] of Object.entries(esperados)) {
   }
   console.log(`${idioma}: ${frases.length} frases validadas`);
 }
+
+const traduzirEspanhol = criarContexto("es");
+if (traduzirEspanhol("Your cart") !== "Tu carrito") throw new Error("Falha na alternância inglês -> espanhol");
+if (traduzirEspanhol("Tu carrito", "en") !== "Your cart") throw new Error("Falha na alternância espanhol -> inglês");
+console.log("alternancia: ingles/espanhol validada");
