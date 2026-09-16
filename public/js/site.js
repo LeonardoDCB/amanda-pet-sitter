@@ -174,7 +174,7 @@ function iniciarLightbox(figuras) {
     const fechar = document.createElement("button");
     fechar.className = "lightbox-fechar";
     fechar.textContent = "✕";
-    fechar.setAttribute("aria-label", traduzir("Fechar galeria"));
+    fechar.setAttribute("aria-label", "Fechar galeria");
 
     const fecharLightbox = () => {
       document.removeEventListener("keydown", navegarTeclado);
@@ -242,7 +242,7 @@ function montarMensagemWhatsApp(dados) {
     `📞 ${textos.contact}: ${dados.contato}`,
     `🐾 ${textos.pet}: ${pet}`,
     `📏 ${textos.size}: ${porte || "-"}`,
-    `💊 ${textos.medication}: ${dados.usa_medicacao === "sim" ? (idioma === "en" ? "Yes" : idioma === "es" ? "Sí" : "Sim") + (dados.medicacao_detalhes ? ` (${dados.medicacao_detalhes})` : "") : (idioma === "en" ? "No" : idioma === "es" ? "No" : "Não")}`,
+    `💊 ${textos.medication}: ${dados.usa_medicacao === "sim" ? (idioma === "en" ? "Yes" : idioma === "es" ? "Sí" : "Sim") + (dados.medicacao_detalhes ? ` (${dados.medicacao_detalhes})` : "") : (idioma === "en" ? "No" : "Não")}`,
     `🛠️ ${textos.service}: ${servico}`,
     `📅 ${textos.from}: ${formatarData(dados.data_inicio)}`,
   ];
@@ -354,20 +354,12 @@ function iniciarFormulario() {
     window.open(linkWhatsApp.href, "_blank", "noopener");
 
       resumo.replaceChildren();
-      const idioma = window.idiomaSite ? window.idiomaSite() : "pt";
-      const resumoTexto = idioma === "en"
-        ? { size: "Size", medication: "Medication", yes: "Yes", no: "No" }
-        : idioma === "es"
-          ? { size: "Tamaño", medication: "Medicamentos", yes: "Sí", no: "No" }
-          : { size: "Porte", medication: "Medicação", yes: "Sim", no: "Não" };
-      const pet = traduzir({ cachorro: "Cachorro", gato: "Gato", outro: "Outro" }[dados.tipo_pet] || dados.tipo_pet);
-      const servico = traduzir({ visita: "Visita em domicílio", hospedagem: "Hospedagem", passeio: "Passeio com o pet" }[dados.tipo_servico] || dados.tipo_servico);
       const linhasResumo = [
         `👤 ${dados.nome_cliente}`,
         `📞 ${dados.contato}`,
-        `🐾 ${pet} · ${servico}`,
-        `📏 ${resumoTexto.size}: ${traduzir(dados.porte)}`,
-        `💊 ${resumoTexto.medication}: ${dados.usa_medicacao === "sim" ? resumoTexto.yes + (dados.medicacao_detalhes ? ` (${dados.medicacao_detalhes})` : "") : resumoTexto.no}`,
+        `🐾 ${dados.tipo_pet} · ${dados.tipo_servico}`,
+        `📏 Porte: ${dados.porte}`,
+        `💊 Medicação: ${dados.usa_medicacao === "sim" ? "Sim" + (dados.medicacao_detalhes ? ` (${dados.medicacao_detalhes})` : "") : "Não"}`,
         `📅 ${formatarData(dados.data_inicio)}${dados.data_fim ? ` → ${formatarData(dados.data_fim)}` : ""}`,
       ];
       for (const linha of linhasResumo) {
@@ -397,23 +389,17 @@ function formatarPreco(cents) {
 }
 
 function montarMensagemPedido(dados) {
-  const idioma = window.idiomaSite ? window.idiomaSite() : "pt";
-  const texto = idioma === "en"
-    ? { intro: "Hello Amanda! I would like to place an order:", unit: "Unit price", subtotal: "Subtotal", total: "Total", name: "Name", contact: "Contact" }
-    : idioma === "es"
-      ? { intro: "¡Hola Amanda! Me gustaría hacer un pedido:", unit: "Precio unitario", subtotal: "Subtotal", total: "Total", name: "Nombre", contact: "Contacto" }
-      : { intro: "Olá Amanda! Gostaria de fazer um pedido:", unit: "Unitário", subtotal: "Subtotal", total: "Total", name: "Nome", contact: "Contato" };
   const linhas = [
-    texto.intro,
+    "Olá Amanda! Gostaria de fazer um pedido:",
     "",
   ];
   for (const item of dados.itens) {
-    linhas.push(`• ${item.quantidade}x ${traduzir(item.nome)}`);
-    linhas.push(`  ${texto.unit}: ${formatarPreco(item.preco_centavos)} · ${texto.subtotal}: ${formatarPreco(item.preco_centavos * item.quantidade)}`);
+    linhas.push(`• ${item.quantidade}x ${item.nome}`);
+    linhas.push(`  Unitário: ${formatarPreco(item.preco_centavos)} · Subtotal: ${formatarPreco(item.preco_centavos * item.quantidade)}`);
   }
-  linhas.push("", `💰 ${texto.total}: ${formatarPreco(dados.total_centavos)}`);
-  linhas.push(`👤 ${texto.name}: ${dados.nome_cliente}`);
-  linhas.push(`📞 ${texto.contact}: ${dados.contato}`);
+  linhas.push("", `💰 Total: ${formatarPreco(dados.total_centavos)}`);
+  linhas.push(`👤 Nome: ${dados.nome_cliente}`);
+  linhas.push(`📞 Contato: ${dados.contato}`);
   if (dados.observacoes) linhas.push(`💬 ${dados.observacoes}`);
   return linhas.join("\n");
 }
@@ -484,7 +470,7 @@ function renderCarrinho() {
 
     const img = document.createElement("img");
     img.src = item.arquivo || "img/amanda-hero.jpg";
-    img.alt = traduzir(item.nome);
+    img.alt = item.nome;
 
     const info = document.createElement("div");
     info.className = "item-info";
@@ -501,7 +487,6 @@ function renderCarrinho() {
     const menos = document.createElement("button");
     menos.type = "button";
     menos.textContent = "−";
-    menos.setAttribute("aria-label", traduzir("Diminuir quantidade"));
     menos.addEventListener("click", () => adicionarAoCarrinho(item, -1));
     const valor = document.createElement("span");
     valor.className = "stepper-valor";
@@ -509,15 +494,13 @@ function renderCarrinho() {
     const mais = document.createElement("button");
     mais.type = "button";
     mais.textContent = "+";
-    mais.setAttribute("aria-label", traduzir("Aumentar quantidade"));
     mais.addEventListener("click", () => adicionarAoCarrinho(item, 1));
     stepper.append(menos, valor, mais);
 
     const remover = document.createElement("button");
     remover.type = "button";
     remover.className = "item-remover";
-    const idioma = window.idiomaSite ? window.idiomaSite() : "pt";
-    remover.setAttribute("aria-label", idioma === "en" ? `Remove ${traduzir(item.nome)}` : idioma === "es" ? `Eliminar ${traduzir(item.nome)}` : `Remover ${item.nome}`);
+    remover.setAttribute("aria-label", `Remover ${item.nome}`);
     remover.textContent = "🗑";
     remover.addEventListener("click", () => {
       delete carrinho[item.id];
@@ -552,7 +535,7 @@ function carregarLoja() {
         if (produto.arquivo) {
           const img = document.createElement("img");
            img.src = produto.arquivo;
-          img.alt = traduzir(produto.nome);
+          img.alt = produto.nome;
           img.loading = "lazy";
           foto.appendChild(img);
         } else {
@@ -585,7 +568,7 @@ function carregarLoja() {
           estoqueEl.textContent = traduzir("Esgotado");
         } else {
           estoqueEl.className = "produto-estoque";
-          estoqueEl.textContent = `${produto.estoque} ${traduzir("em estoque")}`;
+          estoqueEl.textContent = `${produto.estoque} em estoque`;
         }
 
         const acoes = document.createElement("div");
@@ -596,14 +579,12 @@ function carregarLoja() {
         const menos = document.createElement("button");
         menos.type = "button";
         menos.textContent = "−";
-        menos.setAttribute("aria-label", traduzir("Diminuir quantidade"));
         const valor = document.createElement("span");
         valor.className = "stepper-valor";
         valor.textContent = "1";
         const mais = document.createElement("button");
         mais.type = "button";
         mais.textContent = "+";
-        mais.setAttribute("aria-label", traduzir("Aumentar quantidade"));
         stepper.append(menos, valor, mais);
 
         const adicionar = document.createElement("button");
