@@ -1,23 +1,8 @@
 const WHATSAPP_NUMERO = "5518997607771";
-const traduzir = (texto) => window.traduzirSite ? window.traduzirSite(texto) : texto;
 
 const GALERIA_ESTATICA = [
   { arquivo: "img/amanda-hero.jpg", legenda: "Cuidado com carinho em cada visita." },
   { arquivo: "img/amanda-sobre.jpg", legenda: "Amanda Pet Sitter em Birigui e Araçatuba." },
-  { arquivo: "img/galeria/galeria-02.jpeg", legenda: "Momentos de carinho e cuidado." },
-  { arquivo: "img/galeria/galeria-03.jpeg", legenda: "Momentos de carinho e cuidado." },
-  { arquivo: "img/galeria/galeria-04.jpeg", legenda: "Momentos de carinho e cuidado." },
-  { arquivo: "img/galeria/galeria-05.jpeg", legenda: "Momentos de carinho e cuidado." },
-  { arquivo: "img/galeria/galeria-06.jpeg", legenda: "Momentos de carinho e cuidado." },
-  { arquivo: "img/galeria/galeria-07.jpeg", legenda: "Momentos de carinho e cuidado." },
-  { arquivo: "img/galeria/galeria-08.jpeg", legenda: "Momentos de carinho e cuidado." },
-  { arquivo: "img/galeria/galeria-09.jpeg", legenda: "Momentos de carinho e cuidado." },
-  { arquivo: "img/galeria/galeria-10.jpeg", legenda: "Momentos de carinho e cuidado." },
-  { arquivo: "img/galeria/galeria-11.jpeg", legenda: "Momentos de carinho e cuidado." },
-  { arquivo: "img/galeria/galeria-12.jpeg", legenda: "Momentos de carinho e cuidado." },
-  { arquivo: "img/galeria/galeria-13.jpeg", legenda: "Momentos de carinho e cuidado." },
-  { arquivo: "img/galeria/galeria-14.jpeg", legenda: "Momentos de carinho e cuidado." },
-  { arquivo: "img/galeria/galeria-15.jpeg", legenda: "Momentos de carinho e cuidado." },
 ];
 
 const PRODUTOS_ESTATICOS = [
@@ -99,31 +84,6 @@ window.addEventListener("resize", () => {
 
 if (ehMobile()) menuNavegacao.inert = true;
 
-const cabecalho = document.querySelector(".cabecalho");
-if (cabecalho) {
-  const atualizarCabecalho = () => cabecalho.classList.toggle("scrolled", window.scrollY > 12);
-  atualizarCabecalho();
-  window.addEventListener("scroll", atualizarCabecalho, { passive: true });
-}
-
-document.querySelectorAll(".btn").forEach((botao) => {
-  botao.addEventListener("pointermove", (evento) => {
-    const caixa = botao.getBoundingClientRect();
-    botao.style.setProperty("--brilho-x", `${evento.clientX - caixa.left}px`);
-    botao.style.setProperty("--brilho-y", `${evento.clientY - caixa.top}px`);
-  });
-
-  botao.addEventListener("click", (evento) => {
-    const caixa = botao.getBoundingClientRect();
-    botao.style.setProperty("--clique-x", `${evento.clientX - caixa.left}px`);
-    botao.style.setProperty("--clique-y", `${evento.clientY - caixa.top}px`);
-    botao.classList.remove("ripple");
-    void botao.offsetWidth;
-    botao.classList.add("ripple");
-    window.setTimeout(() => botao.classList.remove("ripple"), 600);
-  });
-});
-
 async function carregarGaleria() {
   const grade = document.getElementById("grade-galeria");
   grade.replaceChildren();
@@ -132,11 +92,11 @@ async function carregarGaleria() {
       figura.className = "galeria-item";
       figura.tabIndex = 0;
       figura.setAttribute("role", "button");
-       figura.setAttribute("aria-label", traduzir(img.legenda || "Foto da galeria"));
+      figura.setAttribute("aria-label", img.legenda || "Foto da galeria");
 
       const figuraImg = document.createElement("img");
        figuraImg.src = img.arquivo;
-       figuraImg.alt = traduzir(img.legenda || "Pet de cliente da Amanda em Birigui ou Araçatuba-SP");
+      figuraImg.alt = img.legenda || "Pet de cliente da Amanda em Birigui ou Araçatuba-SP";
       figuraImg.loading = "lazy";
 
       figura.appendChild(figuraImg);
@@ -144,7 +104,7 @@ async function carregarGaleria() {
       if (img.legenda) {
         const legenda = document.createElement("figcaption");
         legenda.className = "legenda";
-         legenda.textContent = traduzir(img.legenda);
+        legenda.textContent = img.legenda;
         figura.appendChild(legenda);
       }
 
@@ -226,28 +186,19 @@ function formatarData(iso) {
 }
 
 function montarMensagemWhatsApp(dados) {
-  const idioma = window.idiomaSite ? window.idiomaSite() : "pt";
-  const textos = idioma === "en"
-    ? { intro: "Hello Amanda! I would like to request a quote:", name: "Name", contact: "Contact", pet: "Pet", size: "Size", medication: "Medication", service: "Service", from: "From", until: "Until" }
-    : idioma === "es"
-      ? { intro: "¡Hola Amanda! Me gustaría pedir un presupuesto:", name: "Nombre", contact: "Contacto", pet: "Mascota", size: "Tamaño", medication: "Medicamentos", service: "Servicio", from: "Desde", until: "Hasta" }
-      : { intro: "Olá Amanda! Gostaria de fazer um orçamento:", name: "Nome", contact: "Contato", pet: "Pet", size: "Porte", medication: "Medicação", service: "Serviço", from: "De", until: "Até" };
-  const pet = { cachorro: idioma === "en" ? "Dog" : idioma === "es" ? "Perro" : "Cachorro", gato: idioma === "en" ? "Cat" : idioma === "es" ? "Gato" : "Gato", outro: idioma === "en" ? "Other" : idioma === "es" ? "Otro" : "Outro" }[dados.tipo_pet] || dados.tipo_pet;
-  const servico = { visita: idioma === "en" ? "In-home visit" : idioma === "es" ? "Visita a domicilio" : "Visita em domicílio", hospedagem: idioma === "en" ? "Boarding" : idioma === "es" ? "Hospedaje" : "Hospedagem", passeio: idioma === "en" ? "Dog walk" : idioma === "es" ? "Paseo" : "Passeio" }[dados.tipo_servico] || dados.tipo_servico;
-  const porte = { Pequeno: idioma === "en" ? "Small" : idioma === "es" ? "Pequeño" : "Pequeno", Grande: idioma === "en" ? "Large" : idioma === "es" ? "Grande" : "Grande" }[dados.porte] || dados.porte;
   const linhas = [
-    textos.intro,
+    "Olá Amanda! Gostaria de fazer um orçamento:",
     "",
-    `👤 ${textos.name}: ${dados.nome_cliente}`,
-    `📞 ${textos.contact}: ${dados.contato}`,
-    `🐾 ${textos.pet}: ${pet}`,
-    `📏 ${textos.size}: ${porte || "-"}`,
-    `💊 ${textos.medication}: ${dados.usa_medicacao === "sim" ? (idioma === "en" ? "Yes" : idioma === "es" ? "Sí" : "Sim") + (dados.medicacao_detalhes ? ` (${dados.medicacao_detalhes})` : "") : (idioma === "en" ? "No" : "Não")}`,
-    `🛠️ ${textos.service}: ${servico}`,
-    `📅 ${textos.from}: ${formatarData(dados.data_inicio)}`,
+    `👤 Nome: ${dados.nome_cliente}`,
+    `📞 Contato: ${dados.contato}`,
+    `🐾 Pet: ${dados.tipo_pet}`,
+    `📏 Porte: ${dados.porte || "-"}`,
+    `💊 Medicação: ${dados.usa_medicacao === "sim" ? "Sim" + (dados.medicacao_detalhes ? ` (${dados.medicacao_detalhes})` : "") : "Não"}`,
+    `🛠️ Serviço: ${dados.tipo_servico}`,
+    `📅 De: ${formatarData(dados.data_inicio)}`,
   ];
 
-  if (dados.data_fim) linhas.push(`📅 ${textos.until}: ${formatarData(dados.data_fim)}`);
+  if (dados.data_fim) linhas.push(`📅 Até: ${formatarData(dados.data_fim)}`);
   if (dados.mensagem) linhas.push("", `💬 ${dados.mensagem}`);
 
   return linhas.join("\n");
@@ -327,7 +278,7 @@ function iniciarFormulario() {
     aviso.className = "aviso";
     limparErros();
     if (!validarCampos() || !confirmarDatas()) {
-      aviso.textContent = traduzir("Confira os campos destacados.");
+      aviso.textContent = "Confira os campos destacados.";
       aviso.className = "aviso erro";
       return;
     }
@@ -348,7 +299,7 @@ function iniciarFormulario() {
 
     const botao = form.querySelector('button[type="submit"]');
     botao.disabled = true;
-    botao.textContent = traduzir("Enviando…");
+    botao.textContent = "Enviando…";
 
     linkWhatsApp.href = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(montarMensagemWhatsApp(dados))}`;
     window.open(linkWhatsApp.href, "_blank", "noopener");
@@ -371,7 +322,7 @@ function iniciarFormulario() {
       form.hidden = true;
       sucesso.hidden = false;
     botao.disabled = false;
-    botao.textContent = traduzir("Abrir orçamento no WhatsApp");
+    botao.textContent = "Abrir orçamento no WhatsApp";
   });
 
   document.getElementById("novo-orcamento").addEventListener("click", () => {
@@ -382,10 +333,7 @@ function iniciarFormulario() {
 }
 
 function formatarPreco(cents) {
-  const idioma = window.idiomaSite ? window.idiomaSite() : "pt";
-  const locale = idioma === "en" ? "en-US" : idioma === "es" ? "es-ES" : "pt-BR";
-  const currency = idioma === "en" ? "USD" : idioma === "es" ? "EUR" : "BRL";
-  return new Intl.NumberFormat(locale, { style: "currency", currency }).format(cents / 100);
+  return "R$ " + (cents / 100).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
 function montarMensagemPedido(dados) {
@@ -476,7 +424,7 @@ function renderCarrinho() {
     info.className = "item-info";
     const nome = document.createElement("div");
     nome.className = "item-nome";
-    nome.textContent = traduzir(item.nome);
+    nome.textContent = item.nome;
     const preco = document.createElement("div");
     preco.className = "item-preco";
     preco.textContent = `${item.quantidade}x ${formatarPreco(item.preco_centavos)}`;
@@ -549,11 +497,11 @@ function carregarLoja() {
         corpo.className = "produto-corpo";
 
         const titulo = document.createElement("h3");
-    titulo.textContent = traduzir(produto.nome);
+        titulo.textContent = produto.nome;
 
         const desc = document.createElement("p");
         desc.className = "produto-desc";
-        desc.textContent = traduzir(produto.descricao || "");
+        desc.textContent = produto.descricao || "";
 
         const preco = document.createElement("div");
         preco.className = "produto-preco";
@@ -562,10 +510,10 @@ function carregarLoja() {
         const estoqueEl = document.createElement("span");
         if (produto.estoque === null) {
           estoqueEl.className = "produto-estoque";
-          estoqueEl.textContent = traduzir("Disponível");
+          estoqueEl.textContent = "Disponível";
         } else if (produto.estoque === 0) {
           estoqueEl.className = "produto-estoque esgotado";
-          estoqueEl.textContent = traduzir("Esgotado");
+          estoqueEl.textContent = "Esgotado";
         } else {
           estoqueEl.className = "produto-estoque";
           estoqueEl.textContent = `${produto.estoque} em estoque`;
@@ -590,11 +538,11 @@ function carregarLoja() {
         const adicionar = document.createElement("button");
         adicionar.type = "button";
         adicionar.className = "btn btn-primario btn-adicionar";
-          adicionar.textContent = traduzir("Adicionar");
+        adicionar.textContent = "Adicionar";
 
         if (produto.estoque === 0) {
           adicionar.disabled = true;
-          adicionar.textContent = traduzir("Esgotado");
+          adicionar.textContent = "Esgotado";
         }
 
         let qtd = 1;
@@ -632,26 +580,26 @@ function iniciarCarrinho() {
     const obs = document.getElementById("pedido-obs").value.trim();
 
     if (nome.length < 2) {
-      aviso.textContent = traduzir("Informe seu nome.");
+      aviso.textContent = "Informe seu nome.";
       aviso.className = "aviso erro";
       return;
     }
     if (contato.length < 5) {
-      aviso.textContent = traduzir("Informe um contato (WhatsApp ou e-mail).");
+      aviso.textContent = "Informe um contato (WhatsApp ou e-mail).";
       aviso.className = "aviso erro";
       return;
     }
 
     const itens = Object.values(carrinho).map((i) => ({ produto_id: i.id, quantidade: i.quantidade }));
     if (itens.length === 0) {
-      aviso.textContent = traduzir("Seu carrinho está vazio.");
+      aviso.textContent = "Seu carrinho está vazio.";
       aviso.className = "aviso erro";
       return;
     }
 
     const botao = evento.target.querySelector('button[type="submit"]');
     botao.disabled = true;
-    botao.textContent = traduzir("Abrindo WhatsApp…");
+    botao.textContent = "Abrindo WhatsApp…";
     const dadosWhatsApp = {
         itens: Object.values(carrinho).map((i) => ({ nome: i.nome, quantidade: i.quantidade, preco_centavos: i.preco_centavos })),
         total_centavos: totalCarrinho(),
@@ -670,7 +618,7 @@ function iniciarCarrinho() {
       document.getElementById("form-pedido").hidden = true;
       document.getElementById("sucesso-pedido").hidden = false;
     botao.disabled = false;
-    botao.textContent = traduzir("Finalizar pedido");
+    botao.textContent = "Finalizar pedido";
   });
 
   document.getElementById("fechar-sucesso-pedido").addEventListener("click", () => {
@@ -680,11 +628,6 @@ function iniciarCarrinho() {
     fecharCarrinho();
   });
 }
-
-document.addEventListener("idiomaalterado", () => {
-  if (document.getElementById("grade-galeria")) carregarGaleria();
-  if (document.getElementById("grade-loja")) carregarLoja();
-});
 
 carregarGaleria();
 iniciarFormulario();

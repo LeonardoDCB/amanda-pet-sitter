@@ -22,18 +22,9 @@
 
   function atualiza() {
     var dark = root.getAttribute("data-theme") === "dark";
-    var idioma = window.idiomaSite ? window.idiomaSite() : "pt";
-    var labels = idioma === "en"
-      ? ["Switch to light theme", "Switch to dark theme"]
-      : idioma === "es"
-        ? ["Cambiar al tema claro", "Cambiar al tema oscuro"]
-        : ["Mudar para tema claro", "Mudar para tema escuro"];
     btn.setAttribute("aria-pressed", String(dark));
-    btn.title = dark ? labels[0] : labels[1];
-    btn.setAttribute("aria-label", btn.title);
+    btn.title = dark ? "Mudar para tema claro" : "Mudar para tema escuro";
   }
-
-  document.addEventListener("idiomaalterado", atualiza);
 
   btn.addEventListener("click", function () {
     var dark = root.getAttribute("data-theme") === "dark";

@@ -22,7 +22,6 @@ O domínio personalizado está definido em `public/CNAME`. Depois de comprar o d
 - A loja usa carrinho local e monta o pedido completo para o WhatsApp.
 - O formulário de orçamento também monta a mensagem completa para o WhatsApp.
 - Não existe banco de dados, painel administrativo, upload ou armazenamento no servidor.
-- O idioma é detectado pelo navegador e pode ser alterado entre português, inglês e espanhol; a escolha fica salva no navegador.
 
 Para alterar produtos, fotos, preços ou textos, edite os arquivos, faça commit e execute `git push`.
 
