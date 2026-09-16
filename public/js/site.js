@@ -300,32 +300,6 @@ function iniciarFormulario() {
   const resumo = document.getElementById("resumo-orcamento");
   const dataInicio = document.getElementById("data_inicio");
   const dataFim = document.getElementById("data_fim");
-  let ultimoResumo = null;
-
-  const renderizarResumo = (dados) => {
-    resumo.replaceChildren();
-    const idioma = window.idiomaSite ? window.idiomaSite() : "pt";
-    const resumoTexto = idioma === "en"
-      ? { size: "Size", medication: "Medication", yes: "Yes", no: "No" }
-      : idioma === "es"
-        ? { size: "Tamaño", medication: "Medicamentos", yes: "Sí", no: "No" }
-        : { size: "Porte", medication: "Medicação", yes: "Sim", no: "Não" };
-    const pet = traduzir({ cachorro: "Cachorro", gato: "Gato", outro: "Outro" }[dados.tipo_pet] || dados.tipo_pet);
-    const servico = traduzir({ visita: "Visita em domicílio", hospedagem: "Hospedagem", passeio: "Passeio com o pet" }[dados.tipo_servico] || dados.tipo_servico);
-    const linhas = [
-      `👤 ${dados.nome_cliente}`,
-      `📞 ${dados.contato}`,
-      `🐾 ${pet} · ${servico}`,
-      `📏 ${resumoTexto.size}: ${traduzir(dados.porte)}`,
-      `💊 ${resumoTexto.medication}: ${dados.usa_medicacao === "sim" ? resumoTexto.yes + (dados.medicacao_detalhes ? ` (${dados.medicacao_detalhes})` : "") : resumoTexto.no}`,
-      `📅 ${formatarData(dados.data_inicio)}${dados.data_fim ? ` → ${formatarData(dados.data_fim)}` : ""}`,
-    ];
-    linhas.forEach((linha) => {
-      const li = document.createElement("li");
-      li.textContent = linha;
-      resumo.appendChild(li);
-    });
-  };
 
   dataInicio.addEventListener("change", () => {
     dataFim.min = dataInicio.value;
@@ -379,8 +353,28 @@ function iniciarFormulario() {
     linkWhatsApp.href = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(montarMensagemWhatsApp(dados))}`;
     window.open(linkWhatsApp.href, "_blank", "noopener");
 
-      ultimoResumo = dados;
-      renderizarResumo(dados);
+      resumo.replaceChildren();
+      const idioma = window.idiomaSite ? window.idiomaSite() : "pt";
+      const resumoTexto = idioma === "en"
+        ? { size: "Size", medication: "Medication", yes: "Yes", no: "No" }
+        : idioma === "es"
+          ? { size: "Tamaño", medication: "Medicamentos", yes: "Sí", no: "No" }
+          : { size: "Porte", medication: "Medicação", yes: "Sim", no: "Não" };
+      const pet = traduzir({ cachorro: "Cachorro", gato: "Gato", outro: "Outro" }[dados.tipo_pet] || dados.tipo_pet);
+      const servico = traduzir({ visita: "Visita em domicílio", hospedagem: "Hospedagem", passeio: "Passeio com o pet" }[dados.tipo_servico] || dados.tipo_servico);
+      const linhasResumo = [
+        `👤 ${dados.nome_cliente}`,
+        `📞 ${dados.contato}`,
+        `🐾 ${pet} · ${servico}`,
+        `📏 ${resumoTexto.size}: ${traduzir(dados.porte)}`,
+        `💊 ${resumoTexto.medication}: ${dados.usa_medicacao === "sim" ? resumoTexto.yes + (dados.medicacao_detalhes ? ` (${dados.medicacao_detalhes})` : "") : resumoTexto.no}`,
+        `📅 ${formatarData(dados.data_inicio)}${dados.data_fim ? ` → ${formatarData(dados.data_fim)}` : ""}`,
+      ];
+      for (const linha of linhasResumo) {
+        const li = document.createElement("li");
+        li.textContent = linha;
+        resumo.appendChild(li);
+      }
 
       form.hidden = true;
       sucesso.hidden = false;
@@ -392,10 +386,6 @@ function iniciarFormulario() {
     form.reset();
     form.hidden = false;
     sucesso.hidden = true;
-  });
-
-  document.addEventListener("idiomaalterado", () => {
-    if (ultimoResumo && !sucesso.hidden) renderizarResumo(ultimoResumo);
   });
 }
 
@@ -713,7 +703,6 @@ function iniciarCarrinho() {
 document.addEventListener("idiomaalterado", () => {
   if (document.getElementById("grade-galeria")) carregarGaleria();
   if (document.getElementById("grade-loja")) carregarLoja();
-  if (document.getElementById("carrinho-itens")) renderCarrinho();
 });
 
 carregarGaleria();
