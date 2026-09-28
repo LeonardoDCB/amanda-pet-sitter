@@ -1,2 +1,2 @@
 User-agent: *
-Sitemap: https://amandapetsitter.com/sitemap.xml
+Sitemap: https://leonardodcb.github.io/amanda-pet-sitter/sitemap.xml

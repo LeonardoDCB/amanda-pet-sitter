@@ -12,7 +12,7 @@ Também é possível abrir `public/index.html` diretamente no navegador, mas o s
 
 O site é publicado pelo GitHub Pages através de `.github/workflows/pages.yml`. O workflow publica a pasta `public` automaticamente a cada push na branch `main`.
 
-O domínio personalizado está definido em `public/CNAME`. Depois de comprar o domínio, configure no provedor DNS os registros indicados pelo GitHub Pages e ative HTTPS nas configurações do repositório.
+Enquanto usa o endereço temporário do GitHub Pages, acesse `https://leonardodcb.github.io/amanda-pet-sitter/`. Depois de comprar um domínio, configure-o em **Settings > Pages > Custom domain**, atualize as URLs de SEO e crie novamente o arquivo `public/CNAME` com o domínio escolhido.
 
 ## Conteúdo
 
@@ -27,7 +27,7 @@ Para alterar produtos, fotos, preços ou textos, edite os arquivos, faça commit
 
 ## SEO antes de publicar
 
-- Trocar `G-XXXXXXXXXX` pelo ID real do Google Analytics, se for usar Analytics.
-- Confirmar o domínio no Google Search Console.
-- Enviar `https://amandapetsitter.com/sitemap.xml`.
+- Se for usar Analytics, adicione o ID real da propriedade do Google Analytics.
+- Confirmar a URL publicada no Google Search Console.
+- Enviar `https://leonardodcb.github.io/amanda-pet-sitter/sitemap.xml`.
 - Atualizar `public/sitemap.xml` se novas páginas forem criadas.
