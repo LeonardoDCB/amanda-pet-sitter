@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script>(function(){try{var t=localStorage.getItem('tema');if(!t&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches){t='dark';}if(t==='dark'){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}})();</script>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; media-src 'self'; frame-src 'none'; form-action 'self'; upgrade-insecure-requests" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
+  <script src="js/tema-inicial.js"></script>
   <script defer src="js/tema.js"></script>
 
   <meta name="description" content="Dicas de pet sitting em Birigui e Araçatuba-SP: como preparar seu pet para a hospedagem, cuidados no calor e por que o passeio regular faz bem. Leitura rápida para tutores." />
@@ -25,9 +28,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <title>Dicas para tutores de pets — Pet Sitter Amanda (Birigui e Araçatuba-SP)</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Nunito+Sans:wght@400;600;700;800&display=swap" />
+  <link rel="stylesheet" href="css/fonts.css" />
   <link rel="stylesheet" href="css/tokens.css" />
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/componentes.css" />
@@ -120,7 +121,7 @@
           <p>Cães que passeiam com frequência dormem melhor, têm menos ansiedade e comportamentos destrutivos. O exercício é saúde — e diversão na mesma dose. Combine passeios com a rotina dele.</p>
         </article>
 
-        <div class="containe hero-acoes" style="margin-top: 2rem;">
+        <div class="containe hero-acoes espaco-cta">
           <a class="btn btn-whatsapp btn-grande" target="_blank" rel="noopener" href="https://wa.me/5518997607771?text=Ol%C3%A1%20Amanda!%20Quero%20saber%20mais%20sobre%20os%20cuidados%20com%20meu%20pet.">Falar sobre meu pet</a>
         </div>
       </div>

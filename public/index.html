@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script>(function(){try{var t=localStorage.getItem('tema');if(!t&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches){t='dark';}if(t==='dark'){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}})();</script>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; media-src 'self'; frame-src 'none'; form-action 'self'; upgrade-insecure-requests" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
+  <script src="js/tema-inicial.js"></script>
   <script defer src="js/tema.js"></script>
 
   <meta name="description" content="Pet Sitter em Birigui e Araçatuba-SP: visitas em domicílio, hospedagem e passeios para cães e gatos. Cuidado com amor, fotos diárias e orçamento pelo WhatsApp. Peça o seu!" />
@@ -62,9 +65,7 @@
   </script>
   <title>Pet Sitter em Birigui e Araçatuba-SP | Visitas, Hospedagem e Passeios — Amanda</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Nunito+Sans:wght@400;600;700;800&display=swap" />
+  <link rel="stylesheet" href="css/fonts.css" />
   <link rel="stylesheet" href="css/tokens.css" />
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/componentes.css" />
@@ -367,8 +368,9 @@
               <label for="mensagem">Mensagem</label>
               <textarea id="mensagem" name="mensagem" maxlength="2000" rows="4" placeholder="Conte sobre seu pet: porte, idade, rotina, cuidados especiais…"></textarea>
             </div>
-         <button type="submit" class="btn btn-primario btn-grande">Abrir orçamento no WhatsApp</button>
-            <p id="aviso-form" class="aviso" role="status"></p>
+          <button type="submit" class="btn btn-primario btn-grande">Abrir orçamento no WhatsApp</button>
+          <p class="privacidade-aviso">Ao continuar, seus dados serão incluídos em uma mensagem do WhatsApp para contato direto. O site não armazena essas informações.</p>
+          <p id="aviso-form" class="aviso" role="status"></p>
           </form>
 
           <div id="sucesso-orcamento" class="sucesso" hidden>

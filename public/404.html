@@ -3,13 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script>(function(){try{var t=localStorage.getItem('tema');if(!t&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches){t='dark';}if(t==='dark'){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}})();</script>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; media-src 'self'; frame-src 'none'; form-action 'self'; upgrade-insecure-requests" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
+  <script src="/amanda-pet-sitter/js/tema-inicial.js"></script>
   <script defer src="/amanda-pet-sitter/js/tema.js"></script>
   <meta name="robots" content="noindex, follow" />
   <meta name="description" content="Página não encontrada — Pet Sitter Amanda (Birigui e Araçatuba-SP)." />
   <title>Página não encontrada — Pet Sitter Amanda</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Nunito+Sans:wght@400;600;700;800&display=swap" />
+  <link rel="stylesheet" href="/amanda-pet-sitter/css/fonts.css" />
   <link rel="stylesheet" href="/amanda-pet-sitter/css/tokens.css" />
   <link rel="stylesheet" href="/amanda-pet-sitter/css/base.css" />
   <link rel="stylesheet" href="/amanda-pet-sitter/css/componentes.css" />
@@ -37,7 +40,7 @@
   </header>
 
   <main id="conteudo">
-    <section class="secao" style="min-height: 60vh; display: flex; align-items: center;">
+    <section class="secao pagina-erro-secao">
       <div class="containe secao-titulo">
         <span class="eyebrow">Ops!</span>
         <h1>Página não <em>encontrada</em> 🐾</h1>

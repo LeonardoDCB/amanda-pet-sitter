@@ -40,6 +40,33 @@ const PRODUTOS_ESTATICOS = [
   },
 ];
 
+const LIMITE_ITENS_POR_PRODUTO = 50;
+const PRODUTOS_POR_ID = new Map(PRODUTOS_ESTATICOS.map((produto) => [produto.id, produto]));
+
+function normalizarCarrinho(valor) {
+  const carrinhoNormalizado = {};
+  if (!valor || typeof valor !== "object" || Array.isArray(valor)) return carrinhoNormalizado;
+
+  for (const [id, item] of Object.entries(valor)) {
+    const produto = PRODUTOS_POR_ID.get(id);
+    const quantidade = Number(item?.quantidade);
+    if (!produto || !Number.isFinite(quantidade)) continue;
+
+    const quantidadeSegura = Math.min(LIMITE_ITENS_POR_PRODUTO, Math.floor(quantidade));
+    if (quantidadeSegura < 1) continue;
+
+    carrinhoNormalizado[id] = {
+      id: produto.id,
+      nome: produto.nome,
+      preco_centavos: produto.preco_centavos,
+      arquivo: produto.arquivo,
+      quantidade: quantidadeSegura,
+    };
+  }
+
+  return carrinhoNormalizado;
+}
+
 const menuBotao = document.getElementById("menu-botao");
 const menuNavegacao = document.getElementById("menu-navegacao");
 const menuOverlay = document.getElementById("menu-overlay");
@@ -354,10 +381,10 @@ function montarMensagemPedido(dados) {
 
 const carrinho = (function () {
   try {
-    const salvo = localStorage.getItem("carrinho_amanda");
-    if (salvo) {
-      const obj = JSON.parse(salvo);
-      if (obj && typeof obj === "object") return obj;
+     const salvo = localStorage.getItem("carrinho_amanda");
+     if (salvo) {
+       const obj = JSON.parse(salvo);
+       return normalizarCarrinho(obj);
     }
   } catch {}
   return {};
@@ -371,7 +398,10 @@ function salvarCarrinhoLocal() {
 
 function adicionarAoCarrinho(produto, qtd) {
   if (carrinho[produto.id]) {
-    carrinho[produto.id].quantidade += qtd;
+    carrinho[produto.id].quantidade = Math.min(
+      LIMITE_ITENS_POR_PRODUTO,
+      carrinho[produto.id].quantidade + qtd,
+    );
   } else {
     carrinho[produto.id] = {
       id: produto.id,
@@ -407,7 +437,7 @@ function renderCarrinho() {
     contador.hidden = true;
   }
 
-  itensEl.innerHTML = "";
+  itensEl.replaceChildren();
   vazioEl.hidden = itens.length > 0;
   form.hidden = itens.length === 0;
   totalEl.textContent = formatarPreco(totalCarrinho());
@@ -546,12 +576,15 @@ function carregarLoja() {
         }
 
         let qtd = 1;
-        menos.addEventListener("click", () => {
-          if (qtd > 1) { qtd -= 1; valor.textContent = String(qtd); }
-        });
-        mais.addEventListener("click", () => {
-          qtd += 1; valor.textContent = String(qtd);
-        });
+         menos.addEventListener("click", () => {
+           if (qtd > 1) { qtd -= 1; valor.textContent = String(qtd); }
+         });
+         mais.addEventListener("click", () => {
+           if (qtd < LIMITE_ITENS_POR_PRODUTO) {
+             qtd += 1;
+             valor.textContent = String(qtd);
+           }
+         });
         adicionar.addEventListener("click", () => {
           adicionarAoCarrinho(produto, qtd);
           abrirCarrinho();

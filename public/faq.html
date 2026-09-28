@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script>(function(){try{var t=localStorage.getItem('tema');if(!t&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches){t='dark';}if(t==='dark'){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}})();</script>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; media-src 'self'; frame-src 'none'; form-action 'self'; upgrade-insecure-requests" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), payment=()" />
+  <script src="js/tema-inicial.js"></script>
   <script defer src="js/tema.js"></script>
 
   <meta name="description" content="Perguntas frequentes sobre pet sitting em Birigui e Araçatuba-SP: visitas, hospedagem, passeios, medicação, porte dos cães e como reservar. Tire suas dúvidas." />
@@ -25,9 +28,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <title>Perguntas frequentes — Pet Sitter Amanda (Birigui e Araçatuba-SP)</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Nunito+Sans:wght@400;600;700;800&display=swap" />
+  <link rel="stylesheet" href="css/fonts.css" />
   <link rel="stylesheet" href="css/tokens.css" />
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/componentes.css" />
@@ -136,7 +137,7 @@
           </details>
         </div>
 
-        <div class="containe hero-acoes" style="margin-top: 2rem;">
+        <div class="containe hero-acoes espaco-cta">
           <a class="btn btn-whatsapp btn-grande" target="_blank" rel="noopener" href="https://wa.me/5518997607771?text=Ol%C3%A1%20Amanda!%20Tenho%20outras%20d%C3%BAvidas%20sobre%20os%20servi%C3%A7os.">Tirar dúvida no WhatsApp</a>
         </div>
       </div>

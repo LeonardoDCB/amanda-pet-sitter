@@ -10,7 +10,7 @@ Também é possível abrir `public/index.html` diretamente no navegador, mas o s
 
 ## Publicação
 
-O site é publicado pelo GitHub Pages através de `.github/workflows/pages.yml`. O workflow publica a pasta `public` automaticamente a cada push na branch `main`.
+O site é publicado pelo GitHub Pages através de `.github/workflows/static.yml`. O workflow publica a pasta `public` automaticamente a cada push na branch `main`.
 
 Enquanto usa o endereço temporário do GitHub Pages, acesse `https://leonardodcb.github.io/amanda-pet-sitter/`. Depois de comprar um domínio, configure-o em **Settings > Pages > Custom domain**, atualize as URLs de SEO e crie novamente o arquivo `public/CNAME` com o domínio escolhido.
 
@@ -22,6 +22,12 @@ Enquanto usa o endereço temporário do GitHub Pages, acesse `https://leonardodc
 - A loja usa carrinho local e monta o pedido completo para o WhatsApp.
 - O formulário de orçamento também monta a mensagem completa para o WhatsApp.
 - Não existe banco de dados, painel administrativo, upload ou armazenamento no servidor.
+
+## Segurança e privacidade
+
+- O formulário e o pedido apenas montam uma mensagem para o WhatsApp; o site não armazena os dados informados.
+- O navegador recebe uma Content Security Policy e não carrega fontes, scripts ou imagens de terceiros.
+- Consulte [SECURITY.md](SECURITY.md) antes de alterar a publicação, adicionar integrações ou configurar um domínio próprio.
 
 Para alterar produtos, fotos, preços ou textos, edite os arquivos, faça commit e execute `git push`.
 
