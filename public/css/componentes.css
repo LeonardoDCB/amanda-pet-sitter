@@ -698,6 +698,10 @@
   gap: var(--espaco-4);
 }
 
+.campo-linha:has(> #campo-porte[hidden]) {
+  grid-template-columns: 1fr;
+}
+
 .campo label {
   display: block;
   font-weight: 800;

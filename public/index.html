@@ -333,7 +333,7 @@
               </div>
 
             <div class="campo-linha">
-              <div class="campo">
+              <div class="campo" id="campo-porte">
                 <label for="porte">Porte do cachorro</label>
                 <select id="porte" name="porte" required>
                   <option value="Pequeno">Pequeno</option>
@@ -356,12 +356,12 @@
               <div class="campo">
                 <label for="data_inicio">Data de início</label>
                 <input type="date" id="data_inicio" name="data_inicio" required />
-                <span class="campo-msg">Escolha a data de início.</span>
+                <span class="campo-msg">Escolha hoje ou uma data futura para o início.</span>
               </div>
               <div class="campo">
                 <label for="data_fim">Data de fim <span class="opcional">(opcional)</span></label>
                 <input type="date" id="data_fim" name="data_fim" />
-                <span class="campo-msg">A data de fim não pode ser anterior à de início.</span>
+                <span class="campo-msg">A data de fim deve ser hoje ou posterior e não anterior à de início.</span>
               </div>
             </div>
             <div class="campo">
@@ -375,14 +375,14 @@
 
           <div id="sucesso-orcamento" class="sucesso" hidden>
             <span class="emoji" aria-hidden="true">💌</span>
-            <h3>Orçamento enviado com sucesso!</h3>
-            <p>Vou ler sua mensagem e responder o quanto antes. Quer agilizar?</p>
+            <h3>Mensagem de orçamento pronta</h3>
+            <p>Abra o WhatsApp e toque em enviar para que Amanda receba seu orçamento. Se a nova aba não abrir, use o botão abaixo.</p>
             <ul id="resumo-orcamento" class="sucesso-resumo"></ul>
             <div class="sucesso-acoes">
               <a id="link-whatsapp" class="btn btn-whatsapp" target="_blank" rel="noopener" href="https://wa.me/5518997607771">
-                Confirmar no WhatsApp
+                Abrir mensagem no WhatsApp
               </a>
-              <button type="button" class="btn btn-fantasma" id="novo-orcamento">Enviar outro orçamento</button>
+              <button type="button" class="btn btn-fantasma" id="novo-orcamento">Preencher outro orçamento</button>
             </div>
           </div>
         </div>
@@ -464,15 +464,16 @@
         <input type="text" id="pedido-contato" placeholder="WhatsApp ou e-mail" maxlength="60" required />
         <label for="pedido-obs">Observações (opcional)</label>
         <textarea id="pedido-obs" placeholder="Observações (opcional)" maxlength="2000" rows="2"></textarea>
-        <button type="submit" class="btn btn-primario btn-grande">Finalizar pedido</button>
+        <button type="submit" class="btn btn-primario btn-grande">Abrir pedido no WhatsApp</button>
         <p id="aviso-pedido" class="aviso" role="status"></p>
       </form>
       <div id="sucesso-pedido" class="sucesso sucesso-carrinho" hidden>
         <span class="emoji" aria-hidden="true">💌</span>
-        <h3>Pedido enviado!</h3>
-        <p>Vou conferir e te respondo pelo WhatsApp.</p>
-        <a id="link-pedido-whatsapp" class="btn btn-whatsapp" target="_blank" rel="noopener" href="https://wa.me/5518997607771">Confirmar no WhatsApp</a>
-        <button type="button" class="btn btn-fantasma" id="fechar-sucesso-pedido">Fechar</button>
+        <h3>Mensagem de pedido pronta</h3>
+        <p>Abra o WhatsApp e toque em enviar para fazer o pedido. Seus itens continuam no carrinho até você esvaziá-lo.</p>
+        <a id="link-pedido-whatsapp" class="btn btn-whatsapp" target="_blank" rel="noopener" href="https://wa.me/5518997607771">Abrir mensagem no WhatsApp</a>
+        <button type="button" class="btn btn-fantasma" id="limpar-pedido">Esvaziar carrinho</button>
+        <button type="button" class="btn btn-fantasma" id="fechar-sucesso-pedido">Fechar aviso</button>
       </div>
     </div>
   </aside>

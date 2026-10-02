@@ -219,12 +219,12 @@ function montarMensagemWhatsApp(dados) {
     `👤 Nome: ${dados.nome_cliente}`,
     `📞 Contato: ${dados.contato}`,
     `🐾 Pet: ${dados.tipo_pet}`,
-    `📏 Porte: ${dados.porte || "-"}`,
     `💊 Medicação: ${dados.usa_medicacao === "sim" ? "Sim" + (dados.medicacao_detalhes ? ` (${dados.medicacao_detalhes})` : "") : "Não"}`,
     `🛠️ Serviço: ${dados.tipo_servico}`,
     `📅 De: ${formatarData(dados.data_inicio)}`,
   ];
 
+  if (dados.porte) linhas.splice(5, 0, `📏 Porte: ${dados.porte}`);
   if (dados.data_fim) linhas.push(`📅 Até: ${formatarData(dados.data_fim)}`);
   if (dados.mensagem) linhas.push("", `💬 ${dados.mensagem}`);
 
@@ -261,13 +261,25 @@ function limparErros() {
   });
 }
 
-function confirmarDatas() {
-  const inicio = document.getElementById("data_inicio").value;
-  const fim = document.getElementById("data_fim").value;
-  const campoFim = document.getElementById("data_fim").closest(".campo");
-  const invalido = Boolean(fim && inicio && fim < inicio);
-  campoFim.classList.toggle("erro", invalido);
-  return !invalido;
+function confirmarDatas(mostrarErro = true) {
+  const dataInicio = document.getElementById("data_inicio");
+  const dataFim = document.getElementById("data_fim");
+  const hoje = dataLocalHoje();
+  dataInicio.min = hoje;
+  dataFim.min = dataInicio.value > hoje ? dataInicio.value : hoje;
+
+  const inicioInvalido = !dataInicio.value || dataInicio.value < hoje;
+  const fimInvalido = Boolean(dataFim.value && dataFim.value < dataFim.min);
+  for (const [input, invalido] of [[dataInicio, inicioInvalido], [dataFim, fimInvalido]]) {
+    input.closest(".campo").classList.toggle("erro", mostrarErro && invalido);
+    input.setAttribute("aria-invalid", String(mostrarErro && invalido));
+  }
+  return !inicioInvalido && !fimInvalido;
+}
+
+function dataLocalHoje() {
+  const hoje = new Date();
+  return `${hoje.getFullYear()}-${String(hoje.getMonth() + 1).padStart(2, "0")}-${String(hoje.getDate()).padStart(2, "0")}`;
 }
 
 function iniciarFormulario() {
@@ -279,16 +291,22 @@ function iniciarFormulario() {
   const dataInicio = document.getElementById("data_inicio");
   const dataFim = document.getElementById("data_fim");
 
-  dataInicio.addEventListener("change", () => {
-    dataFim.min = dataInicio.value;
-    if (dataFim.value && dataFim.value < dataInicio.value) dataFim.value = "";
-  });
+  dataInicio.addEventListener("change", () => confirmarDatas());
+  dataFim.addEventListener("change", () => confirmarDatas());
+  confirmarDatas(false);
 
-  dataFim.addEventListener("input", () => {
-    const campo = dataFim.closest(".campo");
-    const invalido = Boolean(dataFim.value && dataInicio.value && dataFim.value < dataInicio.value);
-    campo.classList.toggle("erro", invalido);
-  });
+  const tipoPet = document.getElementById("tipo_pet");
+  const porte = document.getElementById("porte");
+  const campoPorte = document.getElementById("campo-porte");
+  const alternarPorte = () => {
+    const cachorro = tipoPet.value === "cachorro";
+    campoPorte.hidden = !cachorro;
+    porte.disabled = !cachorro;
+    if (!cachorro) porte.value = "";
+    else if (!porte.value) porte.value = "Pequeno";
+  };
+  tipoPet.addEventListener("change", alternarPorte);
+  alternarPorte();
 
   const selectMed = document.getElementById("usa_medicacao");
   const campoDetalhes = document.getElementById("campo-medicacao-detalhes");
@@ -299,12 +317,14 @@ function iniciarFormulario() {
   selectMed.addEventListener("change", alternarDetalhes);
   alternarDetalhes();
 
-  form.addEventListener("submit", async (evento) => {
+  form.addEventListener("submit", (evento) => {
     evento.preventDefault();
     aviso.textContent = "";
     aviso.className = "aviso";
     limparErros();
-    if (!validarCampos() || !confirmarDatas()) {
+    const camposValidos = validarCampos();
+    const datasValidas = confirmarDatas();
+    if (!camposValidos || !datasValidas) {
       aviso.textContent = "Confira os campos destacados.";
       aviso.className = "aviso erro";
       return;
@@ -315,7 +335,7 @@ function iniciarFormulario() {
       contato: document.getElementById("contato").value.trim(),
       tipo_pet: document.getElementById("tipo_pet").value,
       tipo_servico: document.getElementById("tipo_servico").value,
-      porte: document.getElementById("porte").value,
+      porte: porte.disabled ? "" : porte.value,
       usa_medicacao: document.getElementById("usa_medicacao").value,
       medicacao_detalhes: document.getElementById("medicacao_detalhes").value.trim(),
       data_inicio: dataInicio.value,
@@ -324,38 +344,36 @@ function iniciarFormulario() {
       website: document.getElementById("website").value,
     };
 
-    const botao = form.querySelector('button[type="submit"]');
-    botao.disabled = true;
-    botao.textContent = "Enviando…";
-
     linkWhatsApp.href = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(montarMensagemWhatsApp(dados))}`;
     window.open(linkWhatsApp.href, "_blank", "noopener");
 
-      resumo.replaceChildren();
-      const linhasResumo = [
-        `👤 ${dados.nome_cliente}`,
-        `📞 ${dados.contato}`,
-        `🐾 ${dados.tipo_pet} · ${dados.tipo_servico}`,
-        `📏 Porte: ${dados.porte}`,
-        `💊 Medicação: ${dados.usa_medicacao === "sim" ? "Sim" + (dados.medicacao_detalhes ? ` (${dados.medicacao_detalhes})` : "") : "Não"}`,
-        `📅 ${formatarData(dados.data_inicio)}${dados.data_fim ? ` → ${formatarData(dados.data_fim)}` : ""}`,
-      ];
-      for (const linha of linhasResumo) {
-        const li = document.createElement("li");
-        li.textContent = linha;
-        resumo.appendChild(li);
-      }
+    resumo.replaceChildren();
+    const linhasResumo = [
+      `👤 ${dados.nome_cliente}`,
+      `📞 ${dados.contato}`,
+      `🐾 ${dados.tipo_pet} · ${dados.tipo_servico}`,
+      `💊 Medicação: ${dados.usa_medicacao === "sim" ? "Sim" + (dados.medicacao_detalhes ? ` (${dados.medicacao_detalhes})` : "") : "Não"}`,
+      `📅 ${formatarData(dados.data_inicio)}${dados.data_fim ? ` → ${formatarData(dados.data_fim)}` : ""}`,
+    ];
+    if (dados.porte) linhasResumo.splice(3, 0, `📏 Porte: ${dados.porte}`);
+    for (const linha of linhasResumo) {
+      const li = document.createElement("li");
+      li.textContent = linha;
+      resumo.appendChild(li);
+    }
 
-      form.hidden = true;
-      sucesso.hidden = false;
-    botao.disabled = false;
-    botao.textContent = "Abrir orçamento no WhatsApp";
+    form.hidden = true;
+    sucesso.hidden = false;
   });
 
   document.getElementById("novo-orcamento").addEventListener("click", () => {
     form.reset();
     form.hidden = false;
     sucesso.hidden = true;
+    limparErros();
+    alternarPorte();
+    alternarDetalhes();
+    confirmarDatas(false);
   });
 }
 
@@ -426,6 +444,7 @@ function renderCarrinho() {
   const vazioEl = document.getElementById("carrinho-vazio");
   const totalEl = document.getElementById("carrinho-total");
   const form = document.getElementById("form-pedido");
+  document.getElementById("sucesso-pedido").hidden = true;
 
   const itens = Object.values(carrinho);
   const quantidadeTotal = itens.reduce((s, i) => s + i.quantidade, 0);
@@ -598,11 +617,17 @@ function carregarLoja() {
 }
 
 function iniciarCarrinho() {
+  renderCarrinho();
   document.getElementById("abrir-carrinho").addEventListener("click", abrirCarrinho);
   document.getElementById("fechar-carrinho").addEventListener("click", fecharCarrinho);
   document.getElementById("carrinho-overlay").addEventListener("click", fecharCarrinho);
 
-  document.getElementById("form-pedido").addEventListener("submit", (evento) => {
+  const formPedido = document.getElementById("form-pedido");
+  formPedido.addEventListener("input", () => {
+    document.getElementById("sucesso-pedido").hidden = true;
+  });
+
+  formPedido.addEventListener("submit", (evento) => {
     evento.preventDefault();
     const aviso = document.getElementById("aviso-pedido");
     aviso.textContent = "";
@@ -623,42 +648,34 @@ function iniciarCarrinho() {
       return;
     }
 
-    const itens = Object.values(carrinho).map((i) => ({ produto_id: i.id, quantidade: i.quantidade }));
-    if (itens.length === 0) {
+    if (Object.keys(carrinho).length === 0) {
       aviso.textContent = "Seu carrinho está vazio.";
       aviso.className = "aviso erro";
       return;
     }
 
-    const botao = evento.target.querySelector('button[type="submit"]');
-    botao.disabled = true;
-    botao.textContent = "Abrindo WhatsApp…";
     const dadosWhatsApp = {
-        itens: Object.values(carrinho).map((i) => ({ nome: i.nome, quantidade: i.quantidade, preco_centavos: i.preco_centavos })),
-        total_centavos: totalCarrinho(),
-        nome_cliente: nome,
-        contato,
-        observacoes: obs,
-      };
+      itens: Object.values(carrinho).map((i) => ({ nome: i.nome, quantidade: i.quantidade, preco_centavos: i.preco_centavos })),
+      total_centavos: totalCarrinho(),
+      nome_cliente: nome,
+      contato,
+      observacoes: obs,
+    };
     const urlWhatsApp = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(montarMensagemPedido(dadosWhatsApp))}`;
     document.getElementById("link-pedido-whatsapp").href = urlWhatsApp;
     window.open(urlWhatsApp, "_blank", "noopener");
-
-      for (const chave of Object.keys(carrinho)) delete carrinho[chave];
-      renderCarrinho();
-      salvarCarrinhoLocal();
-
-      document.getElementById("form-pedido").hidden = true;
-      document.getElementById("sucesso-pedido").hidden = false;
-    botao.disabled = false;
-    botao.textContent = "Finalizar pedido";
+    document.getElementById("sucesso-pedido").hidden = false;
   });
 
   document.getElementById("fechar-sucesso-pedido").addEventListener("click", () => {
     document.getElementById("sucesso-pedido").hidden = true;
-    document.getElementById("form-pedido").hidden = false;
-    document.getElementById("form-pedido").reset();
-    fecharCarrinho();
+  });
+
+  document.getElementById("limpar-pedido").addEventListener("click", () => {
+    for (const chave of Object.keys(carrinho)) delete carrinho[chave];
+    renderCarrinho();
+    salvarCarrinhoLocal();
+    formPedido.reset();
   });
 }
 

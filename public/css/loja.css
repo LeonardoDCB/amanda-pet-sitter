@@ -190,6 +190,7 @@
   top: 0;
   right: 0;
   height: 100%;
+  overflow-y: auto;
   width: min(400px, 100vw);
   z-index: 80;
   display: flex;
