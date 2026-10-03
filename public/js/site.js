@@ -3,6 +3,22 @@ const WHATSAPP_NUMERO = "5518997607771";
 const GALERIA_ESTATICA = [
   { arquivo: "img/amanda-hero.jpg", legenda: "Cuidado com carinho em cada visita." },
   { arquivo: "img/amanda-sobre.jpg", legenda: "Amanda Pet Sitter em Birigui e Araçatuba." },
+  { arquivo: "img/galeria/34dd7d01-0cd9-4d80-bf58-476b8510646f.jpeg", legenda: "Um cliente especial da Amanda." },
+  { arquivo: "img/galeria/436ff798-bf1a-450b-864b-d20238ff8803.png", legenda: "Um cliente especial da Amanda." },
+  { arquivo: "img/galeria/71a3c211-0129-473d-a994-e07cc402df2c.jpeg", legenda: "Um cliente especial da Amanda." },
+  { arquivo: "img/galeria/7a123832-8c59-4dda-a581-c4fb2e6cfc91.jpeg", legenda: "Um cliente especial da Amanda." },
+  { arquivo: "img/galeria/89158021-b3d1-42e2-a11d-64cde7618eb6.jpeg", legenda: "Um cliente especial da Amanda." },
+  { arquivo: "img/galeria/8a4c349a-b946-420d-8a5e-8ff0e99f7382.jpeg", legenda: "Um cliente especial da Amanda." },
+  { arquivo: "img/galeria/a07b134f-2104-4200-b5ad-c23b4438515b.jpeg", legenda: "Um cliente especial da Amanda." },
+  { arquivo: "img/galeria/a6cbcce1-7c9d-4689-a0a9-e227fa07c619.jpeg", legenda: "Um cliente especial da Amanda." },
+  { arquivo: "img/galeria/b1484832-d76c-4dcb-9275-f8e0df4246d7.jpeg", legenda: "Um cliente especial da Amanda." },
+  { arquivo: "img/galeria/c6210971-7266-4e07-a339-c38686f5a2dc.jpeg", legenda: "Um cliente especial da Amanda." },
+  { arquivo: "img/galeria/d679821c-0850-42bd-88f7-eedd3d2c1c68.jpeg", legenda: "Um cliente especial da Amanda." },
+  { arquivo: "img/galeria/dd0a259d-a204-451e-b0ce-8b8ac12b1d83.jpeg", legenda: "Um cliente especial da Amanda." },
+  { arquivo: "img/galeria/f012dae3-b261-42d5-87db-daab56eb9b45.jpeg", legenda: "Um cliente especial da Amanda." },
+  { arquivo: "img/galeria/f23b2c42-c782-470b-9a75-83963dd60387.jpeg", legenda: "Um cliente especial da Amanda." },
+  { arquivo: "img/galeria/f57b2009-2449-4ea5-b9c6-5b0dace2a62f.png", legenda: "Um cliente especial da Amanda." },
+  { arquivo: "img/galeria/f85a0ab6-33ec-4597-bd72-6f12751fd9ad.jpeg", legenda: "Um cliente especial da Amanda." },
 ];
 
 const PRODUTOS_ESTATICOS = [
